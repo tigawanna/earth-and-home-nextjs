@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Search, Phone, Mail } from "lucide-react";
 import Image from "next/image";
+import { ModeToggle } from "../theme/theme-toggle";
 
 export function Header() {
   return (
@@ -74,6 +75,7 @@ export function Header() {
             <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
               List Property
             </Button>
+            <ModeToggle />
           </div>
         </div>
       </div>
