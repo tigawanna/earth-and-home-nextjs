@@ -2,12 +2,12 @@ import { Button } from "@/components/ui/button";
 import { Search, MapPin, Home } from "lucide-react";
 import Image from "next/image";
 
-const Hero = () => {
+export function Hero() {
   return (
     <section id="home" className="relative bg-gradient-to-br from-primary/5 to-accent/10 py-20 lg:py-32">
       {/* Background pattern */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}
@@ -17,10 +17,10 @@ const Hero = () => {
               <span className="text-primary block">Dream Home</span>
             </h1>
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Discover exceptional properties with Earth & Home. From luxury estates to cozy family homes, 
+              Discover exceptional properties with Earth & Home. From luxury estates to cozy family homes,
               we connect you with the perfect place to call home.
             </p>
-            
+
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 mb-8">
               <div className="text-center">
@@ -53,13 +53,12 @@ const Hero = () => {
           <div className="animate-scale-in">
             <div className="bg-card text-card-foreground rounded-2xl shadow-2xl overflow-hidden border border-border">
               <div className="relative">
-                <Image 
-                  src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=600&h=400&fit=crop" 
+                <Image
+                  src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=600&h=400&fit=crop"
                   alt="Featured Property"
                   width={600}
                   height={400}
-                  className="w-full h-64 object-cover"
-                />
+                  className="w-full h-64 object-cover" />
                 <div className="absolute top-4 left-4">
                   <span className="bg-accent text-accent-foreground px-3 py-1 rounded-full text-sm font-medium">
                     Featured
@@ -94,6 +93,6 @@ const Hero = () => {
       </div>
     </section>
   );
-};
+}
 
-export default Hero;
+

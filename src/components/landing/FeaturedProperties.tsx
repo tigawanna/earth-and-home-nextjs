@@ -78,7 +78,7 @@ const properties = [
 	},
 ];
 
-const FeaturedProperties = () => {
+export function FeaturedProperties() {
 	return (
 		<section id="properties" className="py-16 bg-muted/20">
 			<div className="container mx-auto px-4">
@@ -105,8 +105,7 @@ const FeaturedProperties = () => {
 									alt={property.title}
 									width={800}
 									height={600}
-									className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-								/>
+									className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300" />
 								<div className="absolute top-4 left-4">
 									<Badge className="bg-accent text-accent-foreground">
 										{property.type}
@@ -177,6 +176,6 @@ const FeaturedProperties = () => {
 			</div>
 		</section>
 	);
-};
+}
 
-export default FeaturedProperties;
+

@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Facebook, Twitter, Instagram, Linkedin, Phone, Mail, MapPin } from "lucide-react";
 import Image from "next/image";
 
-const Footer = () => {
+export function Footer() {
   return (
     <footer id="contact" className="bg-muted text-muted-foreground">
       {/* Main footer content */}
@@ -12,13 +12,12 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-6">
-              <Image 
-                src="/lovable-uploads/85c65874-37e2-449d-b9ec-29ccbf629d79.png" 
-                alt="Earth & Home Logo" 
+              <Image
+                src="/lovable-uploads/85c65874-37e2-449d-b9ec-29ccbf629d79.png"
+                alt="Earth & Home Logo"
                 width={40}
                 height={40}
-                className="h-10 w-10 object-contain"
-              />
+                className="h-10 w-10 object-contain" />
               <div>
                 <h3 className="text-xl font-playfair font-bold text-foreground">
                   Earth & Home
@@ -27,7 +26,7 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground mb-6 leading-relaxed">
-              Your trusted partner in finding the perfect home. We connect dreams with reality 
+              Your trusted partner in finding the perfect home. We connect dreams with reality
               through exceptional real estate services.
             </p>
             <div className="flex space-x-4">
@@ -89,16 +88,15 @@ const Footer = () => {
                 <span>123 Real Estate Blvd,<br />Suite 100, City, ST 12345</span>
               </div>
             </div>
-            
+
             {/* Newsletter */}
             <div>
               <h5 className="font-semibold mb-3 text-foreground">Newsletter</h5>
               <p className="text-sm mb-4">Get the latest property updates and market insights.</p>
               <div className="flex space-x-2">
-                <Input 
-                  placeholder="Your email" 
-                  className="bg-background border-input text-foreground placeholder:text-muted-foreground"
-                />
+                <Input
+                  placeholder="Your email"
+                  className="bg-background border-input text-foreground placeholder:text-muted-foreground" />
                 <Button className="bg-primary text-primary-foreground hover:bg-primary/90">
                   Subscribe
                 </Button>
@@ -125,6 +123,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
+}
 
-export default Footer;
+

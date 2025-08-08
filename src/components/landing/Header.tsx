@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Phone, Mail } from "lucide-react";
 import Image from "next/image";
 
-const Header = () => {
+export function Header() {
   return (
     <header className="bg-background shadow-xs border-b border-border sticky top-0 z-50">
       {/* Top contact bar */}
@@ -34,8 +34,7 @@ const Header = () => {
               alt="Earth & Home Logo"
               width={48}
               height={48}
-              className="h-12 w-12 object-contain"
-            />
+              className="h-12 w-12 object-contain" />
             <div>
               <h1 className="text-2xl font-playfair font-bold text-primary">
                 Earth & Home
@@ -80,6 +79,5 @@ const Header = () => {
       </div>
     </header>
   );
-};
+}
 
-export default Header;

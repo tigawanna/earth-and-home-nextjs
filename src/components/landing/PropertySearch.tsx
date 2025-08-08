@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, MapPin, Filter } from "lucide-react";
 
-const PropertySearch = () => {
+export function PropertySearch() {
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -135,4 +135,4 @@ const PropertySearch = () => {
   );
 };
 
-export default PropertySearch;
+

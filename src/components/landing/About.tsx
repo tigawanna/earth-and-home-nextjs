@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Shield, Award, Users, TrendingUp } from "lucide-react";
 
-const About = () => {
+export function About() {
   return (
     <section id="about" className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -104,6 +104,6 @@ const About = () => {
       </div>
     </section>
   );
-};
+}
 
-export default About;
+
