@@ -109,6 +109,8 @@
 }
 
 :root {
+  /* Hint browsers to use light colors unless `.dark` is set. Helps with Chrome Force Dark Mode. */
+  color-scheme: light;
   --radius: 0.625rem;
 
   /* Warm, airy light theme for real estate */
@@ -159,6 +161,9 @@
 }
 
 .dark {
+  /* Opt into dark color-scheme explicitly to prevent UA auto-inversion. */
+  color-scheme: dark;
+
   /* Sophisticated dark with forest undertones */
   --background: #121613;
   --foreground: #e8ede9;
@@ -179,7 +184,7 @@
   --muted-foreground: #b6c2ba;
 
   --accent: #f97316;
-  --accent-foreground: #0b0f0d;
+  --accent-foreground: #221d17;
 
   --destructive: #f04438;
   --destructive-foreground: #0b0f0d;

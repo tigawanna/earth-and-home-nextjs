@@ -4,6 +4,7 @@ import { PropertySearch } from "@/components/landing/PropertySearch";
 import { FeaturedProperties } from "@/components/landing/FeaturedProperties";
 import { About } from "@/components/landing/About";
 import { Footer } from "@/components/landing/Footer";
+import { SellYourHome } from "@/components/landing/SellYourHome";
 
 export default function Home() {
   return (
@@ -19,6 +20,9 @@ export default function Home() {
 
       {/* Featured */}
       <FeaturedProperties />
+
+      {/* Sell */}
+      <SellYourHome />
 
       {/* About */}
       <About />

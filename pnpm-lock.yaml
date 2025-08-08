@@ -110,6 +110,9 @@ importers:
       drizzle-orm:
         specifier: ^0.44.4
         version: 0.44.4(@neondatabase/serverless@1.0.1)(@types/pg@8.15.5)
+      drizzle-query-logger:
+        specifier: ^1.0.7
+        version: 1.0.7(drizzle-orm@0.44.4(@neondatabase/serverless@1.0.1)(@types/pg@8.15.5))(typescript@5.9.2)
       embla-carousel-react:
         specifier: ^8.6.0
         version: 8.6.0(react@19.1.0)
@@ -2105,6 +2108,12 @@ packages:
         optional: true
       sqlite3:
         optional: true
+
+  drizzle-query-logger@1.0.7:
+    resolution: {integrity: sha512-HVvVhd+qv/SP37CjDCQxh3tTT7WDduY8AJbF/R+hdtbjznJsGxxKB/o9cc+xpdm/WbmOCqL9e0XpyDTZ53M45Q==}
+    peerDependencies:
+      drizzle-orm: ^0.44.3
+      typescript: ^5
 
   dunder-proto@1.0.1:
     resolution: {integrity: sha512-KIN/nDJBQRcXw0MLVhZE9iQHmG68qAVIBg9CqmUYjmQIhgij9U5MFvrqkUL5FbtyyzZuOeOt0zdeRe4UY7ct+A==}
@@ -5016,6 +5025,11 @@ snapshots:
     optionalDependencies:
       '@neondatabase/serverless': 1.0.1
       '@types/pg': 8.15.5
+
+  drizzle-query-logger@1.0.7(drizzle-orm@0.44.4(@neondatabase/serverless@1.0.1)(@types/pg@8.15.5))(typescript@5.9.2):
+    dependencies:
+      drizzle-orm: 0.44.4(@neondatabase/serverless@1.0.1)(@types/pg@8.15.5)
+      typescript: 5.9.2
 
   dunder-proto@1.0.1:
     dependencies:

@@ -42,7 +42,12 @@ export function Hero() {
                 <Search className="mr-2 h-5 w-5" />
                 Browse Properties
               </Button>
-              <Button size="lg" variant="outline" className="border-accent text-accent-foreground hover:bg-accent/10">
+              <Button
+                size="lg"
+                variant="outline"
+                aria-label="Sell your home"
+                className="border-accent text-foreground hover:bg-accent/10 dark:hover:bg-accent/20"
+              >
                 <Home className="mr-2 h-5 w-5" />
                 Sell Your Home
               </Button>
