@@ -46,28 +46,48 @@
   --font-inter: Inter, sans-serif;
   --font-playfair: "Playfair Display", serif;
 
-  /* Earth brand palette (light/dark surfaces use these) */
-  --color-earth-green-50: #f0f9f4;
-  --color-earth-green-100: #dcf2e4;
-  --color-earth-green-200: #bce5cc;
-  --color-earth-green-300: #8dd3a8;
-  --color-earth-green-400: #56bc7d;
-  --color-earth-green-500: #2f8f4f;
-  --color-earth-green-600: #267d42;
-  --color-earth-green-700: #1e6635;
-  --color-earth-green-800: #1a512c;
-  --color-earth-green-900: #164324;
+  /* Earth brand palette (OKLCH). Keep these as stable brand colors. */
+  --color-earth-green-50: oklch(from #f0f9f4 l c h);
+  --color-earth-green-100: oklch(from #dcf2e4 l c h);
+  --color-earth-green-200: oklch(from #bce5cc l c h);
+  --color-earth-green-300: oklch(from #8dd3a8 l c h);
+  --color-earth-green-400: oklch(from #56bc7d l c h);
+  --color-earth-green-500: oklch(from #2f8f4f l c h);
+  --color-earth-green-600: oklch(from #267d42 l c h);
+  --color-earth-green-700: oklch(from #1e6635 l c h);
+  --color-earth-green-800: oklch(from #1a512c l c h);
+  --color-earth-green-900: oklch(from #164324 l c h);
 
-  --color-earth-orange-50: #fff7ed;
-  --color-earth-orange-100: #ffedd5;
-  --color-earth-orange-200: #fed7aa;
-  --color-earth-orange-300: #fdba74;
-  --color-earth-orange-400: #fb923c;
-  --color-earth-orange-500: #f97316;
-  --color-earth-orange-600: #ea580c;
-  --color-earth-orange-700: #c2410c;
-  --color-earth-orange-800: #9a3412;
-  --color-earth-orange-900: #7c2d12;
+  --color-earth-orange-50: oklch(from #fff7ed l c h);
+  --color-earth-orange-100: oklch(from #ffedd5 l c h);
+  --color-earth-orange-200: oklch(from #fed7aa l c h);
+  --color-earth-orange-300: oklch(from #fdba74 l c h);
+  --color-earth-orange-400: oklch(from #fb923c l c h);
+  --color-earth-orange-500: oklch(from #f97316 l c h);
+  --color-earth-orange-600: oklch(from #ea580c l c h);
+  --color-earth-orange-700: oklch(from #c2410c l c h);
+  --color-earth-orange-800: oklch(from #9a3412 l c h);
+  --color-earth-orange-900: oklch(from #7c2d12 l c h);
+
+  /* Clean dark-mode variant scale (aliases).
+     1100 = lightest, 400 = darkest. No HTML changes required. */
+  --color-earth-green-dark-1100: var(--color-earth-green-100);
+  --color-earth-green-dark-1000: var(--color-earth-green-200);
+  --color-earth-green-dark-900: var(--color-earth-green-300);
+  --color-earth-green-dark-800: var(--color-earth-green-400);
+  --color-earth-green-dark-700: var(--color-earth-green-500);
+  --color-earth-green-dark-600: var(--color-earth-green-600);
+  --color-earth-green-dark-500: var(--color-earth-green-700);
+  --color-earth-green-dark-400: var(--color-earth-green-900);
+
+  --color-earth-orange-dark-1100: var(--color-earth-orange-100);
+  --color-earth-orange-dark-1000: var(--color-earth-orange-200);
+  --color-earth-orange-dark-900: var(--color-earth-orange-300);
+  --color-earth-orange-dark-800: var(--color-earth-orange-400);
+  --color-earth-orange-dark-700: var(--color-earth-orange-500);
+  --color-earth-orange-dark-600: var(--color-earth-orange-600);
+  --color-earth-orange-dark-500: var(--color-earth-orange-700);
+  --color-earth-orange-dark-400: var(--color-earth-orange-900);
 
   /* Additional token used by some components */
   --color-destructive-foreground: var(--destructive-foreground);
@@ -113,100 +133,101 @@
   color-scheme: light;
   --radius: 0.625rem;
 
-  /* Warm, airy light theme for real estate */
-  --background: #fbfbf9;
-  --foreground: #1b1d1a;
+  /* Warm, airy light theme for real estate (OKLCH) */
+  --background: oklch(from #fbfbf9 l c h);
+  --foreground: oklch(from #1b1d1a l c h);
 
-  --card: #ffffff;
-  --card-foreground: #1b1d1a;
+  --card: oklch(from #ffffff l c h);
+  --card-foreground: oklch(from #1b1d1a l c h);
 
-  --popover: #ffffff;
-  --popover-foreground: #1b1d1a;
+  --popover: oklch(from #ffffff l c h);
+  --popover-foreground: oklch(from #1b1d1a l c h);
 
-  --primary: #267d42; /* earth green 600 */
-  --primary-foreground: #ffffff;
+  /* map semantics to brand palette */
+  --primary: var(--color-earth-green-600);
+  --primary-foreground: oklch(from #ffffff l c h);
 
-  --secondary: #f3efe7; /* warm paper */
-  --secondary-foreground: #1b1d1a;
+  --secondary: oklch(from #f3efe7 l c h);
+  --secondary-foreground: oklch(from #1b1d1a l c h);
 
-  --muted: #f5f5f4;
-  --muted-foreground: #6b7280;
+  --muted: oklch(from #f5f5f4 l c h);
+  --muted-foreground: oklch(from #6b7280 l c h);
 
-  --accent: #ffedd5; /* sand (orange-100) */
-  --accent-foreground: #9a3412; /* orange-800 */
+  --accent: var(--color-earth-orange-100);
+  --accent-foreground: var(--color-earth-orange-800);
 
-  --destructive: #c2410c; /* earthy destructive */
-  --destructive-foreground: #ffffff;
+  --destructive: oklch(from #c2410c l c h);
+  --destructive-foreground: oklch(from #ffffff l c h);
 
-  --border: #e6e7e9;
-  --input: #e6e7e9;
-  --ring: #94d3ac; /* soft green ring */
+  --border: oklch(from #e6e7e9 l c h);
+  --input: oklch(from #e6e7e9 l c h);
+  --ring: oklch(from #94d3ac l c h);
 
   /* Charts skew towards greens/oranges */
-  --chart-1: #2f8f4f;
-  --chart-2: #f97316;
-  --chart-3: #1e6635;
-  --chart-4: #56bc7d;
-  --chart-5: #9a3412;
+  --chart-1: oklch(from #2f8f4f l c h);
+  --chart-2: oklch(from #f97316 l c h);
+  --chart-3: oklch(from #1e6635 l c h);
+  --chart-4: oklch(from #56bc7d l c h);
+  --chart-5: oklch(from #9a3412 l c h);
 
   /* Sidebar surfaces */
-  --sidebar: #faf6ef;
-  --sidebar-foreground: #1b1d1a;
-  --sidebar-primary: #267d42;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f3efe7;
-  --sidebar-accent-foreground: #1b1d1a;
-  --sidebar-border: #e6e7e9;
-  --sidebar-ring: #94d3ac;
+  --sidebar: oklch(from #faf6ef l c h);
+  --sidebar-foreground: oklch(from #1b1d1a l c h);
+  --sidebar-primary: var(--color-earth-green-600);
+  --sidebar-primary-foreground: oklch(from #ffffff l c h);
+  --sidebar-accent: oklch(from #f3efe7 l c h);
+  --sidebar-accent-foreground: oklch(from #1b1d1a l c h);
+  --sidebar-border: oklch(from #e6e7e9 l c h);
+  --sidebar-ring: oklch(from #94d3ac l c h);
 }
 
 .dark {
   /* Opt into dark color-scheme explicitly to prevent UA auto-inversion. */
   color-scheme: dark;
 
-  /* Sophisticated dark with forest undertones */
-  --background: #121613;
-  --foreground: #e8ede9;
+  /* Sophisticated dark with forest undertones (OKLCH) */
+  --background: oklch(from #121613 l c h);
+  --foreground: oklch(from #e8ede9 l c h);
 
-  --card: #171c18;
-  --card-foreground: #e8ede9;
+  --card: oklch(from #171c18 l c h);
+  --card-foreground: oklch(from #e8ede9 l c h);
 
-  --popover: #171c18;
-  --popover-foreground: #e8ede9;
+  --popover: oklch(from #171c18 l c h);
+  --popover-foreground: oklch(from #e8ede9 l c h);
 
-  --primary: #56bc7d;
-  --primary-foreground: #0b0f0d;
+  --primary: oklch(from #56bc7d l c h); /* brighter green for dark */
+  --primary-foreground: oklch(from #0b0f0d l c h);
 
-  --secondary: #1a201c;
-  --secondary-foreground: #e8ede9;
+  --secondary: oklch(from #1a201c l c h);
+  --secondary-foreground: oklch(from #e8ede9 l c h);
 
-  --muted: #1a201c;
-  --muted-foreground: #b6c2ba;
+  --muted: oklch(from #1a201c l c h);
+  --muted-foreground: oklch(from #b6c2ba l c h);
 
-  --accent: #f97316;
-  --accent-foreground: #221d17;
+  --accent: oklch(from #f97316 l c h);
+  --accent-foreground: oklch(from #221d17 l c h);
 
-  --destructive: #f04438;
-  --destructive-foreground: #0b0f0d;
+  --destructive: oklch(from #f04438 l c h);
+  --destructive-foreground: oklch(from #0b0f0d l c h);
 
-  --border: #232a25;
-  --input: #2a312c;
-  --ring: #56bc7d;
+  --border: oklch(from #232a25 l c h);
+  --input: oklch(from #2a312c l c h);
+  --ring: oklch(from #56bc7d l c h);
 
-  --chart-1: #56bc7d;
-  --chart-2: #f59e0b;
-  --chart-3: #93c5aa;
-  --chart-4: #fb923c;
-  --chart-5: #2f8f4f;
+  --chart-1: oklch(from #56bc7d l c h);
+  --chart-2: oklch(from #f59e0b l c h);
+  --chart-3: oklch(from #93c5aa l c h);
+  --chart-4: oklch(from #fb923c l c h);
+  --chart-5: oklch(from #2f8f4f l c h);
 
-  --sidebar: #171c18;
-  --sidebar-foreground: #e8ede9;
-  --sidebar-primary: #56bc7d;
-  --sidebar-primary-foreground: #0b0f0d;
-  --sidebar-accent: #1d231f;
-  --sidebar-accent-foreground: #e8ede9;
-  --sidebar-border: #232a25;
-  --sidebar-ring: #56bc7d;
+  --sidebar: oklch(from #171c18 l c h);
+  --sidebar-foreground: oklch(from #e8ede9 l c h);
+  --sidebar-primary: oklch(from #56bc7d l c h);
+  --sidebar-primary-foreground: oklch(from #0b0f0d l c h);
+  --sidebar-accent: oklch(from #1d231f l c h);
+  --sidebar-accent-foreground: oklch(from #e8ede9 l c h);
+  --sidebar-border: oklch(from #232a25 l c h);
+  --sidebar-ring: oklch(from #56bc7d l c h);
 }
 
 @layer base {

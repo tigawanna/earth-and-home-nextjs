@@ -3,7 +3,9 @@ import { z } from "zod";
 const serverEnvSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   DATABASE_URL: z.url(),
-//   API_KEY: z.string().min(32).max(32),
+  BETTER_AUTH_SECRET: z.string().min(32).max(64),
+  BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
+  //   API_KEY: z.string().min(32).max(32),
 });
 
 
