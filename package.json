@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "drizzle:gen":"drizzle-kit generate",
+    "drizzle:push":"drizzle-kit push",
+    "drizzle:pull":"drizzle-kit pull",
+    "drizzle:submit":"npm run drizzle:gen && npm run drizzle:push"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",

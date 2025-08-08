@@ -1,4 +1,18 @@
+import { sql } from "drizzle-orm";
+import { uuid } from "drizzle-orm/pg-core";
 import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
+// Add advanced column types and enums
+import { pgEnum, jsonb, numeric, doublePrecision } from "drizzle-orm/pg-core";
+// PostGIS geometry + index
+import { geometry, index } from "drizzle-orm/pg-core";
+
+// ====================================================
+
+  // AUTH SCHEMA
+
+// ====================================================
+
+
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -55,3 +69,151 @@ export const verification = pgTable("verification", {
   createdAt: timestamp("created_at").$defaultFn(() => /* @__PURE__ */ new Date()),
   updatedAt: timestamp("updated_at").$defaultFn(() => /* @__PURE__ */ new Date()),
 });
+
+
+
+// ====================================================
+
+  // PROPERTIES SCHEMA
+
+// ====================================================
+
+// Enums for listings and property details
+export const listingTypeEnum = pgEnum("listing_type", ["sale", "rent"]);
+export const propertyTypeEnum = pgEnum("property_type", [
+  "house",
+  "apartment",
+  "condo",
+  "townhouse",
+  "duplex",
+  "studio",
+  "villa",
+  "land",
+  "commercial",
+  "industrial",
+  "farm",
+]);
+export const propertyStatusEnum = pgEnum("property_status", [
+  "draft",
+  "active",
+  "pending",
+  "sold",
+  "rented",
+  "off_market",
+]);
+export const parkingTypeEnum = pgEnum("parking_type", [
+  "garage",
+  "carport",
+  "street",
+  "covered",
+  "assigned",
+  "none",
+]);
+export const heatingTypeEnum = pgEnum("heating_type", [
+  "none",
+  "electric",
+  "gas",
+  "oil",
+  "heat_pump",
+  "solar",
+  "geothermal",
+]);
+export const coolingTypeEnum = pgEnum("cooling_type", [
+  "none",
+  "central",
+  "wall_unit",
+  "evaporative",
+  "geothermal",
+]);
+export const zoningEnum = pgEnum("zoning", [
+  "residential",
+  "commercial",
+  "agricultural",
+  "industrial",
+  "mixed_use",
+  "recreational",
+  "other",
+]);
+
+export const property = pgTable(
+  "property",
+  {
+    id: uuid("id").primaryKey().default(sql`uuid_generate_v7()`),
+
+    // Basic info
+    title: text("title").notNull(),
+    description: text("description"),
+    slug: text("slug").unique(),
+
+    // Classification
+    listingType: listingTypeEnum("listing_type").notNull().default("sale"),
+    propertyType: propertyTypeEnum("property_type").notNull(),
+    status: propertyStatusEnum("status").notNull().default("active"),
+
+    // Location
+    location: text("location").notNull(), // human-readable
+    streetAddress: text("street_address"),
+    city: text("city"),
+    state: text("state"),
+    postalCode: text("postal_code"),
+    country: text("country"),
+    latitude: doublePrecision("latitude"),
+    longitude: doublePrecision("longitude"),
+    // PostGIS geometry point (WGS84)
+    locationGeom: geometry("location_geom", { type: "point", mode: "xy", srid: 4326 }),
+
+    // Size & structure
+    dimensions: text("dimensions"),
+    buildingSizeSqft: integer("building_size_sqft"),
+    lotSizeSqft: integer("lot_size_sqft"),
+    lotSizeAcres: numeric("lot_size_acres", { precision: 10, scale: 2 }),
+    yearBuilt: integer("year_built"),
+    floors: integer("floors"),
+    beds: integer("beds"),
+    baths: integer("baths"),
+    parkingSpaces: integer("parking_spaces"),
+    parkingType: parkingTypeEnum("parking_type"),
+    heating: heatingTypeEnum("heating"),
+    cooling: coolingTypeEnum("cooling"),
+    zoning: zoningEnum("zoning"), // useful for land
+
+    // Pricing (either sale or rent)
+    currency: text("currency").default("USD"),
+    price: integer("price"), // generic price if you need a single field
+    salePrice: integer("sale_price"),
+    rentalPrice: integer("rental_price"),
+    securityDeposit: integer("security_deposit"),
+    hoaFee: integer("hoa_fee"),
+    annualTaxes: integer("annual_taxes"),
+    availableFrom: timestamp("available_from"),
+
+    // Media & metadata
+    imageUrl: text("image_url"), // primary image
+    images: jsonb("images").default(sql`'[]'::jsonb`),
+    videoUrl: text("video_url"),
+    virtualTourUrl: text("virtual_tour_url"),
+    amenities: jsonb("amenities").default(sql`'[]'::jsonb`),
+    features: jsonb("features").default(sql`'[]'::jsonb`),
+    utilities: jsonb("utilities").default(sql`'{}'::jsonb`),
+
+    // Relations
+    agentId: text("agent_id").references(() => user.id, { onDelete: "set null" }),
+    ownerId: text("owner_id").references(() => user.id, { onDelete: "set null" }),
+
+    // Flags
+    isFeatured: boolean("is_featured").$defaultFn(() => false).notNull(),
+    isNew: boolean("is_new").$defaultFn(() => false).notNull(),
+
+    // Timestamps
+    createdAt: timestamp("created_at")
+      .$defaultFn(() => /* @__PURE__ */ new Date())
+      .notNull(),
+    updatedAt: timestamp("updated_at")
+      .$defaultFn(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (t) => [
+    // Spatial index for efficient geo queries
+    index("property_location_geom_gix").using("gist", t.locationGeom),
+  ]
+);
