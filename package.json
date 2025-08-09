@@ -7,10 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "drizzle:gen":"drizzle-kit generate",
-    "drizzle:push":"drizzle-kit push",
-    "drizzle:pull":"drizzle-kit pull",
-    "drizzle:submit":"npm run drizzle:gen && npm run drizzle:push"
+    "db:gen":"drizzle-kit generate",
+    "db:push":"drizzle-kit push",
+    "db:pull":"drizzle-kit pull",
+    "db:migrate":"drizzle-kit migrate",
+    "db:submit":"npm run db:gen && npm run db:migrate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",

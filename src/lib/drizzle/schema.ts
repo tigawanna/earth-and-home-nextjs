@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { uuid } from "drizzle-orm/pg-core";
+import { serial, uuid, varchar } from "drizzle-orm/pg-core";
 import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core";
 // Add advanced column types and enums
 import { pgEnum, jsonb, numeric, doublePrecision } from "drizzle-orm/pg-core";
@@ -217,3 +217,23 @@ export const property = pgTable(
     index("property_location_geom_gix").using("gist", t.locationGeom),
   ]
 );
+
+
+
+
+export const kenyaWards = pgTable('kenya_wards', {
+  id: serial('id').primaryKey(),
+  wardCode: varchar('ward_code', { length: 10 }).notNull(),
+  ward: text('ward').notNull(),
+  county: text('county').notNull(),
+  countyCode: integer('county_code').notNull(),
+  subCounty: text('sub_county'),
+  constituency: text('constituency').notNull(),
+  constituencyCode: integer('constituency_code').notNull(),
+  rowNum: integer('row_num'),
+  wardCounty: text('ward_county'),
+  geometry: geometry('geometry', { type: 'MultiPolygon', srid: 4326 }).notNull()
+});
+
+// If you need to create a spatial index (recommended for performance):
+// CREATE INDEX idx_kenya_wards_geometry ON kenya_wards USING GIST(geometry);

@@ -1,6 +1,6 @@
 {
-  "id": "d085f72a-2a20-43d6-bc62-5d9d2613f403",
-  "prevId": "468fb1ef-6125-4deb-9d6c-80a393e2f601",
+  "id": "370d0fda-ae2e-41c1-a887-97d783292996",
+  "prevId": "fc674d10-3740-4a23-bf56-c70877e02e04",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -109,6 +109,85 @@
       "checkConstraints": {},
       "isRLSEnabled": false
     },
+    "public.kenya_wards": {
+      "name": "kenya_wards",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "ward_code": {
+          "name": "ward_code",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ward": {
+          "name": "ward",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "county": {
+          "name": "county",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "county_code": {
+          "name": "county_code",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sub_county": {
+          "name": "sub_county",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "constituency": {
+          "name": "constituency",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "constituency_code": {
+          "name": "constituency_code",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "row_num": {
+          "name": "row_num",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ward_county": {
+          "name": "ward_county",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "geometry": {
+          "name": "geometry",
+          "type": "geometry(point)",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
     "public.property": {
       "name": "property",
       "schema": "",
@@ -206,6 +285,12 @@
         "longitude": {
           "name": "longitude",
           "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "location_geom": {
+          "name": "location_geom",
+          "type": "geometry(point)",
           "primaryKey": false,
           "notNull": false
         },
@@ -423,7 +508,23 @@
           "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "property_location_geom_gix": {
+          "name": "property_location_geom_gix",
+          "columns": [
+            {
+              "expression": "location_geom",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "gist",
+          "with": {}
+        }
+      },
       "foreignKeys": {
         "property_agent_id_user_id_fk": {
           "name": "property_agent_id_user_id_fk",
