@@ -1,6 +1,4 @@
-// import "dotenv/config";
-// import { clientEnvs } from "@/lib/client-env"
-import "@/lib/envs/next-envs"
+import "dotenv/config";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {

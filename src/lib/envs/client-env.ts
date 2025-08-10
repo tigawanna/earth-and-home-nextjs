@@ -2,7 +2,7 @@ import z from "zod";
 
 // Client-side environment variables (publicly accessible)
 const clientEnvSchema = z.object({
-  NEXT_PUBLIC_R2_PUBLIC_URL: z.string().url(),
+  NEXT_PUBLIC_R2_PUBLIC_URL: z.url(),
 });
 
 // Only validate on client side and if variables are expected to be available
