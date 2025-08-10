@@ -13,7 +13,7 @@ export const  betterUploadS3 = s3Client;
 
 const router: Router = {
   client: s3Client,
-  bucketName: "earth-and-home", // TODO: Replace with your actual bucket name
+  bucketName: serverEnvs.R2_BUCKET_NAME,
   routes: {
     // Property images upload route
     propertyImages: route({

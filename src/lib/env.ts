@@ -9,9 +9,14 @@ const serverEnvSchema = z.object({
   R2_ENDPOINT: z.url(),
   R2_ACCESS_KEY_ID: z.string(),
   R2_SECRET_ACCESS_KEY: z.string(),
+  R2_BUCKET_NAME: z.string().default("earth-and-home"),
   //   API_KEY: z.string().min(32).max(32),
 });
 
+// Client-side environment variables (publicly accessible)
+const clientEnvSchema = z.object({
+  NEXT_PUBLIC_R2_PUBLIC_URL: z.url(),
+});
 
 const { success, data, error } = serverEnvSchema.safeParse(process.env);
 if (!success) {
@@ -19,4 +24,11 @@ if (!success) {
   throw new Error("Invalid server environment variables");
 }
 
+const clientResult = clientEnvSchema.safeParse(process.env);
+if (!clientResult.success) {
+  console.error("Invalid client environment variables:", clientResult.error.format());
+  throw new Error("Invalid client environment variables");
+}
+
 export const serverEnvs = data;
+export const clientEnvs = clientResult.data;

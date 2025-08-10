@@ -97,6 +97,8 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
     toast.success("Featured image updated");
   };
 
+  console.log("Current images:", fields);
+
   return (
     <Card>
       <CardHeader>
@@ -259,3 +261,6 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
     </Card>
   );
 }
+
+
+const img = "https://earth-and-home.r2.cloudflarestorage.com/bbaf3130-0ec0-4afb-abfa-46763ccde8aa-cute-house.jpg"

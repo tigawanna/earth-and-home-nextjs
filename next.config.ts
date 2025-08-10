@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: process.env.NEXT_PUBLIC_R2_PUBLIC_URL?.replace('https://', '') || "earth-and-home.r2.cloudflarestorage.com",
+      },
     ],
   },
 };
