@@ -5,6 +5,10 @@ const serverEnvSchema = z.object({
   DATABASE_URL: z.url(),
   BETTER_AUTH_SECRET: z.string().min(32).max(64),
   BETTER_AUTH_URL: z.url().default("http://localhost:3000"),
+  CLOUDFLARE_ACCOUNT_ID: z.string(),
+  R2_ENDPOINT: z.url(),
+  R2_ACCESS_KEY_ID: z.string(),
+  R2_SECRET_ACCESS_KEY: z.string(),
   //   API_KEY: z.string().min(32).max(32),
 });
 
