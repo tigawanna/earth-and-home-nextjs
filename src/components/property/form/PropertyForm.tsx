@@ -15,6 +15,7 @@ import { ParkingSection } from "./sections/ParkingSection";
 import { PricingSection } from "./sections/PricingSection";
 import { FeaturesAmenitiesSection } from "./sections/FeaturesAmenitiesSection";
 import { MediaSection } from "./sections/MediaSection";
+import { ImagesUploadSection } from "./sections/ImagesUploadSection";
 import { useState } from "react";
 import { Loader2, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
@@ -141,6 +142,11 @@ export function PropertyForm({
           
           {/* Features & Amenities - Always shown */}
           <FeaturesAmenitiesSection control={form.control as any} />
+          
+          <Separator />
+          
+          {/* Images Upload - Always shown */}
+          <ImagesUploadSection control={form.control as any} />
           
           <Separator />
           

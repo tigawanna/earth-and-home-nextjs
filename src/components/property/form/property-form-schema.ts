@@ -72,6 +72,13 @@ export const propertyFormSchema = z.object({
   availableFrom: z.date().optional(),
 
   // Media & Features
+  images: z.array(z.object({
+    url: z.string().url(),
+    key: z.string(),
+    name: z.string(),
+    size: z.number(),
+    type: z.string(),
+  })).default([]),
   imageUrl: optionalStringSchema,
   videoUrl: optionalStringSchema,
   virtualTourUrl: optionalStringSchema,
@@ -121,6 +128,7 @@ export const defaultPropertyFormValues: Partial<PropertyFormData> = {
   status: "draft",
   country: "Kenya",
   currency: "USD",
+  images: [],
   amenities: [],
   features: [],
   utilities: {},
