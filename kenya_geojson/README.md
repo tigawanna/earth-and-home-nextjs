@@ -1,5 +1,10 @@
 # Kenya Geospatial Data Integration
 
+**Data Sources:**
+- [Kenya Counties & Subcounties](https://github.com/tigawanna/kenya-counties-subcounties)
+- [Kenya Counties, Constituencies & Wards](https://github.com/tigawanna/data-Kenya-Counties-Constituencies-Wards)
+- [Kenya County Assembly Boundaries (GeoJSON)](https://github.com/tigawanna/Kenya-County-Assembly-Boundaries)
+
 This directory contains the Kenya ward boundary data and scripts for integrating it into our PostGIS-enabled PostgreSQL database using Drizzle ORM.
 
 ## Overview
@@ -103,12 +108,17 @@ export const kenyaWards = pgTable(
 ```typescript
 const geometry = {
   type: "MultiPolygon",
-  coordinates: coodinates, // Raw coordinates from source
+  coordinates: ward.coordinates, // Raw coordinates from geojson source // number[][][][] format
 };
 
 const processedWard = {
-  // ...ward properties
-  geometry: JSON.stringify(geometry), // Stringify for PostGIS
+  ...ward,
+  id: parseInt(ward.id, 10),
+  countyCode: ward.countyCode ? ward.countyCode : -1,
+  constituencyCode: ward.constituencyCode ? ward.constituencyCode : -1,
+  subCounty: subCounty || "Unknown",
+  // Store the geometry as GeoJSON text - will convert to PostGIS geometry in insert
+  geometry: JSON.stringify(geometry),
 };
 ```
 
@@ -140,6 +150,23 @@ We provide comprehensive spatial query functions in `src/lib/drizzle/ward-querie
 ### Point-in-Polygon (Exact Match)
 
 ```typescript
+/**
+ * Find the ward that contains a given point (lat, lng)
+ * This is the most accurate method - checks if the point is actually inside the ward boundary
+ */
+export async function findWardByPoint(latitude: number, longitude: number) {
+  const point = sql`ST_SetSRID(ST_MakePoint(${longitude}, ${latitude}), 4326)`;
+  
+  const result = await db
+    .select({
+      ...getTableColumns(kenyaWards),
+    })
+    .from(kenyaWards)
+    .where(sql`ST_Contains(${kenyaWards.geometry}, ${point})`)
+    .limit(1);
+
+  return result[0] || null;
+}
 // Find the ward containing specific coordinates
 const ward = await findWardByPoint(-1.2921, 36.8219); // Nairobi
 ```
