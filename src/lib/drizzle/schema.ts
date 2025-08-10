@@ -4,7 +4,9 @@ import { pgTable, text, timestamp, boolean, integer } from "drizzle-orm/pg-core"
 // Add advanced column types and enums
 import { pgEnum, jsonb, numeric, doublePrecision } from "drizzle-orm/pg-core";
 // PostGIS geometry + index
-import { geometry, index } from "drizzle-orm/pg-core";
+import { index } from "drizzle-orm/pg-core";
+// Custom PostGIS types (workaround for Drizzle geometry bug)
+import { multiPolygon, point } from "./postgis-types";
 
 // ====================================================
 
@@ -159,8 +161,8 @@ export const property = pgTable(
     country: text("country"),
     latitude: doublePrecision("latitude"),
     longitude: doublePrecision("longitude"),
-    // PostGIS geometry point (WGS84)
-    locationGeom: geometry("location_geom", { type: "point", mode: "xy", srid: 4326 }),
+    // PostGIS geometry point (WGS84) using custom type
+    locationGeom: point("location_geom"),
 
     // Size & structure
     dimensions: text("dimensions"),
@@ -221,19 +223,24 @@ export const property = pgTable(
 
 
 
-export const kenyaWards = pgTable('kenya_wards', {
-  id: serial('id').primaryKey(),
-  wardCode: varchar('ward_code', { length: 10 }).notNull(),
-  ward: text('ward').notNull(),
-  county: text('county').notNull(),
-  countyCode: integer('county_code').notNull(),
-  subCounty: text('sub_county'),
-  constituency: text('constituency').notNull(),
-  constituencyCode: integer('constituency_code').notNull(),
-  rowNum: integer('row_num'),
-  wardCounty: text('ward_county'),
-  geometry: geometry('geometry', { type: 'MultiPolygon', srid: 4326 }).notNull()
-});
+export const kenyaWards = pgTable(
+  'kenya_wards',
+  {
+    id: serial('id').primaryKey(),
+    wardCode: varchar('ward_code', { length: 10 }).notNull(),
+    ward: text('ward').notNull(),
+    county: text('county').notNull(),
+    countyCode: integer('county_code').notNull(),
+    subCounty: text('sub_county'),
+    constituency: text('constituency').notNull(),
+    constituencyCode: integer('constituency_code').notNull(),
+    geometry: multiPolygon('geometry').notNull(),
+  },
+  (t) => [
+    index('kenya_wards_geometry_gix').using('gist', t.geometry),
+  ]
+);
+
 
 // If you need to create a spatial index (recommended for performance):
 // CREATE INDEX idx_kenya_wards_geometry ON kenya_wards USING GIST(geometry);
