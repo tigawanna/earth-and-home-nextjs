@@ -176,11 +176,13 @@ export function SelectFieldComponent({
   required = false,
   options 
 }: SelectFieldProps) {
+
   return (
     <FormField
       control={control}
       name={name}
-      render={({ field }) => (
+      render={({ field }) => {
+        return(
         <FormItem>
           <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
             {label}
@@ -202,7 +204,7 @@ export function SelectFieldComponent({
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
-      )}
+      )}}
     />
   );
 }

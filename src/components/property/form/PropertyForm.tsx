@@ -26,13 +26,15 @@ import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/lib/utils/forms";
 import useFormPersist from "react-hook-form-persist";
+import { FormPersist } from "@/lib/react-hook-form/FormPersist";
+
 interface PropertyFormProps {
   initialData?: Partial<PropertyFormData>;
   onSubmit?: (data: PropertyFormData) => Promise<void> | void;
   isEdit?: boolean;
 }
 
-export function PropertyForm({ initialData, onSubmit, isEdit = false }: PropertyFormProps) {
+export default function PropertyForm({ initialData, onSubmit, isEdit = false }: PropertyFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<PropertyFormData>({
@@ -43,12 +45,7 @@ export function PropertyForm({ initialData, onSubmit, isEdit = false }: Property
     } as PropertyFormData,
   });
 
-  // useFormPersist("storageKey", {
-  //   watch: form.watch,
-  //   setValue: form.setValue,
-  //   storage: window.localStorage, // default window.sessionStorage
-  //   // exclude: ["baz"],
-  // });
+
   // Watch property type for conditional rendering
   const propertyType = useWatch({ control: form.control, name: "propertyType" });
   const isLand = isLandProperty(propertyType);
@@ -105,7 +102,7 @@ export function PropertyForm({ initialData, onSubmit, isEdit = false }: Property
           </div>
         )}
       </div>
-
+      <FormPersist form={form} formKey="property-form" />
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-6">
           {/* Basic Information - Always shown */}
