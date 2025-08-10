@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -6,7 +6,11 @@ import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { PropertyFormData, propertyFormSchema, defaultPropertyFormValues } from "./property-form-schema";
+import {
+  PropertyFormData,
+  propertyFormSchema,
+  defaultPropertyFormValues,
+} from "./property-form-schema";
 import { BasicInfoSection } from "./sections/BasicInfoSection";
 import { LocationSection } from "./sections/LocationSection";
 import { BuildingSection } from "./sections/BuildingSection";
@@ -21,18 +25,14 @@ import { Loader2, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/lib/utils/forms";
-
+import useFormPersist from "react-hook-form-persist";
 interface PropertyFormProps {
   initialData?: Partial<PropertyFormData>;
   onSubmit?: (data: PropertyFormData) => Promise<void> | void;
   isEdit?: boolean;
 }
 
-export function PropertyForm({ 
-  initialData, 
-  onSubmit, 
-  isEdit = false 
-}: PropertyFormProps) {
+export function PropertyForm({ initialData, onSubmit, isEdit = false }: PropertyFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<PropertyFormData>({
@@ -43,6 +43,12 @@ export function PropertyForm({
     } as PropertyFormData,
   });
 
+  // useFormPersist("storageKey", {
+  //   watch: form.watch,
+  //   setValue: form.setValue,
+  //   storage: window.localStorage, // default window.sessionStorage
+  //   // exclude: ["baz"],
+  // });
   // Watch property type for conditional rendering
   const propertyType = useWatch({ control: form.control, name: "propertyType" });
   const isLand = isLandProperty(propertyType);
@@ -80,22 +86,20 @@ export function PropertyForm({
   return (
     <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">
-          {isEdit ? "Edit Property" : "Add New Property"}
-        </h1>
+        <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1>
         <p className="text-muted-foreground">
-          {isEdit 
-            ? "Update your property information" 
-            : "Fill in the details to list your property"
-          }
+          {isEdit
+            ? "Update your property information"
+            : "Fill in the details to list your property"}
         </p>
         {propertyType && (
           <div className="flex justify-center">
-            <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-              isLand 
-                ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200" 
-                : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-            }`}>
+            <span
+              className={`px-3 py-1 rounded-full text-sm font-medium ${
+                isLand
+                  ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
+                  : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
+              }`}>
               {isLand ? "🏞️ Land Property" : "🏠 Building Property"}
             </span>
           </div>
@@ -106,27 +110,27 @@ export function PropertyForm({
         <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-6">
           {/* Basic Information - Always shown */}
           <BasicInfoSection control={form.control as any} />
-          
+
           <Separator />
-          
+
           {/* Location Details - Always shown */}
           <LocationSection control={form.control as any} />
-          
+
           <Separator />
-          
+
           {/* Conditional Sections based on Property Type */}
           {!isLand && (
             <>
               {/* Building Information - Only for non-land properties */}
               <BuildingSection control={form.control as any} />
               <Separator />
-              
+
               {/* Parking & Climate Control - Only for non-land properties */}
               <ParkingSection control={form.control as any} />
               <Separator />
             </>
           )}
-          
+
           {isLand && (
             <>
               {/* Land Information - Only for land properties */}
@@ -134,25 +138,25 @@ export function PropertyForm({
               <Separator />
             </>
           )}
-          
+
           {/* Pricing - Always shown */}
           <PricingSection control={form.control as any} />
-          
+
           <Separator />
-          
+
           {/* Features & Amenities - Always shown */}
           <FeaturesAmenitiesSection control={form.control as any} />
-          
+
           <Separator />
-          
+
           {/* Images Upload - Always shown */}
           <ImagesUploadSection control={form.control as any} />
-          
+
           <Separator />
-          
+
           {/* Media - Always shown */}
           <MediaSection control={form.control as any} />
-          
+
           {/* Form Actions */}
           <Card>
             <CardContent className="pt-6">
@@ -162,8 +166,7 @@ export function PropertyForm({
                   variant="outline"
                   onClick={handleSaveDraft}
                   disabled={isSubmitting}
-                  className="flex items-center gap-2"
-                >
+                  className="flex items-center gap-2">
                   {isSubmitting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
@@ -171,12 +174,8 @@ export function PropertyForm({
                   )}
                   Save as Draft
                 </Button>
-                
-                <Button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="flex items-center gap-2"
-                >
+
+                <Button type="submit" disabled={isSubmitting} className="flex items-center gap-2">
                   {isSubmitting ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
@@ -185,7 +184,7 @@ export function PropertyForm({
                   {isEdit ? "Update Property" : "Publish Property"}
                 </Button>
               </div>
-              
+
               {/* Form State Debug (dev only) */}
               {process.env.NODE_ENV === "development" && (
                 <details className="mt-4 p-4 bg-muted rounded-lg">

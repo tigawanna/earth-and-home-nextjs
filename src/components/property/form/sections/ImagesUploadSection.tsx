@@ -12,6 +12,7 @@ import { useState } from "react";
 import { PropertyFormData } from "../property-form-schema";
 import { toast } from "sonner";
 import Image from "next/image";
+import { clientEnvs } from "@/lib/envs/client-env";
 
 interface ImagesUploadSectionProps {
   control: Control<PropertyFormData>;
@@ -43,7 +44,7 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
       const newResults = completedUploads
         .filter(p => !existingKeys.includes(p.objectKey))
         .map(p => ({
-          url: `https://earth-and-home.r2.cloudflarestorage.com/${p.objectKey}`, // TODO: Make this configurable
+          url: `${process.env.NEXT_PUBLIC_R2_PUBLIC_URL}/${p.objectKey}`,
           key: p.objectKey,
           name: p.name,
           size: p.size,
@@ -263,4 +264,4 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
 }
 
 
-const img = "https://earth-and-home.r2.cloudflarestorage.com/bbaf3130-0ec0-4afb-abfa-46763ccde8aa-cute-house.jpg"
+

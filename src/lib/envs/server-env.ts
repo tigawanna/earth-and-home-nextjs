@@ -13,22 +13,14 @@ const serverEnvSchema = z.object({
   //   API_KEY: z.string().min(32).max(32),
 });
 
-// Client-side environment variables (publicly accessible)
-const clientEnvSchema = z.object({
-  NEXT_PUBLIC_R2_PUBLIC_URL: z.url(),
-});
 
 const { success, data, error } = serverEnvSchema.safeParse(process.env);
 if (!success) {
-  console.error("Invalid server environment variables:", error.format());
+  console.error("Invalid server environment variables:", z.treeifyError(error));
   throw new Error("Invalid server environment variables");
 }
 
-const clientResult = clientEnvSchema.safeParse(process.env);
-if (!clientResult.success) {
-  console.error("Invalid client environment variables:", clientResult.error.format());
-  throw new Error("Invalid client environment variables");
-}
 
 export const serverEnvs = data;
-export const clientEnvs = clientResult.data;
+
+

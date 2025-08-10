@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/neon-http";
-import { serverEnvs } from "../env";
+import { serverEnvs } from "../envs/server-env";
 import { EnhancedQueryLogger } from "drizzle-query-logger";
 
 

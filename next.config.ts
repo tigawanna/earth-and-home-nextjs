@@ -1,3 +1,6 @@
+// import "dotenv/config";
+// import { clientEnvs } from "@/lib/client-env"
+import "@/lib/envs/next-envs"
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
@@ -9,7 +12,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: process.env.NEXT_PUBLIC_R2_PUBLIC_URL?.replace('https://', '') || "earth-and-home.r2.cloudflarestorage.com",
+        hostname: process.env.NEXT_PUBLIC_R2_PUBLIC_ORIGIN || "",
       },
     ],
   },

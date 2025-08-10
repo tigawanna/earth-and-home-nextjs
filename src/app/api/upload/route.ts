@@ -1,6 +1,6 @@
 import { createUploadRouteHandler, route, type Router } from 'better-upload/server';
 import { r2 } from 'better-upload/server/helpers';
-import { serverEnvs } from '@/lib/env';
+import { serverEnvs } from '@/lib/envs/server-env';
 
 // Create R2 client using Better Upload's helper
 const s3Client = r2({

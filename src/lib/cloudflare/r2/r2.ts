@@ -1,4 +1,4 @@
-import { serverEnvs } from "@/lib/env";
+import { serverEnvs } from "@/lib/envs/server-env";
 import { S3Client, ListBucketsCommand } from "@aws-sdk/client-s3";
 
 export const s3Client = new S3Client({ 
