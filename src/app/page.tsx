@@ -1,16 +1,16 @@
-import { Header } from "@/components/landing/Header";
-import { Hero } from "@/components/landing/Hero";
-import { PropertySearch } from "@/components/landing/PropertySearch";
-import { FeaturedProperties } from "@/components/landing/FeaturedProperties";
-import { About } from "@/components/landing/About";
-import { Footer } from "@/components/landing/Footer";
-import { SellYourHome } from "@/components/landing/SellYourHome";
+import { Header } from "@/components/root/Header";
+import { Hero } from "@/components/root/Hero";
+import { PropertySearch } from "@/components/root/PropertySearch";
+import { FeaturedProperties } from "@/components/root/FeaturedProperties";
+import { About } from "@/components/root/About";
+import { Footer } from "@/components/root/Footer";
+import { SellYourHome } from "@/components/root/SellYourHome";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       {/* Site Header */}
-      <Header />
+      {/* <Header /> */}
 
       {/* Hero */}
       <Hero />

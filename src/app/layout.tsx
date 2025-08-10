@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { Header } from "@/components/root/Header";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,13 +43,7 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
-  keywords: [
-    "real estate",
-    "properties",
-    "listings",
-    "homes",
-    "Earth & Home",
-  ],
+  keywords: ["real estate", "properties", "listings", "homes", "Earth & Home"],
   authors: [{ name: "Earth & Home Real Estate" }],
   alternates: {
     canonical: "/",
@@ -72,7 +68,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
+          <div>
+            <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 z-[-1]" />
+            <Header />
+            {children}
+          </div>
         </ThemeProvider>
       </body>
     </html>
