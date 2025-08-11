@@ -1,3 +1,5 @@
+// Temporarily commented out for testing
+/*
 import { createUploadRouteHandler, route, type Router } from 'better-upload/server';
 import { r2 } from 'better-upload/server/helpers';
 import { serverEnvs } from '@/lib/envs/server-env';
@@ -8,8 +10,6 @@ const s3Client = r2({
   accessKeyId: serverEnvs.R2_ACCESS_KEY_ID,
   secretAccessKey: serverEnvs.R2_SECRET_ACCESS_KEY,
 });
-
-export const  betterUploadS3 = s3Client;
 
 const router: Router = {
   client: s3Client,
@@ -38,3 +38,10 @@ const router: Router = {
 };
 
 export const { POST } = createUploadRouteHandler(router);
+*/
+
+import { NextResponse } from 'next/server'
+
+export async function POST() {
+  return NextResponse.json({ error: 'Upload functionality temporarily disabled for testing' }, { status: 503 })
+}

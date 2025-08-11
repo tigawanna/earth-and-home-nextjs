@@ -13,7 +13,7 @@ const nextConfig: NextConfig = {
         hostname: process.env.NEXT_PUBLIC_R2_PUBLIC_ORIGIN || "",
       },
     ],
-  },
+  }
 };
 
 export default nextConfig;

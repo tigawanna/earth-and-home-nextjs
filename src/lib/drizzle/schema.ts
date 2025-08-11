@@ -245,3 +245,29 @@ export const kenyaWards = pgTable(
 
 // If you need to create a spatial index (recommended for performance):
 // CREATE INDEX idx_kenya_wards_geometry ON kenya_wards USING GIST(geometry);
+
+// User favorites/bookmarks for properties
+export const favorite = pgTable(
+  "favorite",
+  {
+    id: uuid("id")
+      .primaryKey()
+      .default(sql`uuid_generate_v7()`),
+    
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    
+    propertyId: uuid("property_id")
+      .notNull()
+      .references(() => property.id, { onDelete: "cascade" }),
+    
+    createdAt: timestamp("created_at")
+      .$defaultFn(() => /* @__PURE__ */ new Date())
+      .notNull(),
+  },
+  (t) => [
+    // Unique constraint to prevent duplicate favorites
+    index("favorite_user_property_unique").on(t.userId, t.propertyId)
+  ]
+);
