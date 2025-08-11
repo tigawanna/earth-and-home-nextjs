@@ -1,4 +1,4 @@
-import { Header } from "@/components/root/Header";
+import { ResponsiveDrawer } from "@/components/root/ResponsiveDrawer";
 import { Hero } from "@/components/root/Hero";
 import { PropertySearch } from "@/components/root/PropertySearch";
 import { FeaturedProperties } from "@/components/root/FeaturedProperties";
@@ -8,27 +8,26 @@ import { SellYourHome } from "@/components/root/SellYourHome";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
-      {/* Site Header */}
-      <Header />
+    <ResponsiveDrawer>
+      <main className="min-h-screen bg-background text-foreground">
+        {/* Hero */}
+        <Hero />
 
-      {/* Hero */}
-      <Hero />
+        {/* Search */}
+        <PropertySearch />
 
-      {/* Search */}
-      <PropertySearch />
+        {/* Featured */}
+        <FeaturedProperties />
 
-      {/* Featured */}
-      <FeaturedProperties />
+        {/* Sell */}
+        <SellYourHome />
 
-      {/* Sell */}
-      <SellYourHome />
+        {/* About */}
+        <About />
 
-      {/* About */}
-      <About />
-
-      {/* Footer */}
-      <Footer />
-    </main>
+        {/* Footer */}
+        <Footer />
+      </main>
+    </ResponsiveDrawer>
   );
 }

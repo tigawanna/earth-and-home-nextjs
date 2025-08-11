@@ -1,92 +1,71 @@
 import { Button } from "@/components/ui/button";
-import { Search, Phone, Mail } from "lucide-react";
+import { Search, Menu } from "lucide-react";
 import { ModeToggle } from "../theme/theme-toggle";
 import { DashboardOrAuth } from "./DashboardOrAuth";
 import { SiteIcon } from "../icons/SiteIcon";
 
 export function Header() {
   return (
-    <header className="bg-background shadow-xs border-b border-border sticky top-0 z-50">
-      {/* Top contact bar */}
-      {/* <div className="bg-primary text-primary-foreground py-2 px-4">
-        <div className="container mx-auto flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <Phone size={14} />
-              <span>(555) 123-4567</span>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail size={14} />
-              <span>info@earthandhome.com</span>
-            </div>
-          </div>
-          <div className="hidden md:block">
-            <span>Licensed Real Estate Professionals</span>
+    <header className="navbar bg-background shadow-xs border-b border-border sticky top-0 z-10">
+      {/* Mobile menu button */}
+      <div className="flex-none lg:hidden">
+        <label htmlFor="header-drawer" aria-label="open sidebar" className="btn btn-square btn-ghost">
+          <Menu className="h-6 w-6" />
+        </label>
+      </div>
+
+      {/* Logo */}
+      <div className="flex-1">
+        <div className="flex items-center space-x-3">
+          <SiteIcon />
+          <div>
+            <h1 className="text-2xl font-playfair font-bold text-primary">Earth & Home</h1>
+            <p className="text-sm text-muted-foreground hidden sm:block">Real Estate Excellence</p>
           </div>
         </div>
-      </div> */}
+      </div>
 
-      {/* Main navigation */}
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <SiteIcon />
-            <div>
-              <h1 className="text-2xl font-playfair font-bold text-primary">Earth & Home</h1>
-              <p className="text-sm text-muted-foreground">Real Estate Excellence</p>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <nav className="hidden lg:flex items-center space-x-8">
-            <a
-              href="#home"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+      {/* Desktop Navigation */}
+      <div className="flex-none hidden lg:block">
+        <nav className="menu menu-horizontal px-1">
+          <li>
+            <a href="#home" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Home
             </a>
-            <a
-              href="#properties"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          </li>
+          <li>
+            <a href="#properties" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Properties
             </a>
-            <a
-              href="#buy"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          </li>
+          <li>
+            <a href="#buy" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Buy
             </a>
-            <a
-              href="#sell"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          </li>
+          <li>
+            <a href="#sell" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Sell
             </a>
-            <a
-              href="#about"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          </li>
+          <li>
+            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               About
             </a>
-            <a
-              href="#contact"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          </li>
+          <li>
+            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Contact
             </a>
-          </nav>
+          </li>
+        </nav>
+      </div>
 
-          {/* CTA Buttons */}
-          <div className="flex items-center space-x-4">
-            <Button variant="outline" size="sm" className="hidden sm:flex">
-              <Search className="h-4 w-4 mr-2" />
-              Search
-            </Button>
-            <Button variant="accent" className="">
-              List Property
-            </Button>
-            {/* <Button className="text-accent-foreground hover:bg-accent/90">
-              List Property
-            </Button> */}
-            <DashboardOrAuth />
-            <ModeToggle />
-          </div>
+      {/* CTA Buttons */}
+      <div className="flex-none hidden md:flex">
+        <div className="flex items-center space-x-2">
+          <DashboardOrAuth />
+          <ModeToggle />
         </div>
       </div>
     </header>

@@ -169,6 +169,13 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+  .dark *,
+  .dark ::after,
+  .dark ::before,
+  .dark ::backdrop,
+  .dark ::file-selector-button {
+    border-color: transparent !important;
+  }
 }
 
 /* Responsive centered container utility */
@@ -278,7 +285,7 @@
 
 @layer base {
   * {
-    @apply border-base-300 outline-ring/50;
+    @apply border-base-100 ;
   }
   body {
     @apply bg-background text-foreground;

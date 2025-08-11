@@ -27,45 +27,37 @@ interface DashboardOrAuthProps {
 }
 
 export function DashboardOrAuth({ className }: DashboardOrAuthProps) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const session = await authClient.getSession()
-        if (session.data?.user) {
-          setUser(session.data.user as User)
-        }
-      } catch (error) {
-        console.error("Failed to fetch user session:", error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
 
-    fetchUser()
-  }, [])
+  const {
+    data: session,
+    isPending, //loading state
+    error, //error object
+    refetch, //refetch the session
+  } = authClient.useSession();
+
+
 
   const handleSignOut = async () => {
     try {
       await authClient.signOut()
-      setUser(null)
       window.location.href = "/"
     } catch (error) {
       console.error("Sign out failed:", error)
     }
   }
 
-  if (isLoading) {
+  if (isPending) {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />
+        <Button asChild variant="outline" size="sm" disabled>
+          <Link href="/auth/signin">Sign In</Link>
+        </Button>
       </div>
-    )
+    );
   }
 
-  if (!user) {
+  if (!session?.user) {
     // Not authenticated - show login button
     return (
       <div className={`flex items-center gap-2 ${className}`}>
@@ -74,16 +66,12 @@ export function DashboardOrAuth({ className }: DashboardOrAuthProps) {
             Sign In
           </Link>
         </Button>
-        <Button asChild size="sm">
-          <Link href="/auth/signup">
-            Sign Up
-          </Link>
-        </Button>
       </div>
     )
   }
 
   // Authenticated - show user avatar with dropdown
+    const user = session.user
   return (
     <div className={`flex items-center gap-2 ${className}`}>
       <Button asChild variant="outline" size="sm">
@@ -97,7 +85,7 @@ export function DashboardOrAuth({ className }: DashboardOrAuthProps) {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={user.image} alt={user.name || "User"} />
+              <AvatarImage src={user.image||"/user-fallback.png"} alt={user.name || "User"} />
               <AvatarFallback>
                 {user.name?.charAt(0)?.toUpperCase() || "U"}
               </AvatarFallback>
