@@ -1,12 +1,9 @@
 "use client";
 
 import { SiteIcon } from "../icons/SiteIcon";
-import { Header } from "./Header";
-import { useCallback } from "react";
-import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
-import { DashboardOrAuth } from "./DashboardOrAuth";
 import { ModeToggle } from "../theme/theme-toggle";
+import { DashboardOrAuth } from "./DashboardOrAuth";
+import { Header } from "./Header";
 
 interface ResponsiveDrawerProps {
   children: React.ReactNode;
@@ -25,7 +22,7 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
       </div>
 
       {/* Mobile Sidebar */}
-      <div className="drawer-side z-20">
+      <div className="drawer-side z-20 ">
         <label
           htmlFor="header-drawer"
           aria-label="close sidebar"
@@ -40,7 +37,9 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
               <SiteIcon />
               <div>
                 <h1 className="text-2xl font-playfair font-bold text-primary">Earth & Home</h1>
-                <p className="text-sm text-muted-foreground hidden sm:block">Real Estate Excellence</p>
+                <p className="text-sm text-muted-foreground hidden sm:block">
+                  Real Estate Excellence
+                </p>
               </div>
             </div>
           </label>
@@ -112,13 +111,13 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
               </a>
             </label>
           </li>
-        {/* CTA Buttons */}
-        <div className="mt-6">
-          <div className="flex flex-wrap  gap-4">
-            <DashboardOrAuth />
-            <ModeToggle />
+          {/* CTA Buttons */}
+          <div className="mt-6">
+            <div className="flex flex-wrap  gap-4">
+              <DashboardOrAuth />
+              <ModeToggle />
+            </div>
           </div>
-        </div>
         </ul>
       </div>
     </div>

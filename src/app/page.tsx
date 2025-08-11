@@ -9,7 +9,7 @@ import { SellYourHome } from "@/components/root/SellYourHome";
 export default function Home() {
   return (
     <ResponsiveDrawer>
-      <main className="min-h-screen bg-background text-foreground">
+      <main className="min-h-screen ">
         {/* Hero */}
         <Hero />
 
