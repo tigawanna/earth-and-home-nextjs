@@ -161,10 +161,7 @@ export function DashboardSidebar() {
             <SidebarMenu>
               {userMenuItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton 
-                    asChild 
-                    isActive={pathname === item.url}
-                  >
+                  <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
@@ -174,6 +171,15 @@ export function DashboardSidebar() {
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
+          {/*  go to landing page */}
+          <SidebarMenuItem >
+            <SidebarMenuButton asChild>
+              <Link href="/">
+                <Home className="mr-2 h-4 w-4" />
+                <span>Landing Page</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
         </SidebarGroup>
 
         {/* Admin Section */}
@@ -190,10 +196,7 @@ export function DashboardSidebar() {
               <SidebarMenu>
                 {adminMenuItems.map((item) => (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton 
-                      asChild 
-                      isActive={pathname === item.url}
-                    >
+                    <SidebarMenuButton asChild isActive={pathname === item.url}>
                       <Link href={item.url}>
                         <item.icon />
                         <span>{item.title}</span>
@@ -214,24 +217,16 @@ export function DashboardSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton
                   size="lg"
-                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-                >
+                  className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage 
-                      src={user?.image} 
-                      alt={user?.name || "User"} 
-                    />
+                    <AvatarImage src={user?.image} alt={user?.name || "User"} />
                     <AvatarFallback className="rounded-lg">
                       {user?.name?.charAt(0)?.toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-semibold">
-                      {user?.name || "User"}
-                    </span>
-                    <span className="truncate text-xs">
-                      {user?.email || "user@example.com"}
-                    </span>
+                    <span className="truncate font-semibold">{user?.name || "User"}</span>
+                    <span className="truncate text-xs">{user?.email || "user@example.com"}</span>
                   </div>
                   <ChevronDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -240,8 +235,7 @@ export function DashboardSidebar() {
                 className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
                 side="bottom"
                 align="end"
-                sideOffset={4}
-              >
+                sideOffset={4}>
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/settings">
                     <User className="mr-2 h-4 w-4" />
@@ -259,5 +253,5 @@ export function DashboardSidebar() {
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

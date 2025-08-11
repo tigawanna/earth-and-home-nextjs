@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Search, Phone, Mail } from "lucide-react";
-import Image from "next/image";
 import { ModeToggle } from "../theme/theme-toggle";
 import { DashboardOrAuth } from "./DashboardOrAuth";
+import { SiteIcon } from "../icons/SiteIcon";
 
 export function Header() {
   return (
@@ -31,38 +31,43 @@ export function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <Image
-              src="/lovable-uploads/85c65874-37e2-449d-b9ec-29ccbf629d79.png"
-              alt="Earth & Home Logo"
-              width={48}
-              height={48}
-              className="h-12 w-12 object-contain" />
+            <SiteIcon />
             <div>
-              <h1 className="text-2xl font-playfair font-bold text-primary">
-                Earth & Home
-              </h1>
+              <h1 className="text-2xl font-playfair font-bold text-primary">Earth & Home</h1>
               <p className="text-sm text-muted-foreground">Real Estate Excellence</p>
             </div>
           </div>
 
           {/* Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a href="#home" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#home"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Home
             </a>
-            <a href="#properties" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#properties"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Properties
             </a>
-            <a href="#buy" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#buy"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Buy
             </a>
-            <a href="#sell" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#sell"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Sell
             </a>
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#about"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               About
             </a>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#contact"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Contact
             </a>
           </nav>
@@ -84,4 +89,3 @@ export function Header() {
     </header>
   );
 }
-
