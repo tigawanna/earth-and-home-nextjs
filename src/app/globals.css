@@ -10,35 +10,65 @@
 
 @plugin "daisyui/theme" {
   name: "light";
-  default: true; /* set as default */
-  prefersdark: false; /* set as default dark mode (prefers-color-scheme:dark) */
-  color-scheme: light; /* color of browser-provided UI */
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
 
-  --color-base-100: oklch(98% 0.02 240);
-  --color-base-200: oklch(95% 0.03 240);
-  --color-base-300: oklch(92% 0.04 240);
-  --color-base-content: oklch(20% 0.05 240);
-  --color-primary: oklch(55% 0.3 240);
-  --color-primary-content: oklch(98% 0.01 240);
-  --color-secondary: oklch(70% 0.25 200);
-  --color-secondary-content: oklch(98% 0.01 200);
-  --color-accent: oklch(65% 0.25 160);
-  --color-accent-content: oklch(98% 0.01 160);
-  --color-neutral: oklch(50% 0.05 240);
-  --color-neutral-content: oklch(98% 0.01 240);
-  --color-info: oklch(70% 0.2 220);
-  --color-info-content: oklch(98% 0.01 220);
-  --color-success: oklch(65% 0.25 140);
-  --color-success-content: oklch(98% 0.01 140);
-  --color-warning: oklch(80% 0.25 80);
-  --color-warning-content: oklch(20% 0.05 80);
-  --color-error: oklch(65% 0.3 30);
-  --color-error-content: oklch(98% 0.01 30);
+  /* Base surfaces - warm, airy light theme for real estate */
+  --color-base-100: oklch(from #fbfbf9 l c h); /* background */
+  --color-base-200: oklch(from #ffffff l c h); /* card */
+  --color-base-300: oklch(from #ffffff l c h); /* popover */
+  --color-base-content: oklch(from #1b1d1a l c h); /* foreground */
+
+  /* Brand colors using earth green palette */
+  --color-primary: oklch(from #267d42 l c h); /* earth-green-600 */
+  --color-primary-content: oklch(from #ffffff l c h);
+  
+  --color-secondary: oklch(from #f3efe7 l c h);
+  --color-secondary-content: oklch(from #1b1d1a l c h);
+
+  --color-accent: oklch(from #ffedd5 l c h); /* earth-orange-100 */
+  --color-accent-content: oklch(from #fb923c l c h); /* lighter earth-orange-400 */
+
+  --color-neutral: oklch(from #f5f5f4 l c h); /* muted */
+  --color-neutral-content: oklch(from #6b7280 l c h); /* muted-foreground */
+
+  /* Status colors */
+  --color-info: oklch(from #f97316 l c h); /* chart-2 */
+  --color-info-content: oklch(from #1b1d1a l c h);
+  --color-success: oklch(from #2f8f4f l c h); /* chart-1 */
+  --color-success-content: oklch(from #ffffff l c h);
+  --color-warning: oklch(from #56bc7d l c h); /* chart-4 */
+  --color-warning-content: oklch(from #1b1d1a l c h);
+  --color-error: oklch(from #c2410c l c h); /* destructive */
+  --color-error-content: oklch(from #ffffff l c h);
+
+  /* Extended colors for shadcn components */
+  --color-border: oklch(from #e6e7e9 l c h);
+  --color-input: oklch(from #e6e7e9 l c h);
+  --color-ring: oklch(from #94d3ac l c h);
+
+  /* Sidebar surfaces */
+  --color-sidebar: oklch(from #faf6ef l c h);
+  --color-sidebar-foreground: oklch(from #1b1d1a l c h);
+  --color-sidebar-primary: oklch(from #267d42 l c h);
+  --color-sidebar-primary-foreground: oklch(from #ffffff l c h);
+  --color-sidebar-accent: oklch(from #f3efe7 l c h);
+  --color-sidebar-accent-foreground: oklch(from #1b1d1a l c h);
+  --color-sidebar-border: oklch(from #e6e7e9 l c h);
+  --color-sidebar-ring: oklch(from #94d3ac l c h);
+
+  /* Chart colors */
+  --color-chart-1: oklch(from #2f8f4f l c h);
+  --color-chart-2: oklch(from #f97316 l c h);
+  --color-chart-3: oklch(from #1e6635 l c h);
+  --color-chart-4: oklch(from #56bc7d l c h);
+  --color-chart-5: oklch(from #9a3412 l c h);
 
   /* border radius */
-  --radius-selector: 1rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
+  --radius-selector: 1.5rem;
+  --radius-field: calc(1.5rem - 4px);
+  --radius-box: calc(1.5rem - 2px);
 
   /* base sizes */
   --size-selector: 0.25rem;
@@ -54,35 +84,65 @@
 
 @plugin "daisyui/theme" {
   name: "dark";
-  default: true; /* set as default */
-  prefersdark: true; /* set as default dark mode (prefers-color-scheme:dark) */
-  color-scheme: dark; /* color of browser-provided UI */
+  default: true;
+  prefersdark: true;
+  color-scheme: dark;
 
-  --color-base-100: oklch(98% 0.02 240);
-  --color-base-200: oklch(95% 0.03 240);
-  --color-base-300: oklch(92% 0.04 240);
-  --color-base-content: oklch(20% 0.05 240);
-  --color-primary: oklch(55% 0.3 240);
-  --color-primary-content: oklch(98% 0.01 240);
-  --color-secondary: oklch(70% 0.25 200);
-  --color-secondary-content: oklch(98% 0.01 200);
-  --color-accent: oklch(65% 0.25 160);
-  --color-accent-content: oklch(98% 0.01 160);
-  --color-neutral: oklch(50% 0.05 240);
-  --color-neutral-content: oklch(98% 0.01 240);
-  --color-info: oklch(70% 0.2 220);
-  --color-info-content: oklch(98% 0.01 220);
-  --color-success: oklch(65% 0.25 140);
-  --color-success-content: oklch(98% 0.01 140);
-  --color-warning: oklch(80% 0.25 80);
-  --color-warning-content: oklch(20% 0.05 80);
-  --color-error: oklch(65% 0.3 30);
-  --color-error-content: oklch(98% 0.01 30);
+  /* Base surfaces - sophisticated dark with forest undertones */
+  --color-base-100: oklch(from #121613 l c h); /* background */
+  --color-base-200: oklch(from #171c18 l c h); /* card */
+  --color-base-300: oklch(from #171c18 l c h); /* popover */
+  --color-base-content: oklch(from #e8ede9 l c h); /* foreground */
+
+  /* Brand colors using earth green palette - brighter for dark mode */
+  --color-primary: oklch(from #56bc7d l c h); /* earth-green-400 brighter for dark */
+  --color-primary-content: oklch(from #0b0f0d l c h);
+  
+  --color-secondary: oklch(from #1a201c l c h);
+  --color-secondary-content: oklch(from #e8ede9 l c h);
+
+  --color-accent: oklch(from #f97316 l c h); /* earth-orange-500 */
+  --color-accent-content: oklch(from #fb923c l c h);
+
+  --color-neutral: oklch(from #1a201c l c h); /* muted */
+  --color-neutral-content: oklch(from #b6c2ba l c h); /* muted-foreground */
+
+  /* Status colors */
+  --color-info: oklch(from #f59e0b l c h); /* chart-2 */
+  --color-info-content: oklch(from #e8ede9 l c h);
+  --color-success: oklch(from #56bc7d l c h); /* chart-1 */
+  --color-success-content: oklch(from #0b0f0d l c h);
+  --color-warning: oklch(from #fb923c l c h); /* chart-4 */
+  --color-warning-content: oklch(from #e8ede9 l c h);
+  --color-error: oklch(from #f04438 l c h); /* destructive */
+  --color-error-content: oklch(from #0b0f0d l c h);
+
+  /* Extended colors for shadcn components */
+  --color-border: oklch(from #232a25 l c h);
+  --color-input: oklch(from #2a312c l c h);
+  --color-ring: oklch(from #56bc7d l c h);
+
+  /* Sidebar surfaces */
+  --color-sidebar: oklch(from #171c18 l c h);
+  --color-sidebar-foreground: oklch(from #e8ede9 l c h);
+  --color-sidebar-primary: oklch(from #56bc7d l c h);
+  --color-sidebar-primary-foreground: oklch(from #0b0f0d l c h);
+  --color-sidebar-accent: oklch(from #1d231f l c h);
+  --color-sidebar-accent-foreground: oklch(from #e8ede9 l c h);
+  --color-sidebar-border: oklch(from #232a25 l c h);
+  --color-sidebar-ring: oklch(from #56bc7d l c h);
+
+  /* Chart colors */
+  --color-chart-1: oklch(from #56bc7d l c h);
+  --color-chart-2: oklch(from #f59e0b l c h);
+  --color-chart-3: oklch(from #93c5aa l c h);
+  --color-chart-4: oklch(from #fb923c l c h);
+  --color-chart-5: oklch(from #2f8f4f l c h);
 
   /* border radius */
-  --radius-selector: 1rem;
-  --radius-field: 0.25rem;
-  --radius-box: 0.5rem;
+  --radius-selector: 1.5rem;
+  --radius-field: calc(1.5rem - 4px);
+  --radius-box: calc(1.5rem - 2px);
 
   /* base sizes */
   --size-selector: 0.25rem;
@@ -227,105 +287,103 @@
 }
 
 :root {
-  /* Hint browsers to use light colors unless `.dark` is set. Helps with Chrome Force Dark Mode. */
+  /* DaisyUI theme tokens as source of truth */
   color-scheme: light;
-  --radius: 0.625rem;
+  --radius: var(--radius-selector);
 
-  /* Warm, airy light theme for real estate (OKLCH) */
-  --background: oklch(from #fbfbf9 l c h);
-  --foreground: oklch(from #1b1d1a l c h);
+  /* Map shadcn variables to DaisyUI tokens */
+  --background: var(--color-base-100);
+  --foreground: var(--color-base-content);
 
-  --card: oklch(from #ffffff l c h);
-  --card-foreground: oklch(from #1b1d1a l c h);
+  --card: var(--color-base-200);
+  --card-foreground: var(--color-base-content);
 
-  --popover: oklch(from #ffffff l c h);
-  --popover-foreground: oklch(from #1b1d1a l c h);
+  --popover: var(--color-base-300);
+  --popover-foreground: var(--color-base-content);
 
-  /* map semantics to brand palette */
-  --primary: var(--color-earth-green-600);
-  --primary-foreground: oklch(from #ffffff l c h);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-content);
 
-  --secondary: oklch(from #f3efe7 l c h);
-  --secondary-foreground: oklch(from #1b1d1a l c h);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-content);
 
-  --muted: oklch(from #f5f5f4 l c h);
-  --muted-foreground: oklch(from #6b7280 l c h);
+  --muted: var(--color-neutral);
+  --muted-foreground: var(--color-neutral-content);
 
-  --accent: var(--color-earth-orange-100);
-  --accent-foreground: var(--color-earth-orange-800);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-content);
 
-  --destructive: oklch(from #c2410c l c h);
-  --destructive-foreground: oklch(from #ffffff l c h);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-error-content);
 
-  --border: oklch(from #e6e7e9 l c h);
-  --input: oklch(from #e6e7e9 l c h);
-  --ring: oklch(from #94d3ac l c h);
+  --border: var(--color-border);
+  --input: var(--color-input);
+  --ring: var(--color-ring);
 
-  /* Charts skew towards greens/oranges */
-  --chart-1: oklch(from #2f8f4f l c h);
-  --chart-2: oklch(from #f97316 l c h);
-  --chart-3: oklch(from #1e6635 l c h);
-  --chart-4: oklch(from #56bc7d l c h);
-  --chart-5: oklch(from #9a3412 l c h);
+  --chart-1: var(--color-chart-1);
+  --chart-2: var(--color-chart-2);
+  --chart-3: var(--color-chart-3);
+  --chart-4: var(--color-chart-4);
+  --chart-5: var(--color-chart-5);
 
-  /* Sidebar surfaces */
-  --sidebar: oklch(from #faf6ef l c h);
-  --sidebar-foreground: oklch(from #1b1d1a l c h);
-  --sidebar-primary: var(--color-earth-green-600);
-  --sidebar-primary-foreground: oklch(from #ffffff l c h);
-  --sidebar-accent: oklch(from #f3efe7 l c h);
-  --sidebar-accent-foreground: oklch(from #1b1d1a l c h);
-  --sidebar-border: oklch(from #e6e7e9 l c h);
-  --sidebar-ring: oklch(from #94d3ac l c h);
+  --sidebar: var(--color-sidebar);
+  --sidebar-foreground: var(--color-sidebar-foreground);
+  --sidebar-primary: var(--color-sidebar-primary);
+  --sidebar-primary-foreground: var(--color-sidebar-primary-foreground);
+  --sidebar-accent: var(--color-sidebar-accent);
+  --sidebar-accent-foreground: var(--color-sidebar-accent-foreground);
+  --sidebar-border: var(--color-sidebar-border);
+  --sidebar-ring: var(--color-sidebar-ring);
 }
 
 .dark {
-  /* Opt into dark color-scheme explicitly to prevent UA auto-inversion. */
+  /* Dark theme inherits from DaisyUI dark theme */
   color-scheme: dark;
+  --radius: var(--radius-selector);
 
-  /* Sophisticated dark with forest undertones (OKLCH) */
-  --background: oklch(from #121613 l c h);
-  --foreground: oklch(from #e8ede9 l c h);
+  /* All variables automatically inherit from DaisyUI dark theme tokens */
+  --background: var(--color-base-100);
+  --foreground: var(--color-base-content);
 
-  --card: oklch(from #171c18 l c h);
-  --card-foreground: oklch(from #e8ede9 l c h);
+  --card: var(--color-base-200);
+  --card-foreground: var(--color-base-content);
 
-  --popover: oklch(from #171c18 l c h);
-  --popover-foreground: oklch(from #e8ede9 l c h);
+  --popover: var(--color-base-300);
+  --popover-foreground: var(--color-base-content);
 
-  --primary: oklch(from #56bc7d l c h); /* brighter green for dark */
-  --primary-foreground: oklch(from #0b0f0d l c h);
+  --primary: var(--color-primary);
+  --primary-foreground: var(--color-primary-content);
 
-  --secondary: oklch(from #1a201c l c h);
-  --secondary-foreground: oklch(from #e8ede9 l c h);
+  --secondary: var(--color-secondary);
+  --secondary-foreground: var(--color-secondary-content);
 
-  --muted: oklch(from #1a201c l c h);
-  --muted-foreground: oklch(from #b6c2ba l c h);
+  --muted: var(--color-neutral);
+  --muted-foreground: var(--color-neutral-content);
 
-  --accent: oklch(from #f97316 l c h);
-  --accent-foreground: oklch(from #221d17 l c h);
+  --accent: var(--color-accent);
+  --accent-foreground: var(--color-accent-content);
 
-  --destructive: oklch(from #f04438 l c h);
-  --destructive-foreground: oklch(from #0b0f0d l c h);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--color-error-content);
 
-  --border: oklch(from #232a25 l c h);
-  --input: oklch(from #2a312c l c h);
-  --ring: oklch(from #56bc7d l c h);
+  --border: var(--color-border);
+  --input: var(--color-input);
+  --ring: var(--color-ring);
 
-  --chart-1: oklch(from #56bc7d l c h);
-  --chart-2: oklch(from #f59e0b l c h);
-  --chart-3: oklch(from #93c5aa l c h);
-  --chart-4: oklch(from #fb923c l c h);
-  --chart-5: oklch(from #2f8f4f l c h);
+  --chart-1: var(--color-chart-1);
+  --chart-2: var(--color-chart-2);
+  --chart-3: var(--color-chart-3);
+  --chart-4: var(--color-chart-4);
+  --chart-5: var(--color-chart-5);
 
-  --sidebar: oklch(from #171c18 l c h);
-  --sidebar-foreground: oklch(from #e8ede9 l c h);
-  --sidebar-primary: oklch(from #56bc7d l c h);
-  --sidebar-primary-foreground: oklch(from #0b0f0d l c h);
-  --sidebar-accent: oklch(from #1d231f l c h);
-  --sidebar-accent-foreground: oklch(from #e8ede9 l c h);
-  --sidebar-border: oklch(from #232a25 l c h);
-  --sidebar-ring: oklch(from #56bc7d l c h);
+  --sidebar: var(--color-sidebar);
+  --sidebar-foreground: var(--color-sidebar-foreground);
+  --sidebar-primary: var(--color-sidebar-primary);
+  --sidebar-primary-foreground: var(--color-sidebar-primary-foreground);
+  --sidebar-accent: var(--color-sidebar-accent);
+  --sidebar-accent-foreground: var(--color-sidebar-accent-foreground);
+  --sidebar-border: var(--color-sidebar-border);
+  --sidebar-ring: var(--color-sidebar-ring);
 }
 
 @layer base {

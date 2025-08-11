@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
-import { Header } from "@/components/root/Header";
+
 
 
 const geistSans = Geist({
@@ -67,7 +67,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="system"
+          enableSystem>
           <div>
             <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 z-[-1]" />
             {children}
