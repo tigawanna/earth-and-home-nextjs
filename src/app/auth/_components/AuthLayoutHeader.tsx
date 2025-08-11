@@ -3,23 +3,39 @@ import Link from "next/link";
 import { ModeToggle } from "@/components/theme/theme-toggle";
 import { SiteIcon } from "@/components/icons/SiteIcon";
 import LinkLoadingIndicator from "@/lib/next/LinkLoadingIndicator";
+import { cn } from "@/lib/utils";
 
-interface AuthLayoutHeaderProps {}
+interface AuthLayoutHeaderProps {
+  variant?: "default" | "floating";
+  className?: string;
+}
 
-export function AuthLayoutHeader({}: AuthLayoutHeaderProps) {
+export function AuthLayoutHeader({ variant = "default", className }: AuthLayoutHeaderProps) {
+  const isFloating = variant === "floating";
+  
   return (
-    <header className="w-full flex  items-center justify-between py-6 border-b boredr-base-200 bg-background px-4">
-      <Link href="/" aria-label="Earth & Home Home" className="flex items-center space-x-3">
-        <SiteIcon />
+    <header 
+      className={cn(
+        "w-full flex items-center justify-between py-4 px-6 z-50",
+        isFloating 
+          ? "fixed top-0 left-0 right-0 backdrop-blur-md" 
+          : "border-b border-base-200 bg-background/10",
+        className
+      )}
+    >
+      <Link href="/" aria-label="Earth & Home Home" className="flex items-center space-x-3 group">
+        <SiteIcon className="transition-transform group-hover:scale-105" />
         <div>
-          <span className="text-2xl font-playfair font-bold text-primary hover:underline">
+          <span className="text-xl font-bold text-primary group-hover:text-primary/80 transition-colors">
             Earth & Home
           </span>
-          <p className="text-sm text-muted-foreground">Real Estate Excellence</p>
+          {!isFloating && (
+            <p className="text-xs text-muted-foreground">Real Estate Excellence</p>
+          )}
         </div>
         <LinkLoadingIndicator />
       </Link>
-      <div className="mt-4 flex items-center gap-4">
+      <div className="flex items-center gap-4">
         <ModeToggle />
       </div>
     </header>

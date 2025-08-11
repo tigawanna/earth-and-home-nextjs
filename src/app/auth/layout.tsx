@@ -3,7 +3,7 @@ import { AuthLayoutHeader } from "./_components/AuthLayoutHeader";
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
     <section className="w-full h-full  flex flex-col ">
-      <AuthLayoutHeader />
+      <AuthLayoutHeader variant="floating" />
       {children}
     </section>
   );
