@@ -1,18 +1,12 @@
-import { Button } from "@/components/ui/button";
-import { Search, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
+import { SiteIcon } from "../icons/SiteIcon";
 import { ModeToggle } from "../theme/theme-toggle";
 import { DashboardOrAuth } from "./DashboardOrAuth";
-import { SiteIcon } from "../icons/SiteIcon";
 
 export function Header() {
   return (
-    <header className="navbar bg-background shadow-xs border-b border-border sticky top-0 z-10">
+    <header className="navbar bg-background shadow-xs border-b border-border sticky top-0 z-20 px-8">
       {/* Mobile menu button */}
-      <div className="flex-none lg:hidden">
-        <label htmlFor="header-drawer" aria-label="open sidebar" className="btn btn-square btn-ghost">
-          <Menu className="h-6 w-6" />
-        </label>
-      </div>
 
       {/* Logo */}
       <div className="flex-1">
@@ -29,38 +23,57 @@ export function Header() {
       <div className="flex-none hidden lg:block">
         <nav className="menu menu-horizontal px-1">
           <li>
-            <a href="#home" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#home"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Home
             </a>
           </li>
           <li>
-            <a href="#properties" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#properties"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Properties
             </a>
           </li>
           <li>
-            <a href="#buy" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#buy"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Buy
             </a>
           </li>
           <li>
-            <a href="#sell" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#sell"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Sell
             </a>
           </li>
           <li>
-            <a href="#about" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#about"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               About
             </a>
           </li>
           <li>
-            <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+            <a
+              href="#contact"
+              className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Contact
             </a>
           </li>
         </nav>
       </div>
-
+      <div className="flex-none md:hidden">
+        <label
+          htmlFor="header-drawer"
+          aria-label="open sidebar"
+          className="btn btn-square btn-ghost">
+          <Menu className="h-6 w-6" />
+        </label>
+      </div>
       {/* CTA Buttons */}
       <div className="flex-none hidden md:flex">
         <div className="flex items-center space-x-2">

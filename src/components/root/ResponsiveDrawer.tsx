@@ -16,7 +16,7 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
   return (
     <div className="drawer">
       <input id="header-drawer" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex flex-col ">
         {/* Site Header */}
         <Header />
 
