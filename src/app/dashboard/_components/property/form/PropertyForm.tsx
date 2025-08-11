@@ -81,14 +81,14 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false }: 
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+    <div className="w-full   p-6 space-y-6">
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1>
-        <p className="text-muted-foreground">
+        {/* <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1> */}
+        {/* <p className="text-muted-foreground">
           {isEdit
             ? "Update your property information"
             : "Fill in the details to list your property"}
-        </p>
+        </p> */}
         {propertyType && (
           <div className="flex justify-center">
             <span

@@ -11,8 +11,7 @@ import { toast } from "sonner";
 import Link from "next/link";
 import LinkLoadingIndicator from "@/lib/next/LinkLoadingIndicator";
 import Image from "next/image";
-import { SiteIcon } from "@/components/icons/SiteIcon";
-import { AuthLayoutHeader } from "@/app/auth/_components/AuthLayoutHeader";
+
 
 export default function SignInPage() {
   const router = useRouter();

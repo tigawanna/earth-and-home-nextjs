@@ -1,12 +1,12 @@
 "use client";
 
-import { PropertyFormData } from "@/components/property/form/property-form-schema";
+import { PropertyFormData } from "@/app/dashboard/_components/property/form/property-form-schema";
 import { Loader } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
-const PropertyForm = dynamic(() => import("@/components/property/form/PropertyForm"), {
+const PropertyForm = dynamic(() => import("@/app/dashboard/_components/property/form/PropertyForm"), {
   loading: () => (
     <div className="flex items-center justify-center min-h-screen bg-background">
       <Loader className="h-8 w-8 animate-spin text-muted" />
