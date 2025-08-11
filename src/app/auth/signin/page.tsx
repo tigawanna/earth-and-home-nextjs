@@ -50,7 +50,7 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row pt-16">
+    <div className="min-h-screen flex flex-col md:flex-row pt-16" aria-label="Sign In Page">
       {/* pt-16 to account for fixed header */}
       {/* Brand Side */}
       <div className="hidden md:flex flex-1 items-center justify-center relative overflow-hidden bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 p-12">
@@ -101,6 +101,11 @@ export default function SignInPage() {
       <div className="flex flex-1 items-center justify-center p-4 bg-background">
         <Card className="w-full max-w-md">
           <CardContent>
+            <span
+              className="block mb-6 text-3xl font-semibold text-primary"
+              aria-label="Sign In Label">
+              Sign In
+            </span>
             <form
               onSubmit={handleSignIn}
               className="space-y-4"
