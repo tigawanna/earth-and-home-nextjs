@@ -10,11 +10,9 @@ import { multiPolygon, point } from "./postgis-types";
 
 // ====================================================
 
-  // AUTH SCHEMA
+// AUTH SCHEMA
 
 // ====================================================
-
-
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -30,6 +28,10 @@ export const user = pgTable("user", {
   updatedAt: timestamp("updated_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: text("role"),
+  banned: boolean("banned"),
+  banReason: text("ban_reason"),
+  banExpires: timestamp("ban_expires"),
 });
 
 export const session = pgTable("session", {
@@ -43,6 +45,7 @@ export const session = pgTable("session", {
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
+  impersonatedBy: text("impersonated_by"),
 });
 
 export const account = pgTable("account", {
@@ -72,11 +75,9 @@ export const verification = pgTable("verification", {
   updatedAt: timestamp("updated_at").$defaultFn(() => /* @__PURE__ */ new Date()),
 });
 
-
-
 // ====================================================
 
-  // PROPERTIES SCHEMA
+// PROPERTIES SCHEMA
 
 // ====================================================
 
@@ -140,7 +141,9 @@ export const zoningEnum = pgEnum("zoning", [
 export const property = pgTable(
   "property",
   {
-    id: uuid("id").primaryKey().default(sql`uuid_generate_v7()`),
+    id: uuid("id")
+      .primaryKey()
+      .default(sql`uuid_generate_v7()`),
 
     // Basic info
     title: text("title").notNull(),
@@ -203,8 +206,12 @@ export const property = pgTable(
     ownerId: text("owner_id").references(() => user.id, { onDelete: "set null" }),
 
     // Flags
-    isFeatured: boolean("is_featured").$defaultFn(() => false).notNull(),
-    isNew: boolean("is_new").$defaultFn(() => false).notNull(),
+    isFeatured: boolean("is_featured")
+      .$defaultFn(() => false)
+      .notNull(),
+    isNew: boolean("is_new")
+      .$defaultFn(() => false)
+      .notNull(),
 
     // Timestamps
     createdAt: timestamp("created_at")
@@ -220,27 +227,21 @@ export const property = pgTable(
   ]
 );
 
-
-
-
 export const kenyaWards = pgTable(
-  'kenya_wards',
+  "kenya_wards",
   {
-    id: serial('id').primaryKey(),
-    wardCode: varchar('ward_code', { length: 10 }).notNull(),
-    ward: text('ward').notNull(),
-    county: text('county').notNull(),
-    countyCode: integer('county_code').notNull(),
-    subCounty: text('sub_county'),
-    constituency: text('constituency').notNull(),
-    constituencyCode: integer('constituency_code').notNull(),
-    geometry: multiPolygon('geometry').notNull(),
+    id: serial("id").primaryKey(),
+    wardCode: varchar("ward_code", { length: 10 }).notNull(),
+    ward: text("ward").notNull(),
+    county: text("county").notNull(),
+    countyCode: integer("county_code").notNull(),
+    subCounty: text("sub_county"),
+    constituency: text("constituency").notNull(),
+    constituencyCode: integer("constituency_code").notNull(),
+    geometry: multiPolygon("geometry").notNull(),
   },
-  (t) => [
-    index('kenya_wards_geometry_gix').using('gist', t.geometry),
-  ]
+  (t) => [index("kenya_wards_geometry_gix").using("gist", t.geometry)]
 );
-
 
 // If you need to create a spatial index (recommended for performance):
 // CREATE INDEX idx_kenya_wards_geometry ON kenya_wards USING GIST(geometry);
