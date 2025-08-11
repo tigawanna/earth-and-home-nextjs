@@ -70,7 +70,6 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div>
             <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 z-[-1]" />
-            <Header />
             {children}
           </div>
         </ThemeProvider>
