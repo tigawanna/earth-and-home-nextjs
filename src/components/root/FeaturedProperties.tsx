@@ -96,7 +96,7 @@ export function FeaturedProperties() {
 					{properties.map((property) => (
 						<div
 							key={property.id}
-							className="bg-card text-card-foreground rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border border-border"
+							className="bg-card text-card-foreground rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 group border boredr-base-200"
 						>
 							{/* Image */}
 							<div className="relative overflow-hidden">
@@ -111,11 +111,11 @@ export function FeaturedProperties() {
 										{property.type}
 									</Badge>
 								</div>
-								<button className="absolute top-4 right-4 bg-background/90 hover:bg-background p-2 rounded-full transition-colors border border-border">
+								<button className="absolute top-4 right-4 bg-background/90 hover:bg-background p-2 rounded-full transition-colors border boredr-base-200">
 									<Heart className="h-4 w-4 text-muted-foreground" />
 								</button>
 								<div className="absolute bottom-4 right-4">
-									<span className="bg-background/95 backdrop-blur-xs text-foreground px-3 py-1 rounded-full font-semibold border border-border">
+									<span className="bg-background/95 backdrop-blur-xs text-foreground px-3 py-1 rounded-full font-semibold border boredr-base-200">
 										{property.price}
 									</span>
 								</div>

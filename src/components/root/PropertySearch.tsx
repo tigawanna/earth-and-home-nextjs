@@ -19,7 +19,7 @@ export function PropertySearch() {
         </div>
 
         {/* Search form */}
-        <div className="bg-card text-card-foreground rounded-2xl shadow-xl border border-border p-8 max-w-6xl mx-auto">
+        <div className="bg-card text-card-foreground rounded-2xl shadow-xl border boredr-base-200 p-8 max-w-6xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
             {/* Location */}
             <div className="lg:col-span-2">
@@ -83,7 +83,7 @@ export function PropertySearch() {
           </div>
 
           {/* Advanced filters */}
-          <div className="mt-6 pt-6 border-t border-border">
+          <div className="mt-6 pt-6 border-t boredr-base-200">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <Select>
                 <SelectTrigger>

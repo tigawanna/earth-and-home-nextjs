@@ -47,19 +47,12 @@
   --color-error: oklch(from #c2410c l c h); /* destructive */
   --color-error-content: oklch(from #ffffff l c h);
 
-  /* border radius */
-  --radius-selector: 1.5rem;
-  --radius-field: calc(1.5rem - 4px);
-  --radius-box: calc(1.5rem - 2px);
-
-  /* base sizes */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-
-  /* border size */
   --border: 1px;
-
-  /* effects */
   --depth: 1;
   --noise: 0;
 }
@@ -100,19 +93,12 @@
   --color-error: oklch(from #f04438 l c h); /* destructive */
   --color-error-content: oklch(from #0b0f0d l c h);
 
-  /* border radius */
-  --radius-selector: 1.5rem;
-  --radius-field: calc(1.5rem - 4px);
-  --radius-box: calc(1.5rem - 2px);
-
-  /* base sizes */
+  --radius-selector: 0.5rem;
+  --radius-field: 0.25rem;
+  --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-
-  /* border size */
   --border: 1px;
-
-  /* effects */
   --depth: 1;
   --noise: 0;
 }
@@ -210,11 +196,13 @@
   --destructive-base: var(--color-error);
   --destructive-foreground-base: var(--color-error-content);
 
-  --border: var(--color-base-100);
+  /* --border: var(--color-base-100); */
 
   --input: var(--color-base-200);
   --ring: var(--color-primary);
+  
   --radius: var(--radius-box);
+
   --chart-1: var(--color-success);
   --chart-2: var(--color-info);
   --chart-3: var(--color-warning);
@@ -256,6 +244,8 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  --border: var(--border);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -341,6 +331,12 @@
 @apply backdrop-blur-md bg-base-100/50 border border-base-content/10;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 @utility btn {
-  @apply border-neutral-content;
+  @apply border-neutral-content rounded-lg
 }

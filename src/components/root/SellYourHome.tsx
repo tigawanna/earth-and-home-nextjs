@@ -60,10 +60,10 @@ export function SellYourHome() {
           </div>
 
           {/* Right: Simple checklist card with accessible contrast */}
-          <div className="bg-card text-card-foreground rounded-2xl border border-border shadow-lg p-6">
+          <div className="bg-card text-card-foreground rounded-2xl border boredr-base-200 shadow-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="font-semibold">Listing Checklist</div>
-              <span className="rounded-full px-3 py-1 text-xs bg-background border border-border">2–3 weeks</span>
+              <span className="rounded-full px-3 py-1 text-xs bg-background border boredr-base-200">2–3 weeks</span>
             </div>
             <ul className="space-y-3 text-sm">
               {[

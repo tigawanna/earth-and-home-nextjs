@@ -8,7 +8,7 @@ interface AuthLayoutHeaderProps {}
 
 export function AuthLayoutHeader({}: AuthLayoutHeaderProps) {
   return (
-    <header className="w-full flex  items-center justify-between py-6 border-b border-border bg-background px-4">
+    <header className="w-full flex  items-center justify-between py-6 border-b boredr-base-200 bg-background px-4">
       <Link href="/" aria-label="Earth & Home Home" className="flex items-center space-x-3">
         <SiteIcon />
         <div>

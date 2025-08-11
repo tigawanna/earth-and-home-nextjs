@@ -5,7 +5,7 @@ import { DashboardOrAuth } from "./DashboardOrAuth";
 
 export function Header() {
   return (
-    <header className="navbar bg-background shadow-xs border-b border-border sticky top-0 z-20 px-8">
+    <header className="navbar bg-background shadow-xs border-b boredr-base-200 sticky top-0 z-20 px-8">
       {/* Mobile menu button */}
 
       {/* Logo */}

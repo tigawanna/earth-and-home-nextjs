@@ -4,7 +4,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
 
-const buttonVariants = cva("btn  border-[1px]", {
+const buttonVariants = cva("btn", {
   variants: {
     variant: {
       default: "bg-primary",
@@ -19,7 +19,7 @@ const buttonVariants = cva("btn  border-[1px]", {
       default: "btn-primary",
       sm: "btn-sm",
       lg: "btn-lg",
-      icon: "btn-sm",
+      icon: "size-auto border-none p-1 shadow-lg shadow-base-200",
     },
   },
   defaultVariants: {

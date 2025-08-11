@@ -55,7 +55,7 @@ export function Hero() {
 
           {/* Right content - Featured property card */}
           <div className="animate-scale-in">
-            <div className="bg-card text-card-foreground rounded-2xl shadow-2xl overflow-hidden border border-border">
+            <div className="bg-card text-card-foreground rounded-2xl shadow-2xl overflow-hidden border boredr-base-200">
               <div className="relative">
                 <Image
                   src="https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=600&h=400&fit=crop"
@@ -69,7 +69,7 @@ export function Hero() {
                   </span>
                 </div>
                 <div className="absolute top-4 right-4">
-                  <span className="bg-background text-foreground px-3 py-1 rounded-full text-sm font-medium border border-border">
+                  <span className="bg-background text-foreground px-3 py-1 rounded-full text-sm font-medium border boredr-base-200">
                     $850,000
                   </span>
                 </div>

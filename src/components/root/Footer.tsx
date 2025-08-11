@@ -30,16 +30,16 @@ export function Footer() {
               through exceptional real estate services.
             </p>
             <div className="flex space-x-4">
-              <Button size="sm" variant="outline" className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground">
+              <Button size="sm" variant="outline" className="boredr-base-200 text-muted-foreground hover:bg-primary hover:text-primary-foreground">
                 <Facebook className="h-4 w-4" />
               </Button>
-              <Button size="sm" variant="outline" className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground">
+              <Button size="sm" variant="outline" className="boredr-base-200 text-muted-foreground hover:bg-primary hover:text-primary-foreground">
                 <Twitter className="h-4 w-4" />
               </Button>
-              <Button size="sm" variant="outline" className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground">
+              <Button size="sm" variant="outline" className="boredr-base-200 text-muted-foreground hover:bg-primary hover:text-primary-foreground">
                 <Instagram className="h-4 w-4" />
               </Button>
-              <Button size="sm" variant="outline" className="border-border text-muted-foreground hover:bg-primary hover:text-primary-foreground">
+              <Button size="sm" variant="outline" className="boredr-base-200 text-muted-foreground hover:bg-primary hover:text-primary-foreground">
                 <Linkedin className="h-4 w-4" />
               </Button>
             </div>
@@ -107,7 +107,7 @@ export function Footer() {
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-border">
+      <div className="border-t boredr-base-200">
         <div className="container mx-auto px-4 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm">
