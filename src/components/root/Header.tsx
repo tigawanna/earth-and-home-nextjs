@@ -8,7 +8,7 @@ export function Header() {
   return (
     <header className="bg-background shadow-xs border-b border-border sticky top-0 z-50">
       {/* Top contact bar */}
-      <div className="bg-primary text-primary-foreground py-2 px-4">
+      {/* <div className="bg-primary text-primary-foreground py-2 px-4">
         <div className="container mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2">
@@ -24,7 +24,7 @@ export function Header() {
             <span>Licensed Real Estate Professionals</span>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main navigation */}
       <div className="container mx-auto px-4 py-4">
