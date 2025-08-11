@@ -78,9 +78,12 @@ export function Header() {
               <Search className="h-4 w-4 mr-2" />
               Search
             </Button>
-            <Button className="bg-accent text-accent-foreground hover:bg-accent/90">
+            <Button variant="accent" className="">
               List Property
             </Button>
+            {/* <Button className="text-accent-foreground hover:bg-accent/90">
+              List Property
+            </Button> */}
             <DashboardOrAuth />
             <ModeToggle />
           </div>
