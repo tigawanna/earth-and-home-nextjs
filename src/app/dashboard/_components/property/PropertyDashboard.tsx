@@ -1,9 +1,7 @@
-"use client";
-
-import { useState, useEffect } from "react";
-
-import { PropertyList } from "./PropertyList";
-import { PropertyFilters as PropertyFiltersComponent } from "./PropertyFilters";
+import { useState, useCallback } from "react";
+import { PropertyList } from "./list/PropertyList";
+import { PropertyFiltersManager } from "./list/PropertyFiltersManager";
+import { PaginationManager } from "./list/PaginationManager";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Plus } from "lucide-react";
@@ -32,64 +30,20 @@ export function PropertyDashboard({
   const [pagination, setPagination] = useState(initialPagination);
   const [loading, setLoading] = useState(false);
 
-  // Filter and sort state
-  const [filters, setFilters] = useState<PropertyFilters>({});
-  const [sortBy, setSortBy] = useState<PropertySortBy>("createdAt");
-  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
-  const [currentPage, setCurrentPage] = useState(1);
-
-  // Fetch properties when filters change
-  useEffect(() => {
-    const fetchProperties = async () => {
-      setLoading(true);
-      try {
-        const result = await getProperties({
-          filters,
-          sortBy,
-          sortOrder,
-          page: currentPage,
-          limit: 20,
-          userId,
-        });
-
-        if (result.success) {
-          setProperties(result.properties);
-          setPagination(result.pagination);
-        }
-      } catch (error) {
-        console.error("Error fetching properties:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProperties();
-  }, [filters, sortBy, sortOrder, currentPage, userId]);
-
-  const handleFiltersChange = (newFilters: PropertyFilters) => {
-    setFilters(newFilters);
-    setCurrentPage(1); // Reset to first page when filters change
-  };
-
-  const handleSortChange = (newSortBy: PropertySortBy, newSortOrder: SortOrder) => {
-    setSortBy(newSortBy);
-    setSortOrder(newSortOrder);
-    setCurrentPage(1); // Reset to first page when sort changes
-  };
-
-  const handleClearFilters = () => {
-    setFilters({});
-    setCurrentPage(1);
-  };
-
-  const handlePropertyDeleted = () => {
-    // Refresh the current page
-    const fetchProperties = async () => {
+  // Handle filters change from the PropertyFiltersManager
+  const handleFiltersChange = useCallback(async (
+    filters: PropertyFilters, 
+    sortBy: PropertySortBy, 
+    sortOrder: SortOrder, 
+    page: number
+  ) => {
+    setLoading(true);
+    try {
       const result = await getProperties({
         filters,
         sortBy,
         sortOrder,
-        page: currentPage,
+        page,
         limit: 20,
         userId,
       });
@@ -98,13 +52,17 @@ export function PropertyDashboard({
         setProperties(result.properties);
         setPagination(result.pagination);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching properties:", error);
+    } finally {
+      setLoading(false);
+    }
+  }, [userId]);
 
-    fetchProperties();
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
+  const handlePropertyDeleted = () => {
+    // This will trigger a refresh through the filters manager
+    // The current filters and pagination will be maintained
+    window.location.reload();
   };
 
   return (
@@ -128,13 +86,7 @@ export function PropertyDashboard({
       </div>
 
       {/* Filters */}
-      <PropertyFiltersComponent
-        filters={filters}
-        sortBy={sortBy}
-        sortOrder={sortOrder}
-        onFiltersChange={handleFiltersChange}
-        onSortChange={handleSortChange}
-        onClearFilters={handleClearFilters}
+      <PropertyFiltersManager
       />
 
       {/* Loading Overlay */}
@@ -158,50 +110,8 @@ export function PropertyDashboard({
       )}
 
       {/* Pagination */}
-      {!loading && pagination.totalPages > 1 && (
-        <Card>
-          <CardContent className="flex items-center justify-between py-4">
-            <div className="text-sm text-muted-foreground">
-              Showing {(currentPage - 1) * pagination.limit + 1} to{" "}
-              {Math.min(currentPage * pagination.limit, pagination.totalCount)} of{" "}
-              {pagination.totalCount} properties
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={!pagination.hasPrevPage}>
-                Previous
-              </Button>
-
-              {/* Page numbers */}
-              {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
-                const page = Math.max(1, currentPage - 2) + i;
-                if (page > pagination.totalPages) return null;
-
-                return (
-                  <Button
-                    key={page}
-                    variant={page === currentPage ? "default" : "outline"}
-                    size="sm"
-                    onClick={() => handlePageChange(page)}>
-                    {page}
-                  </Button>
-                );
-              })}
-
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={!pagination.hasNextPage}>
-                Next
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {!loading && (
+        <PaginationManager pagination={pagination} />
       )}
     </div>
   );

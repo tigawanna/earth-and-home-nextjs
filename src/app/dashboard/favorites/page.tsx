@@ -4,7 +4,11 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
-export default async function FavoritesPage() {
+export default async function FavoritesPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
   const session = await auth.api.getSession({
     headers: await headers()
   });
@@ -13,8 +17,11 @@ export default async function FavoritesPage() {
     redirect("/auth/signin");
   }
 
+  const params = await searchParams;
+  const page = params.page ? Number(params.page) : 1;
+
   // Get user's favorite properties
-  const result = await getFavoriteProperties(session.user.id, 1, 20);
+  const result = await getFavoriteProperties(session.user.id, page, 20);
 
   return (
     <PropertyDashboard
