@@ -1,5 +1,5 @@
 import { PropertyList } from "./list/PropertyList";
-import { PropertyFilters } from "@/components/property/PropertyFilters";
+import { PropertyFilters } from "@/components/property/list/PropertyFilters";
 import { getFavoriteProperties } from "@/actions/drizzle/property-queries";
 
 interface FavoritesDashboardProps {

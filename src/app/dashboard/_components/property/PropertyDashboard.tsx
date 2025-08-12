@@ -1,5 +1,5 @@
 import { PropertyList } from "./list/PropertyList";
-import { PropertyFilters } from "@/components/property/PropertyFilters";
+import { PropertyFilters } from "@/components/property/list/PropertyFilters";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";

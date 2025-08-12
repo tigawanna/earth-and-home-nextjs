@@ -1,7 +1,8 @@
-import { PublicPropertyDashboard } from "@/components/property/PublicPropertyDashboard";
+import { PublicPropertyListings } from "@/components/property/PublicPropertyListings";
 import { Suspense } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { PropertyFilters } from "@/components/property/list/PropertyFilters";
 
 function LoadingFallback() {
   return (
@@ -23,8 +24,10 @@ export default async function PublicPropertiesPage({
 
   return (
     <div className="container mx-auto py-8">
+      {/* Filters - No status filter for public view */}
+      <PropertyFilters showStatusFilter={false} />
       <Suspense fallback={<LoadingFallback />}>
-        <PublicPropertyDashboard searchParams={params} />
+        <PublicPropertyListings searchParams={params} />
       </Suspense>
     </div>
   );

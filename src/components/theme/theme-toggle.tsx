@@ -19,10 +19,8 @@ export function ModeToggle({compact}:{compact?: boolean}) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="icon" className=" ">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all
-          data-[theme=dark]:scale-0 data-[theme=dark]:-rotate-9 dark:scale-0 dark:-rotate-90 data-[theme=dark]:bg-red" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all
-          data-[theme=dark]:scale-100 data-[theme=dark]:rotate-0" />
+          <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+          <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

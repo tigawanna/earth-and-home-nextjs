@@ -5,32 +5,28 @@ import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, X, Filter } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/actions/drizzle/property-types";
+import {
+  PropertyFilters as PropertyFiltersType,
+  PropertySortBy,
+  SortOrder,
+} from "@/actions/drizzle/property-types";
 
 interface PropertyFiltersProps {
-  showOwnerFilter?: boolean;
   showStatusFilter?: boolean;
-  totalCount?: number;
-  currentPage?: number;
-  totalPages?: number;
-  hasNextPage?: boolean;
-  hasPrevPage?: boolean;
 }
 
-export function PropertyFilters({
-  showOwnerFilter = false,
-  showStatusFilter = true,
-  totalCount = 0,
-  currentPage: propCurrentPage,
-  totalPages = 0,
-  hasNextPage = false,
-  hasPrevPage = false,
-}: PropertyFiltersProps) {
+export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   // Search params using nuqs - these automatically update the URL
@@ -44,7 +40,7 @@ export function PropertyFilters({
   const [baths, setBaths] = useQueryState("baths", parseAsInteger);
   const [city, setCity] = useQueryState("city", parseAsString);
   const [isFeatured, setIsFeatured] = useQueryState("featured", parseAsString);
-  
+
   // Sort parameters
   const [sortBy, setSortBy] = useQueryState("sortBy", parseAsString.withDefault("createdAt"));
   const [sortOrder, setSortOrder] = useQueryState("sortOrder", parseAsString.withDefault("desc"));
@@ -64,13 +60,13 @@ export function PropertyFilters({
     isFeatured: isFeatured === "true" ? true : undefined,
   };
 
-  const hasActiveFilters = Object.values(filters).some(value => 
-    value !== undefined && value !== "" && value !== null
+  const hasActiveFilters = Object.values(filters).some(
+    (value) => value !== undefined && value !== "" && value !== null
   );
 
   const getActiveFilterCount = () => {
-    return Object.values(filters).filter(value => 
-      value !== undefined && value !== "" && value !== null
+    return Object.values(filters).filter(
+      (value) => value !== undefined && value !== "" && value !== null
     ).length;
   };
 
@@ -112,9 +108,7 @@ export function PropertyFilters({
               <Filter className="h-5 w-5" />
               Filters & Search
               {hasActiveFilters && (
-                <Badge variant="secondary">
-                  {getActiveFilterCount()} active
-                </Badge>
+                <Badge variant="secondary">{getActiveFilterCount()} active</Badge>
               )}
             </CardTitle>
             <div className="flex gap-2">
@@ -159,8 +153,7 @@ export function PropertyFilters({
                   <Label>Sort By</Label>
                   <Select
                     value={sortBy}
-                    onValueChange={(value) => handleSortChange("sortBy", value)}
-                  >
+                    onValueChange={(value) => handleSortChange("sortBy", value)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -177,8 +170,7 @@ export function PropertyFilters({
                   <Label>Sort Order</Label>
                   <Select
                     value={sortOrder}
-                    onValueChange={(value) => handleSortChange("sortOrder", value)}
-                  >
+                    onValueChange={(value) => handleSortChange("sortOrder", value)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -196,8 +188,7 @@ export function PropertyFilters({
                   <Label>Property Type</Label>
                   <Select
                     value={propertyType || ""}
-                    onValueChange={(value) => resetPageOnChange(setPropertyType)(value || null)}
-                  >
+                    onValueChange={(value) => resetPageOnChange(setPropertyType)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All types" />
                     </SelectTrigger>
@@ -222,8 +213,7 @@ export function PropertyFilters({
                   <Label>Listing Type</Label>
                   <Select
                     value={listingType || ""}
-                    onValueChange={(value) => resetPageOnChange(setListingType)(value || null)}
-                  >
+                    onValueChange={(value) => resetPageOnChange(setListingType)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All listings" />
                     </SelectTrigger>
@@ -242,8 +232,7 @@ export function PropertyFilters({
                   <Label>Status</Label>
                   <Select
                     value={status || ""}
-                    onValueChange={(value) => resetPageOnChange(setStatus)(value || null)}
-                  >
+                    onValueChange={(value) => resetPageOnChange(setStatus)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All statuses" />
                     </SelectTrigger>
@@ -268,7 +257,9 @@ export function PropertyFilters({
                     type="number"
                     placeholder="0"
                     value={minPrice || ""}
-                    onChange={(e) => resetPageOnChange(setMinPrice)(e.target.value ? Number(e.target.value) : null)}
+                    onChange={(e) =>
+                      resetPageOnChange(setMinPrice)(e.target.value ? Number(e.target.value) : null)
+                    }
                   />
                 </div>
 
@@ -278,7 +269,9 @@ export function PropertyFilters({
                     type="number"
                     placeholder="No limit"
                     value={maxPrice || ""}
-                    onChange={(e) => resetPageOnChange(setMaxPrice)(e.target.value ? Number(e.target.value) : null)}
+                    onChange={(e) =>
+                      resetPageOnChange(setMaxPrice)(e.target.value ? Number(e.target.value) : null)
+                    }
                   />
                 </div>
               </div>
@@ -289,8 +282,9 @@ export function PropertyFilters({
                   <Label>Bedrooms</Label>
                   <Select
                     value={beds?.toString() || ""}
-                    onValueChange={(value) => resetPageOnChange(setBeds)(value ? Number(value) : null)}
-                  >
+                    onValueChange={(value) =>
+                      resetPageOnChange(setBeds)(value ? Number(value) : null)
+                    }>
                     <SelectTrigger>
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
@@ -309,8 +303,9 @@ export function PropertyFilters({
                   <Label>Bathrooms</Label>
                   <Select
                     value={baths?.toString() || ""}
-                    onValueChange={(value) => resetPageOnChange(setBaths)(value ? Number(value) : null)}
-                  >
+                    onValueChange={(value) =>
+                      resetPageOnChange(setBaths)(value ? Number(value) : null)
+                    }>
                     <SelectTrigger>
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
@@ -341,7 +336,9 @@ export function PropertyFilters({
                   type="checkbox"
                   id="featured"
                   checked={isFeatured === "true"}
-                  onChange={(e) => resetPageOnChange(setIsFeatured)(e.target.checked ? "true" : null)}
+                  onChange={(e) =>
+                    resetPageOnChange(setIsFeatured)(e.target.checked ? "true" : null)
+                  }
                   className="rounded"
                 />
                 <Label htmlFor="featured">Featured properties only</Label>
@@ -355,25 +352,18 @@ export function PropertyFilters({
       {currentPage > 1 && (
         <Card>
           <CardContent className="flex items-center justify-between py-4">
-            <div className="text-sm text-muted-foreground">
-              Page {currentPage}
-            </div>
+            <div className="text-sm text-muted-foreground">Page {currentPage}</div>
 
             <div className="flex gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setCurrentPage(currentPage - 1)}
-                disabled={currentPage <= 1}
-              >
+                disabled={currentPage <= 1}>
                 Previous
               </Button>
 
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setCurrentPage(currentPage + 1)}
-              >
+              <Button variant="outline" size="sm" onClick={() => setCurrentPage(currentPage + 1)}>
                 Next
               </Button>
             </div>
