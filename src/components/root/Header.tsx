@@ -2,6 +2,7 @@ import { Menu } from "lucide-react";
 import { SiteIcon } from "../icons/SiteIcon";
 import { ModeToggle } from "../theme/theme-toggle";
 import { DashboardOrAuth } from "./DashboardOrAuth";
+import Link from "next/link";
 
 export function Header() {
   return (
@@ -11,11 +12,13 @@ export function Header() {
       {/* Logo */}
       <div className="flex-1">
         <div className="flex items-center space-x-3">
-          <SiteIcon />
-          <div>
+          <Link href="/">
+            <SiteIcon />
+          </Link>
+          <Link href="/">
             <h1 className="text-2xl font-playfair font-bold text-primary">Earth & Home</h1>
             <p className="text-sm text-muted-foreground hidden sm:block">Real Estate Excellence</p>
-          </div>
+          </Link>
         </div>
       </div>
 

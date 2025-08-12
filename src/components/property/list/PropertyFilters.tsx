@@ -91,7 +91,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
   return (
     <section className="space-y-4">
       {/* Main Search Card - Always Visible */}
-      <div className="rounded-lg border bg-card shadow-sm p-4 transition-colors">
+      <div className="rounded-lg border">
         {/* Header - More Compact */}
         <div className="flex flex-col md:flex-row  items-center justify-between gap-3 mb-4">
           <div className="flex w-full flex-3/4 gap-1 relative">

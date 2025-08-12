@@ -49,7 +49,6 @@ export async function PublicPropertyListings({
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-3xl font-bold">Properties</h1>
           <p className="text-muted-foreground">
             {totalCount} {totalCount === 1 ? "property" : "properties"} available
           </p>

@@ -16,7 +16,6 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
       <div className="drawer-content flex flex-col ">
         {/* Site Header */}
         <Header />
-
         {/* Main Content */}
         {children}
       </div>

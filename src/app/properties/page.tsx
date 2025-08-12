@@ -24,7 +24,6 @@ export default async function PublicPropertiesPage({
 
   return (
     <div className="container mx-auto py-8">
-      {/* Filters - No status filter for public view */}
       <PropertyFilters showStatusFilter={false} />
       <Suspense fallback={<LoadingFallback />}>
         <PublicPropertyListings searchParams={params} />
