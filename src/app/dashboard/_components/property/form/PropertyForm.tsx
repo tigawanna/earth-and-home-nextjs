@@ -19,14 +19,16 @@ import { ParkingSection } from "./sections/ParkingSection";
 import { PricingSection } from "./sections/PricingSection";
 import { FeaturesAmenitiesSection } from "./sections/FeaturesAmenitiesSection";
 import { MediaSection } from "./sections/MediaSection";
-import { ImagesUploadSection } from "./sections/ImagesUploadSection";
+import { ImagesUploadSection } from "./files/ImagesUploadSection";
 import { useState } from "react";
 import { Loader2, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/utils/forms";
-import useFormPersist from "react-hook-form-persist";
 import { FormPersist } from "@/lib/react-hook-form/FormPersist";
+
+
+
 
 interface PropertyFormProps {
   initialData?: Partial<PropertyFormData>;

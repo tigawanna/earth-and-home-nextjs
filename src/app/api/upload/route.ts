@@ -18,7 +18,26 @@ const router: Router = {
       fileTypes: ["image/*"],
       multipleFiles: true,
       maxFiles: 10, // Allow up to 10 images per property
-      maxFileSize: 5 * 1024 * 1024, // 5MB in bytes
+      maxFileSize: 5 * 10 * 1024 * 1024, // 5MB in bytes
+      onBeforeUpload(data) {
+        const { files, clientMetadata } = data;
+        
+        // Use property title as the folder prefix (one level nesting)
+        const propertyTitle = (clientMetadata as any)?.propertytitle || "unknown-property";
+        
+        return {
+          generateObjectKey: ({ file }) => {
+            // Create a slug from the original filename
+            const fileSlug = file.name.toLowerCase()
+              .replace(/[^a-z0-9.-]/g, '-')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, '');
+            
+            // Return the key with just property title prefix (one level)
+            return `properties/${propertyTitle}/${crypto.randomUUID()}-${fileSlug}`;
+          }
+        };
+      },
     }),
 
     // Property documents upload route (for future use)
@@ -31,6 +50,24 @@ const router: Router = {
       multipleFiles: true,
       maxFiles: 5,
       maxFileSize: 10 * 1024 * 1024, // 10MB in bytes
+      onBeforeUpload(data) {
+        const { files, clientMetadata } = data;
+        
+        // Use property title as the folder prefix (one level nesting)
+        const propertyTitle = (clientMetadata as any)?.propertytitle || "unknown-property";
+        
+        return {
+          generateObjectKey: ({ file }) => {
+            const fileSlug = file.name.toLowerCase()
+              .replace(/[^a-z0-9.-]/g, '-')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, '');
+            
+            // Return the key with just property title prefix (one level)
+            return `documents/${propertyTitle}/${crypto.randomUUID()}-${fileSlug}`;
+          }
+        };
+      },
     }),
   },
 };

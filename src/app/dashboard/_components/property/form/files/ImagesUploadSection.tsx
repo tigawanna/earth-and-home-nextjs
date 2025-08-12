@@ -23,6 +23,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: "images",
+
   });
 
   const [featuredImageIndex, setFeaturedImageIndex] = useState<number>(0);
@@ -31,12 +32,25 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
 
   const uploadControl = useUploadFiles({
     route: "propertyImages",
-    onBeforeUpload(data) {
-      return data.files.map(file => ({
-        ...file,
-        name: `${propertyTitle}/${file.name}`,
-      }));
-    },
+
+    // onBeforeUpload(data): File[] {
+    //   const formattedPropertyTitle = propertyTitle.replace(/\s+/g, '-').toLowerCase();
+    //   return data.files.map((file) => {
+    //     const newFile = new File([file], `${formattedPropertyTitle}/${file.name}`, {
+    //       type: file.type,
+    //       lastModified: file.lastModified,
+    //     });
+
+    //     // Handle custom properties if needed
+    //     for (const [key, value] of Object.entries(file)) {
+    //       if (!(key in newFile)) {
+    //         (newFile as any)[key] = value;
+    //       }
+    //     }
+
+    //     return newFile;
+    //   });
+    // },
   });
 
   // Watch for upload progress and completion
@@ -114,12 +128,14 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
         <CardTitle className="flex items-center gap-2">
           📸 Property Images
           {fields.length > 0 && (
-            <Badge variant="secondary">{fields.length} image{fields.length !== 1 ? 's' : ''}</Badge>
+            <Badge variant="secondary">
+              {fields.length} image{fields.length !== 1 ? "s" : ""}
+            </Badge>
           )}
         </CardTitle>
         <CardDescription>
-          Upload high-quality images of your property. The first image will be used as the featured image.
-          Drag and drop to reorder images.
+          Upload high-quality images of your property. The first image will be used as the featured
+          image. Drag and drop to reorder images.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -133,15 +149,15 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
               maxFileSize: "5MB",
               fileTypes: "JPEG, PNG, WebP, GIF",
             }}
-
             metadata={{
+              propertytitle: propertyTitle?.replace(/\s+/g, '-').toLowerCase(), // Use property title as ID
               // You can add property ID here when editing existing property
               // propertyId: propertyId
             }}
           />
           <p className="text-xs text-muted-foreground">
-            💡 <strong>Tip:</strong> Upload high-resolution images (at least 1200px wide) for best results.
-            The first image will be used as the main property photo.
+            💡 <strong>Tip:</strong> Upload high-resolution images (at least 1200px wide) for best
+            results. The first image will be used as the main property photo.
           </p>
         </div>
 
@@ -154,17 +170,14 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                 Click the star to set as featured image
               </div>
             </div>
-            
+
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {fields.map((field, index) => (
                 <div
                   key={field.id}
                   className={`group relative overflow-hidden rounded-lg border transition-all hover:shadow-md ${
-                    index === featuredImageIndex
-                      ? "ring-2 ring-primary ring-offset-2"
-                      : ""
-                  }`}
-                >
+                    index === featuredImageIndex ? "ring-2 ring-primary ring-offset-2" : ""
+                  }`}>
                   {/* Image */}
                   <div className="aspect-video relative bg-muted">
                     <Image
@@ -174,7 +187,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                       className="object-cover"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                    
+
                     {/* Featured Badge */}
                     {index === featuredImageIndex && (
                       <div className="absolute top-2 left-2">
@@ -203,18 +216,16 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                         size="sm"
                         className="h-7 px-2"
                         onClick={() => handleSetFeatured(index)}
-                        disabled={index === featuredImageIndex}
-                      >
+                        disabled={index === featuredImageIndex}>
                         <Star className="h-3 w-3" />
                       </Button>
-                      
+
                       <Button
                         type="button"
                         variant="outline"
                         size="sm"
                         className="h-7 px-2"
-                        onClick={() => window.open(field.url, "_blank")}
-                      >
+                        onClick={() => window.open(field.url, "_blank")}>
                         <Eye className="h-3 w-3" />
                       </Button>
 
@@ -225,8 +236,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                           size="sm"
                           className="h-7 px-2 rounded-r-none border-r-0"
                           onClick={() => handleMoveUp(index)}
-                          disabled={index === 0}
-                        >
+                          disabled={index === 0}>
                           <MoveUp className="h-3 w-3" />
                         </Button>
                         <Button
@@ -235,8 +245,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                           size="sm"
                           className="h-7 px-2 rounded-l-none"
                           onClick={() => handleMoveDown(index)}
-                          disabled={index === fields.length - 1}
-                        >
+                          disabled={index === fields.length - 1}>
                           <MoveDown className="h-3 w-3" />
                         </Button>
                       </div>
@@ -246,8 +255,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                         variant="outline"
                         size="sm"
                         className="h-7 px-2 hover:bg-destructive hover:text-destructive-foreground ml-auto"
-                        onClick={() => handleRemoveImage(index)}
-                      >
+                        onClick={() => handleRemoveImage(index)}>
                         <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>
@@ -262,9 +270,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
         {fields.length === 0 && (
           <div className="text-center py-8 text-muted-foreground">
             <p className="text-sm">No images uploaded yet</p>
-            <p className="text-xs mt-1">
-              Upload at least one image to showcase your property
-            </p>
+            <p className="text-xs mt-1">Upload at least one image to showcase your property</p>
           </div>
         )}
       </CardContent>
