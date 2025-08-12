@@ -7,7 +7,7 @@ import {
   NumberFieldComponent, 
   SelectFieldComponent 
 } from "../form-fields";
-import { isLandProperty } from "@/lib/utils/forms";
+import { isLandProperty } from "@/utils/forms";
 
 interface ParkingSectionProps {
   control: Control<PropertyFormData>;

@@ -101,7 +101,7 @@ export default function SignInPage() {
         <Card className="w-full max-w-md">
           <CardContent>
             <span
-              className="block mb-6 text-3xl font-semibold text-primary"
+              className="block mb-6 text-5xl font-extrabold text-primary"
               aria-label="Sign In Label">
               Sign In
             </span>

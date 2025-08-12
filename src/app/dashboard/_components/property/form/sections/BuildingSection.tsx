@@ -4,7 +4,7 @@ import { Control, useWatch } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PropertyFormData } from "../property-form-schema";
 import { NumberFieldComponent, SelectFieldComponent } from "../form-fields";
-import { isLandProperty } from "@/lib/utils/forms";
+import { isLandProperty } from "@/utils/forms";
 
 interface BuildingSectionProps {
   control: Control<PropertyFormData>;
@@ -94,7 +94,7 @@ export function BuildingSection({ control }: BuildingSectionProps) {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <NumberFieldComponent
             control={control}
             name="parkingSpaces"
@@ -128,7 +128,7 @@ export function BuildingSection({ control }: BuildingSectionProps) {
             placeholder="Select cooling system"
             options={coolingOptions}
           />
-        </div>
+        </div> */}
       </CardContent>
     </Card>
   );

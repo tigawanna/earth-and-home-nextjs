@@ -24,7 +24,7 @@ import { useState } from "react";
 import { Loader2, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
-import { isLandProperty } from "@/lib/utils/forms";
+import { isLandProperty } from "@/utils/forms";
 import useFormPersist from "react-hook-form-persist";
 import { FormPersist } from "@/lib/react-hook-form/FormPersist";
 
@@ -44,7 +44,6 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false }: 
       ...initialData,
     } as PropertyFormData,
   });
-
 
   // Watch property type for conditional rendering
   const propertyType = useWatch({ control: form.control, name: "propertyType" });
@@ -83,12 +82,12 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false }: 
   return (
     <div className="w-full   p-6 space-y-6">
       <div className="text-center space-y-2">
-        {/* <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1> */}
-        {/* <p className="text-muted-foreground">
+        <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1>
+        <p className="text-muted-foreground">
           {isEdit
             ? "Update your property information"
             : "Fill in the details to list your property"}
-        </p> */}
+        </p>
         {propertyType && (
           <div className="flex justify-center">
             <span
@@ -147,7 +146,9 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false }: 
           <Separator />
 
           {/* Images Upload - Always shown */}
-          <ImagesUploadSection control={form.control as any} />
+          <ImagesUploadSection 
+          control={form.control as any} 
+          propertyTitle={form.watch("title")} />
 
           <Separator />
 

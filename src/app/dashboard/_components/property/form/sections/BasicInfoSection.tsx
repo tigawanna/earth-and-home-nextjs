@@ -8,7 +8,7 @@ import {
   TextareaFieldComponent, 
   SelectFieldComponent 
 } from "../form-fields";
-import { createEnumOptions } from "@/lib/utils/forms";
+import { createEnumOptions } from "@/utils/forms";
 
 interface BasicInfoSectionProps {
   control: Control<PropertyFormData>;

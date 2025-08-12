@@ -9,7 +9,8 @@ import {
   createConditionalSchema,
   isLandProperty,
   isResidentialProperty 
-} from "@/lib/utils/forms";
+} from "@/utils/forms";
+import { getLocalCurrency } from "@/utils/locale";
 
 // Base property form schema with conditional validation
 export const propertyFormSchema = z.object({
@@ -62,7 +63,7 @@ export const propertyFormSchema = z.object({
   ]).optional(),
 
   // Pricing
-  currency: z.string().default("USD"),
+  currency: z.string().default("KES"),
   price: positiveNumberSchema,
   salePrice: positiveNumberSchema,
   rentalPrice: positiveNumberSchema,
@@ -127,7 +128,7 @@ export const defaultPropertyFormValues: Partial<PropertyFormData> = {
   listingType: "sale",
   status: "draft",
   country: "Kenya",
-  currency: "USD",
+  currency: getLocalCurrency(),
   images: [],
   amenities: [],
   features: [],

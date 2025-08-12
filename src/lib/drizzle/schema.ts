@@ -183,7 +183,7 @@ export const property = pgTable(
     zoning: zoningEnum("zoning"), // useful for land
 
     // Pricing (either sale or rent)
-    currency: text("currency").default("USD"),
+    currency: text("currency").default("KES"),
     price: integer("price"), // generic price if you need a single field
     salePrice: integer("sale_price"),
     rentalPrice: integer("rental_price"),

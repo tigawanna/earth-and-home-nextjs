@@ -7,7 +7,7 @@ import {
   MultiSelectFieldComponent, 
   SwitchFieldComponent 
 } from "../form-fields";
-import { COMMON_AMENITIES, COMMON_FEATURES, isLandProperty } from "@/lib/utils/forms";
+import { COMMON_AMENITIES, COMMON_FEATURES, isLandProperty } from "@/utils/forms";
 
 interface FeaturesAmenitiesSectionProps {
   control: Control<PropertyFormData>;

@@ -14,7 +14,7 @@ import { CalendarIcon, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { PropertyFormData } from "./property-form-schema";
-import { FormFieldProps, createEnumOptions, formatCurrency, parseCurrency } from "@/lib/utils/forms";
+import { FormFieldProps, createEnumOptions, formatCurrency, parseCurrency } from "@/utils/forms";
 
 // Basic Text Input Field
 export function TextFieldComponent({ 
@@ -119,14 +119,19 @@ export function NumberFieldComponent({
 }
 
 // Currency Input Field
+interface CurrencyFieldProps extends FormFieldProps<PropertyFormData> {
+  currency?: string;
+}
+
 export function CurrencyFieldComponent({ 
   control, 
   name, 
   label, 
   placeholder, 
   description, 
-  required = false 
-}: FormFieldProps<PropertyFormData>) {
+  required = false,
+  currency = "USD"
+}: CurrencyFieldProps) {
   return (
     <FormField
       control={control}
@@ -137,12 +142,14 @@ export function CurrencyFieldComponent({
             {label}
           </FormLabel>
           <FormControl>
-            <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+            <div className="relative flex justify-center items-center gap-2">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground font-medium">
+                {currency}
+              </span>
               <Input 
                 type="number"
                 placeholder={placeholder} 
-                className="pl-8"
+                className="pl-16"
                 {...field}
                 value={field.value as number || ''}
                 onChange={(e) => field.onChange(e.target.value ? Number(e.target.value) : undefined)}

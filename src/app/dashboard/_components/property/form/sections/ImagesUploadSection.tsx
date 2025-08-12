@@ -12,13 +12,14 @@ import { useState } from "react";
 import { PropertyFormData } from "../property-form-schema";
 import { toast } from "sonner";
 import Image from "next/image";
-import { clientEnvs } from "@/lib/envs/client-env";
+
 
 interface ImagesUploadSectionProps {
   control: Control<PropertyFormData>;
+  propertyTitle:string
 }
 
-export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
+export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSectionProps) {
   const { fields, append, remove, move } = useFieldArray({
     control,
     name: "images",
@@ -26,9 +27,16 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
 
   const [featuredImageIndex, setFeaturedImageIndex] = useState<number>(0);
 
-  // Better Upload hook for handling file uploads
+
+
   const uploadControl = useUploadFiles({
     route: "propertyImages",
+    onBeforeUpload(data) {
+      return data.files.map(file => ({
+        ...file,
+        name: `${propertyTitle}/${file.name}`,
+      }));
+    },
   });
 
   // Watch for upload progress and completion
@@ -98,7 +106,7 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
     toast.success("Featured image updated");
   };
 
-  console.log("Current images:", fields);
+
 
   return (
     <Card>
@@ -125,6 +133,7 @@ export function ImagesUploadSection({ control }: ImagesUploadSectionProps) {
               maxFileSize: "5MB",
               fileTypes: "JPEG, PNG, WebP, GIF",
             }}
+
             metadata={{
               // You can add property ID here when editing existing property
               // propertyId: propertyId

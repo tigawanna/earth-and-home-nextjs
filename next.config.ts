@@ -13,7 +13,10 @@ const nextConfig: NextConfig = {
         hostname: process.env.NEXT_PUBLIC_R2_PUBLIC_ORIGIN || "",
       },
     ],
-  }
+  },
+  experimental: {
+    reactCompiler: true,
+  },
 };
 
 export default nextConfig;

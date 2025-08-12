@@ -8,7 +8,7 @@ import {
   SelectFieldComponent,
   TextFieldComponent 
 } from "../form-fields";
-import { isLandProperty } from "@/lib/utils/forms";
+import { isLandProperty } from "@/utils/forms";
 
 interface LandSectionProps {
   control: Control<PropertyFormData>;
