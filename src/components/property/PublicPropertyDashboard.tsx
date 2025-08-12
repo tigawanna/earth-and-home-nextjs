@@ -1,37 +1,21 @@
-import { PropertyList } from "./list/PropertyList";
+import { PublicPropertyList } from "@/components/property/list/PublicPropertyList";
 import { PropertyFilters } from "@/components/property/PropertyFilters";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import Link from "next/link";
 import { getProperties } from "@/actions/drizzle/property-queries";
 import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/actions/drizzle/property-types";
 
-interface PropertyDashboardProps {
+interface PublicPropertyDashboardProps {
   searchParams: { [key: string]: string | string[] | undefined };
-  userId?: string;
-  showActions?: boolean;
-  showFavorite?: boolean;
-  title?: string;
-  showStatusFilter?: boolean;
-  agentFilter?: boolean; // Whether to filter by user's properties only
 }
 
-export async function PropertyDashboard({
+export async function PublicPropertyDashboard({
   searchParams,
-  userId,
-  showActions = true,
-  showFavorite = true,
-  title = "Properties",
-  showStatusFilter = true,
-  agentFilter = false,
-}: PropertyDashboardProps) {
+}: PublicPropertyDashboardProps) {
   // Convert search params to filters
   const filters: PropertyFiltersType = {
-    ...(agentFilter && userId ? { agentId: userId } : {}), // Only add agentId if filtering by user
     search: searchParams.search as string,
     propertyType: searchParams.propertyType as string,
     listingType: searchParams.listingType as "sale" | "rent",
-    status: searchParams.status as string,
+    status: "active", // Only show active properties in public view
     minPrice: searchParams.minPrice ? Number(searchParams.minPrice) : undefined,
     maxPrice: searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined,
     beds: searchParams.beds ? Number(searchParams.beds) : undefined,
@@ -44,48 +28,36 @@ export async function PropertyDashboard({
   const sortOrder = (searchParams.sortOrder as SortOrder) || "desc";
   const page = searchParams.page ? Number(searchParams.page) : 1;
 
-  // Fetch properties with filters
+  // Get properties with filters
   const result = await getProperties({
     filters,
     sortBy,
     sortOrder,
     page,
     limit: 20,
-    userId,
   });
 
   const properties = result.success ? result.properties : [];
   const totalCount = result.success ? result.pagination.totalCount : 0;
+
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold">{title}</h1>
-          <p className="text-muted-foreground">
-            {totalCount} {totalCount === 1 ? "property" : "properties"} found
-          </p>
-        </div>
-        {showActions && (
-          <Button asChild>
-            <Link href="/dashboard/properties/new">
-              <Plus className="h-4 w-4 mr-2" />
-              Add Property
-            </Link>
-          </Button>
-        )}
+      <div>
+        <h1 className="text-3xl font-bold">Properties</h1>
+        <p className="text-muted-foreground">
+          {totalCount} {totalCount === 1 ? "property" : "properties"} available
+        </p>
       </div>
 
-      {/* Filters */}
+      {/* Filters - No status filter for public view */}
       <PropertyFilters 
-        showStatusFilter={showStatusFilter}
+        showStatusFilter={false}
       />
 
       {/* Properties List */}
-      <PropertyList
+      <PublicPropertyList
         properties={properties}
-        showActions={showActions}
-        showFavorite={showFavorite}
       />
     </div>
   );

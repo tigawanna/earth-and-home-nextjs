@@ -1,10 +1,22 @@
 
-import { getProperties } from "@/actions/drizzle/property-queries";
 import { PropertyDashboard } from "../_components/property/PropertyDashboard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { PropertyFilters, PropertySortBy, SortOrder } from "@/actions/drizzle/property-types";
+import { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+
+function LoadingFallback() {
+  return (
+    <Card>
+      <CardContent className="flex items-center justify-center py-8">
+        <Loader2 className="h-6 w-6 animate-spin mr-2" />
+        <span>Loading properties...</span>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default async function PropertiesPage({
   searchParams,
@@ -21,43 +33,17 @@ export default async function PropertiesPage({
 
   const params = await searchParams;
 
-  // Convert search params to filters
-  const filters: PropertyFilters = {
-    agentId: session.user.id, // Always filter by user's properties
-    search: params.search as string,
-    propertyType: params.propertyType as string,
-    listingType: params.listingType as "sale" | "rent",
-    status: params.status as string,
-    minPrice: params.minPrice ? Number(params.minPrice) : undefined,
-    maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
-    beds: params.beds ? Number(params.beds) : undefined,
-    baths: params.baths ? Number(params.baths) : undefined,
-    city: params.city as string,
-    isFeatured: params.featured === "true" ? true : undefined,
-  };
-
-  const sortBy = (params.sortBy as PropertySortBy) || "createdAt";
-  const sortOrder = (params.sortOrder as SortOrder) || "desc";
-  const page = params.page ? Number(params.page) : 1;
-
-  // Get user's properties with filters
-  const result = await getProperties({
-    filters,
-    sortBy,
-    sortOrder,
-    page,
-    limit: 20,
-    userId: session.user.id,
-  });
-
   return (
-    <PropertyDashboard
-      initialProperties={result.success ? result.properties : []}
-      initialPagination={result.success ? result.pagination : { page: 1, limit: 20, totalCount: 0, totalPages: 0, hasNextPage: false, hasPrevPage: false }}
-      userId={session.user.id}
-      showActions={true}
-      showFavorite={false}
-      title="My Properties"
-    />
+    <Suspense fallback={<LoadingFallback />}>
+      <PropertyDashboard
+        searchParams={params}
+        userId={session.user.id}
+        showActions={true}
+        showFavorite={false}
+        title="My Properties"
+        showStatusFilter={true}
+        agentFilter={true} // Filter by user's properties only
+      />
+    </Suspense>
   );
 }

@@ -1,8 +1,21 @@
-import { getFavoriteProperties } from "@/actions/drizzle/property-queries";
-import { PropertyDashboard } from "../_components/property/PropertyDashboard";
+import { FavoritesDashboard } from "../_components/property/FavoritesDashboard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { Suspense } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+
+function LoadingFallback() {
+  return (
+    <Card>
+      <CardContent className="flex items-center justify-center py-8">
+        <Loader2 className="h-6 w-6 animate-spin mr-2" />
+        <span>Loading favorites...</span>
+      </CardContent>
+    </Card>
+  );
+}
 
 export default async function FavoritesPage({
   searchParams,
@@ -18,19 +31,13 @@ export default async function FavoritesPage({
   }
 
   const params = await searchParams;
-  const page = params.page ? Number(params.page) : 1;
-
-  // Get user's favorite properties
-  const result = await getFavoriteProperties(session.user.id, page, 20);
 
   return (
-    <PropertyDashboard
-      initialProperties={result.success ? result.properties : []}
-      initialPagination={result.success ? result.pagination : { page: 1, limit: 20, totalCount: 0, totalPages: 0, hasNextPage: false, hasPrevPage: false }}
-      userId={session.user.id}
-      showActions={false}
-      showFavorite={true}
-      title="My Favorites"
-    />
+    <Suspense fallback={<LoadingFallback />}>
+      <FavoritesDashboard
+        searchParams={params}
+        userId={session.user.id}
+      />
+    </Suspense>
   );
 }

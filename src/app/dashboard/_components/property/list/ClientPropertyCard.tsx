@@ -25,14 +25,12 @@ interface ClientPropertyCardProps {
   property: PropertyWithAgent;
   showActions?: boolean;
   showFavorite?: boolean;
-  onPropertyDeleted?: () => void;
 }
 
 export function ClientPropertyCard({ 
   property, 
   showActions = true, 
-  showFavorite = true,
-  onPropertyDeleted 
+  showFavorite = true
 }: ClientPropertyCardProps) {
   const [isPending, startTransition] = useTransition();
   const [isDeleting, setIsDeleting] = useState(false);
@@ -45,7 +43,7 @@ export function ClientPropertyCard({
       
       if (result.success) {
         toast.success(result.message);
-        onPropertyDeleted?.();
+        router.refresh(); // This will trigger a re-render of the server component
       } else {
         toast.error(result.message);
       }

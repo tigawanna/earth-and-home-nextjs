@@ -9,14 +9,12 @@ interface PropertyListProps {
   properties: PropertyWithAgent[];
   showActions?: boolean;
   showFavorite?: boolean;
-  onPropertyDeleted?: () => void;
 }
 
 export function PropertyList({ 
   properties, 
   showActions = true, 
-  showFavorite = true,
-  onPropertyDeleted 
+  showFavorite = true
 }: PropertyListProps) {
   if (properties.length === 0) {
     return (
@@ -50,7 +48,6 @@ export function PropertyList({
           property={property}
           showActions={showActions}
           showFavorite={showFavorite}
-          onPropertyDeleted={onPropertyDeleted}
         />
       ))}
     </div>
