@@ -15,9 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, X, Filter } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import {
-  PropertyFilters as PropertyFiltersType,
-} from "@/actions/drizzle/property-types";
+import { PropertyFilters as PropertyFiltersType } from "@/actions/drizzle/property-types";
 
 interface PropertyFiltersProps {
   showStatusFilter?: boolean;
@@ -91,39 +89,13 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
   };
 
   return (
-    <div className="space-y-6">
+    <section className="space-y-4">
       {/* Main Search Card - Always Visible */}
-      <div className="bg-card text-card-foreground rounded-2xl shadow-xl border border-border p-8">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-primary/10 rounded-lg">
-              <Search className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-foreground">Search & Filter</h3>
-              <p className="text-sm text-muted-foreground">
-                Find your perfect property
-              </p>
-            </div>
-          </div>
-          {hasActiveFilters && (
-            <div className="flex items-center gap-2">
-              <Badge variant="secondary" className="bg-primary/10 text-primary">
-                {getActiveFilterCount()} active
-              </Badge>
-              <Button variant="outline" size="sm" onClick={handleClearFilters}>
-                <X className="h-4 w-4 mr-1" />
-                Clear All
-              </Button>
-            </div>
-          )}
-        </div>
-
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+      <div className="rounded-lg border bg-card shadow-sm p-4 transition-colors">
+        {/* Header - More Compact */}
+        <div className="flex flex-col md:flex-row  items-center justify-between gap-3 mb-4">
+          <div className="flex w-full flex-3/4 gap-1 relative">
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by title, description, or location..."
               value={search}
@@ -131,26 +103,49 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 setSearch(e.target.value || null);
                 setCurrentPage(1);
               }}
-              className="pl-12 h-14 text-lg border-2 border-border focus:border-primary rounded-xl"
+              className="pl-10 h-10 text-sm border-border/50 focus:border-primary focus-visible:ring-1 rounded-lg transition-colors"
+              aria-label="Search properties"
             />
+          </div>
+          {/* Listing Type */}
+          <div className="space-y-1 w-full flex-1/4">
+            {/* <Label className="text-xs font-medium text-foreground">For</Label> */}
+            <Select
+              value={listingType || "all"}
+              onValueChange={(value) => {
+                setListingType(value === "all" ? null : value);
+                setCurrentPage(1);
+              }}>
+              <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
+                <SelectValue placeholder="All" />
+              </SelectTrigger>
+              <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
+                <SelectItem value="all">All listings</SelectItem>
+                <SelectItem value="sale">Sale</SelectItem>
+                <SelectItem value="rent">Rent</SelectItem>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
-        {/* Quick Filters Row */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Property Type</Label>
+        {/* Search Bar - More Compact */}
+        {/* <div className="mb-4"></div> */}
+
+        {/* Quick Filters Row - Flex Wrap Layout */}
+        <div className="flex flex-wrap gap-3 mb-3">
+          {/* Property Type */}
+          <div className="space-y-1 min-w-[140px] flex-1">
+            <Label className="text-xs font-medium text-foreground">Type</Label>
             <Select
               value={propertyType || "all"}
               onValueChange={(value) => {
                 setPropertyType(value === "all" ? null : value);
                 setCurrentPage(1);
-              }}
-            >
-              <SelectTrigger className="h-12 border-2 border-border focus:border-primary rounded-lg">
-                <SelectValue placeholder="All types" />
+              }}>
+              <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
+                <SelectValue placeholder="All" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                 <SelectItem value="all">All types</SelectItem>
                 <SelectItem value="house">House</SelectItem>
                 <SelectItem value="apartment">Apartment</SelectItem>
@@ -162,39 +157,19 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Listing Type</Label>
-            <Select
-              value={listingType || "all"}
-              onValueChange={(value) => {
-                setListingType(value === "all" ? null : value);
-                setCurrentPage(1);
-              }}
-            >
-              <SelectTrigger className="h-12 border-2 border-border focus:border-primary rounded-lg">
-                <SelectValue placeholder="All listings" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All listings</SelectItem>
-                <SelectItem value="sale">For Sale</SelectItem>
-                <SelectItem value="rent">For Rent</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Bedrooms</Label>
+          {/* Bedrooms */}
+          <div className="space-y-1 min-w-[120px] flex-1">
+            <Label className="text-xs font-medium text-foreground">Beds</Label>
             <Select
               value={beds?.toString() || "any"}
               onValueChange={(value) => {
                 setBeds(value === "any" ? null : Number(value));
                 setCurrentPage(1);
-              }}
-            >
-              <SelectTrigger className="h-12 border-2 border-border focus:border-primary rounded-lg">
+              }}>
+              <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
                 <SelectValue placeholder="Any" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                 <SelectItem value="any">Any</SelectItem>
                 <SelectItem value="1">1+</SelectItem>
                 <SelectItem value="2">2+</SelectItem>
@@ -205,8 +180,9 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
             </Select>
           </div>
 
-          <div className="space-y-2">
-            <Label className="text-sm font-medium text-foreground">Price Range</Label>
+          {/* Price Range - Responsive Width */}
+          <div className="space-y-1 min-w-[180px] flex-[2_1_320px]">
+            <Label className="text-xs font-medium text-foreground">Price Range</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -216,7 +192,8 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                   setMinPrice(e.target.value ? Number(e.target.value) : null);
                   setCurrentPage(1);
                 }}
-                className="h-12 border-2 border-border focus:border-primary rounded-lg"
+                className="h-9 border-border/50 focus:border-primary rounded-md text-sm w-1/2 min-w-[70px]"
+                aria-label="Minimum price"
               />
               <Input
                 type="number"
@@ -226,36 +203,59 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                   setMaxPrice(e.target.value ? Number(e.target.value) : null);
                   setCurrentPage(1);
                 }}
-                className="h-12 border-2 border-border focus:border-primary rounded-lg"
+                className="h-9 border-border/50 focus:border-primary rounded-md text-sm w-1/2 min-w-[70px]"
+                aria-label="Maximum price"
               />
             </div>
           </div>
         </div>
 
-        {/* Advanced Filters Toggle */}
-        <div className="flex justify-center">
+        {/* Advanced Filters Toggle - Smaller */}
+        <div className="flex justify-center pt-1">
           <Collapsible open={isOpen} onOpenChange={setIsOpen}>
             <CollapsibleTrigger asChild>
-              <Button variant="outline" className="px-6 py-2 rounded-full border-2 border-primary text-primary hover:bg-primary/10">
-                <Filter className="h-4 w-4 mr-2" />
-                {isOpen ? "Hide" : "Show"} Advanced Filters
+              <Button
+                variant="outline"
+                size="sm"
+                className="group px-4 py-1.5 rounded-md border-border/50 text-primary hover:bg-primary/5 hover:border-primary flex items-center gap-2 h-8"
+                aria-expanded={isOpen}
+                aria-controls="advanced-filters">
+                <Filter className="h-3 w-3 group-hover:scale-110 transition-transform" />
+                <span className="font-medium text-xs">{isOpen ? "Hide" : "More"} Filters</span>
               </Button>
             </CollapsibleTrigger>
           </Collapsible>
+          {hasActiveFilters && (
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <Badge
+                variant="secondary"
+                className="bg-primary/10 text-primary text-xs px-2 py-1 rounded-md">
+                {getActiveFilterCount()}
+              </Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleClearFilters}
+                className="group border-border/50 hover:border-primary rounded-md h-8">
+                <X className="h-3 w-3 mr-1 group-hover:rotate-90 transition-transform" />
+                <span className="hidden sm:inline">Clear</span>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Advanced Filters Card */}
+      {/* Advanced Filters Card - More Compact */}
       <Collapsible open={isOpen} onOpenChange={setIsOpen}>
-        <CollapsibleContent>
-          <div className="bg-card text-card-foreground rounded-2xl shadow-lg border border-border p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="p-2 bg-secondary/10 rounded-lg">
-                <Filter className="h-5 w-5 text-secondary-foreground" />
+        <CollapsibleContent id="advanced-filters">
+          <div className="rounded-lg border bg-card shadow-sm p-4 animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-1.5 bg-secondary/10 rounded-lg">
+                <Filter className="h-4 w-4 text-secondary-foreground" />
               </div>
-              <div>
-                <h3 className="text-lg font-semibold text-foreground">Advanced Filters</h3>
-                <p className="text-sm text-muted-foreground">
+              <div className="min-w-0">
+                <h3 className="text-base font-semibold text-foreground">Advanced Filters</h3>
+                <p className="text-xs text-muted-foreground hidden sm:block">
                   Refine your search with detailed criteria
                 </p>
               </div>
@@ -263,16 +263,20 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Sort Section */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-foreground border-b border-border pb-2">Sort & Order</h4>
-                <div className="space-y-3">
-                  <div className="space-y-2">
-                    <Label className="text-sm">Sort By</Label>
-                    <Select value={sortBy} onValueChange={(value) => handleSortChange("sortBy", value)}>
-                      <SelectTrigger className="h-11 border-2 border-border focus:border-primary rounded-lg">
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground text-xs uppercase tracking-wide border-b border-border/50 pb-1">
+                  Sort & Order
+                </h4>
+                <div className="space-y-2">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Sort By</Label>
+                    <Select
+                      value={sortBy}
+                      onValueChange={(value) => handleSortChange("sortBy", value)}>
+                      <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                         <SelectItem value="createdAt">Date Created</SelectItem>
                         <SelectItem value="updatedAt">Last Updated</SelectItem>
                         <SelectItem value="price">Price</SelectItem>
@@ -280,13 +284,15 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       </SelectContent>
                     </Select>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-sm">Sort Order</Label>
-                    <Select value={sortOrder} onValueChange={(value) => handleSortChange("sortOrder", value)}>
-                      <SelectTrigger className="h-11 border-2 border-border focus:border-primary rounded-lg">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Sort Order</Label>
+                    <Select
+                      value={sortOrder}
+                      onValueChange={(value) => handleSortChange("sortOrder", value)}>
+                      <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                         <SelectItem value="desc">Newest First</SelectItem>
                         <SelectItem value="asc">Oldest First</SelectItem>
                       </SelectContent>
@@ -296,22 +302,23 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
               </div>
 
               {/* Property Details */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-foreground border-b border-border pb-2">Property Details</h4>
-                <div className="space-y-3">
-                  <div className="space-y-2">
-                    <Label className="text-sm">Bathrooms</Label>
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground text-xs uppercase tracking-wide border-b border-border/50 pb-1">
+                  Property Details
+                </h4>
+                <div className="space-y-2">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Bathrooms</Label>
                     <Select
                       value={baths?.toString() || "any"}
                       onValueChange={(value) => {
                         setBaths(value === "any" ? null : Number(value));
                         setCurrentPage(1);
-                      }}
-                    >
-                      <SelectTrigger className="h-11 border-2 border-border focus:border-primary rounded-lg">
+                      }}>
+                      <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue placeholder="Any" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                         <SelectItem value="any">Any</SelectItem>
                         <SelectItem value="1">1+</SelectItem>
                         <SelectItem value="2">2+</SelectItem>
@@ -320,9 +327,9 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       </SelectContent>
                     </Select>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <Label className="text-sm">City</Label>
+
+                  <div className="space-y-1">
+                    <Label className="text-xs">City</Label>
                     <Input
                       placeholder="Enter city name"
                       value={city || ""}
@@ -330,12 +337,13 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                         setCity(e.target.value || null);
                         setCurrentPage(1);
                       }}
-                      className="h-11 border-2 border-border focus:border-primary rounded-lg"
+                      className="h-9 border-border/50 focus:border-primary rounded-md text-sm"
+                      aria-label="City"
                     />
                   </div>
 
                   {/* Featured Toggle */}
-                  <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
+                  <div className="flex items-center gap-2 p-2 bg-muted/30 rounded-md border-border/50">
                     <input
                       type="checkbox"
                       id="featured"
@@ -344,31 +352,34 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                         setIsFeatured(e.target.checked ? "true" : null);
                         setCurrentPage(1);
                       }}
-                      className="w-4 h-4 text-primary bg-background border-2 border-border rounded focus:ring-primary"
+                      className="w-3 h-3 text-primary bg-background border border-border rounded focus:ring-primary focus-visible:outline-none"
                     />
-                    <Label htmlFor="featured" className="text-sm font-medium">Featured properties only</Label>
+                    <Label htmlFor="featured" className="text-xs font-medium">
+                      Featured only
+                    </Label>
                   </div>
                 </div>
               </div>
 
               {/* Status & Extended Properties */}
-              <div className="space-y-4">
-                <h4 className="font-medium text-foreground border-b border-border pb-2">Additional Filters</h4>
-                <div className="space-y-3">
+              <div className="space-y-3">
+                <h4 className="font-medium text-foreground text-xs uppercase tracking-wide border-b border-border/50 pb-1">
+                  Additional Filters
+                </h4>
+                <div className="space-y-2">
                   {showStatusFilter && (
-                    <div className="space-y-2">
-                      <Label className="text-sm">Status</Label>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Status</Label>
                       <Select
                         value={status || "all"}
                         onValueChange={(value) => {
                           setStatus(value === "all" ? null : value);
                           setCurrentPage(1);
-                        }}
-                      >
-                        <SelectTrigger className="h-11 border-2 border-border focus:border-primary rounded-lg">
+                        }}>
+                        <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                           <SelectValue placeholder="All statuses" />
                         </SelectTrigger>
-                        <SelectContent>
+                        <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                           <SelectItem value="all">All statuses</SelectItem>
                           <SelectItem value="draft">Draft</SelectItem>
                           <SelectItem value="active">Active</SelectItem>
@@ -382,19 +393,18 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                   )}
 
                   {/* Extended Property Types */}
-                  <div className="space-y-2">
-                    <Label className="text-sm">More Property Types</Label>
+                  <div className="space-y-1">
+                    <Label className="text-xs">More Types</Label>
                     <Select
                       value={propertyType || "all"}
                       onValueChange={(value) => {
                         setPropertyType(value === "all" ? null : value);
                         setCurrentPage(1);
-                      }}
-                    >
-                      <SelectTrigger className="h-11 border-2 border-border focus:border-primary rounded-lg">
+                      }}>
+                      <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue placeholder="All types" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent sideOffset={4} className="max-h-72 overflow-y-auto">
                         <SelectItem value="all">All types</SelectItem>
                         <SelectItem value="duplex">Duplex</SelectItem>
                         <SelectItem value="studio">Studio</SelectItem>
@@ -411,39 +421,37 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
         </CollapsibleContent>
       </Collapsible>
 
-      {/* Pagination */}
+      {/* Pagination - More Compact */}
       {currentPage > 1 && (
-        <div className="bg-card text-card-foreground rounded-2xl shadow-lg border border-border p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-muted rounded-lg">
-                <span className="text-sm font-medium">Page {currentPage}</span>
+        <div className="rounded-lg border bg-card shadow-sm p-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2">
+              <div className="px-2 py-1 bg-muted rounded-md">
+                <span className="text-xs font-medium">Page {currentPage}</span>
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex gap-2 justify-end">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage <= 1}
-                className="px-4 py-2 border-2 border-border hover:border-primary rounded-lg"
-              >
+                className="px-3 py-1.5 border-border/50 hover:border-primary rounded-md disabled:opacity-50 disabled:cursor-not-allowed h-8 text-xs">
                 Previous
               </Button>
 
-              <Button 
-                variant="outline" 
-                size="sm" 
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => setCurrentPage(currentPage + 1)}
-                className="px-4 py-2 border-2 border-border hover:border-primary rounded-lg"
-              >
+                className="px-3 py-1.5 border-border/50 hover:border-primary rounded-md h-8 text-xs">
                 Next
               </Button>
             </div>
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 }
