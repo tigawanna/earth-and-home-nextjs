@@ -187,13 +187,13 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   <Label>Property Type</Label>
                   <Select
-                    value={propertyType || ""}
+                    value={propertyType || "all"}
                     onValueChange={(value) => resetPageOnChange(setPropertyType)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All types</SelectItem>
+                      <SelectItem value="all">All types</SelectItem>
                       <SelectItem value="house">House</SelectItem>
                       <SelectItem value="apartment">Apartment</SelectItem>
                       <SelectItem value="condo">Condo</SelectItem>
@@ -212,13 +212,13 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   <Label>Listing Type</Label>
                   <Select
-                    value={listingType || ""}
+                    value={listingType || "all"}
                     onValueChange={(value) => resetPageOnChange(setListingType)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All listings" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All listings</SelectItem>
+                      <SelectItem value="all">All listings</SelectItem>
                       <SelectItem value="sale">For Sale</SelectItem>
                       <SelectItem value="rent">For Rent</SelectItem>
                     </SelectContent>
@@ -231,13 +231,13 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   <Label>Status</Label>
                   <Select
-                    value={status || ""}
+                    value={status || "all"}
                     onValueChange={(value) => resetPageOnChange(setStatus)(value || null)}>
                     <SelectTrigger>
                       <SelectValue placeholder="All statuses" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All statuses</SelectItem>
+                      <SelectItem value="all">All statuses</SelectItem>
                       <SelectItem value="draft">Draft</SelectItem>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="pending">Pending</SelectItem>
@@ -281,7 +281,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   <Label>Bedrooms</Label>
                   <Select
-                    value={beds?.toString() || ""}
+                    value={beds?.toString() || "1"}
                     onValueChange={(value) =>
                       resetPageOnChange(setBeds)(value ? Number(value) : null)
                     }>
@@ -289,7 +289,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any</SelectItem>
+                      <SelectItem value="1">Any</SelectItem>
                       <SelectItem value="1">1+</SelectItem>
                       <SelectItem value="2">2+</SelectItem>
                       <SelectItem value="3">3+</SelectItem>
@@ -302,7 +302,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   <Label>Bathrooms</Label>
                   <Select
-                    value={baths?.toString() || ""}
+                    value={baths?.toString() || "1"}
                     onValueChange={(value) =>
                       resetPageOnChange(setBaths)(value ? Number(value) : null)
                     }>
@@ -310,7 +310,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       <SelectValue placeholder="Any" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">Any</SelectItem>
+                      <SelectItem value="1">Any</SelectItem>
                       <SelectItem value="1">1+</SelectItem>
                       <SelectItem value="2">2+</SelectItem>
                       <SelectItem value="3">3+</SelectItem>
