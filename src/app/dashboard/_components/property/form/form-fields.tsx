@@ -1,6 +1,6 @@
 "use client";
 
-import { Control, FieldPath } from "react-hook-form";
+import { Control, FieldPath, useWatch } from "react-hook-form";
 import { FormField, FormItem, FormLabel, FormControl, FormMessage, FormDescription } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,7 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, X } from "lucide-react";
+import { CalendarIcon, ChartNoAxesColumnDecreasing, X } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { PropertyFormData } from "./property-form-schema";
@@ -183,7 +183,8 @@ export function SelectFieldComponent({
   required = false,
   options 
 }: SelectFieldProps) {
-
+ const currentValue = useWatch({ control, name });
+//  console.log("Current value in SelectFieldComponent:== ", currentValue);
   return (
     <FormField
       control={control}
