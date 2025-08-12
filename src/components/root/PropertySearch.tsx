@@ -1,11 +1,39 @@
 "use client"
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, MapPin, Filter } from "lucide-react";
 
 export function PropertySearch() {
+  const router = useRouter();
+  const [location, setLocation] = useState("");
+  const [propertyType, setPropertyType] = useState("");
+  const [priceRange, setPriceRange] = useState("");
+  const [bedrooms, setBedrooms] = useState("");
+  const [bathrooms, setBathrooms] = useState("");
+  const [size, setSize] = useState("");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    
+    if (location) params.set("search", location);
+    if (propertyType && propertyType !== "any") params.set("propertyType", propertyType);
+    if (bedrooms && bedrooms !== "any") params.set("beds", bedrooms);
+    if (bathrooms && bathrooms !== "any") params.set("baths", bathrooms);
+    
+    // Handle price range
+    if (priceRange && priceRange !== "any") {
+      const [min, max] = priceRange.split("-");
+      if (min) params.set("minPrice", min);
+      if (max && max !== "+") params.set("maxPrice", max);
+    }
+    
+    // Navigate to properties page with search params
+    router.push(`/properties?${params.toString()}`);
+  };
   return (
     <section className="py-16 bg-background">
       <div className="container mx-auto px-4">
@@ -31,6 +59,8 @@ export function PropertySearch() {
                 <Input 
                   placeholder="Enter city, neighborhood, or ZIP code"
                   className="pl-10 h-12"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
                 />
               </div>
             </div>
@@ -40,11 +70,12 @@ export function PropertySearch() {
               <label className="block text-sm font-medium text-foreground mb-2">
                 Property Type
               </label>
-              <Select>
+              <Select value={propertyType} onValueChange={setPropertyType}>
                 <SelectTrigger className="h-12">
                   <SelectValue placeholder="Any Type" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Any Type</SelectItem>
                   <SelectItem value="house">House</SelectItem>
                   <SelectItem value="condo">Condo</SelectItem>
                   <SelectItem value="apartment">Apartment</SelectItem>
@@ -59,23 +90,27 @@ export function PropertySearch() {
               <label className="block text-sm font-medium text-foreground mb-2">
                 Price Range
               </label>
-              <Select>
+              <Select value={priceRange} onValueChange={setPriceRange}>
                 <SelectTrigger className="h-12">
                   <SelectValue placeholder="Any Price" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="0-300000">$0 - $300K</SelectItem>
-                  <SelectItem value="300000-500000">$300K - $500K</SelectItem>
-                  <SelectItem value="500000-750000">$500K - $750K</SelectItem>
-                  <SelectItem value="750000-1000000">$750K - $1M</SelectItem>
-                  <SelectItem value="1000000+">$1M+</SelectItem>
+                  <SelectItem value="any">Any Price</SelectItem>
+                  <SelectItem value="0-300000">KES 0 - 300K</SelectItem>
+                  <SelectItem value="300000-500000">KES 300K - 500K</SelectItem>
+                  <SelectItem value="500000-750000">KES 500K - 750K</SelectItem>
+                  <SelectItem value="750000-1000000">KES 750K - 1M</SelectItem>
+                  <SelectItem value="1000000+">KES 1M+</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
             {/* Search Button */}
             <div className="flex items-end">
-              <Button className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button 
+                className="w-full h-12 bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={handleSearch}
+              >
                 <Search className="mr-2 h-5 w-5" />
                 Search
               </Button>
@@ -85,11 +120,12 @@ export function PropertySearch() {
           {/* Advanced filters */}
           <div className="mt-6 pt-6 border-t boredr-base-200">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <Select>
+              <Select value={bedrooms} onValueChange={setBedrooms}>
                 <SelectTrigger>
                   <SelectValue placeholder="Bedrooms" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Any Bedrooms</SelectItem>
                   <SelectItem value="1">1+ Bed</SelectItem>
                   <SelectItem value="2">2+ Beds</SelectItem>
                   <SelectItem value="3">3+ Beds</SelectItem>
@@ -98,11 +134,12 @@ export function PropertySearch() {
                 </SelectContent>
               </Select>
 
-              <Select>
+              <Select value={bathrooms} onValueChange={setBathrooms}>
                 <SelectTrigger>
                   <SelectValue placeholder="Bathrooms" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Any Bathrooms</SelectItem>
                   <SelectItem value="1">1+ Bath</SelectItem>
                   <SelectItem value="2">2+ Baths</SelectItem>
                   <SelectItem value="3">3+ Baths</SelectItem>
@@ -110,11 +147,12 @@ export function PropertySearch() {
                 </SelectContent>
               </Select>
 
-              <Select>
+              <Select value={size} onValueChange={setSize}>
                 <SelectTrigger>
                   <SelectValue placeholder="Size (sq ft)" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="any">Any Size</SelectItem>
                   <SelectItem value="500-1000">500-1,000</SelectItem>
                   <SelectItem value="1000-1500">1,000-1,500</SelectItem>
                   <SelectItem value="1500-2000">1,500-2,000</SelectItem>
@@ -123,9 +161,13 @@ export function PropertySearch() {
                 </SelectContent>
               </Select>
 
-              <Button variant="outline" className="border-accent text-accent-foreground hover:bg-accent/20">
+              <Button 
+                variant="outline" 
+                className="border-accent text-accent-foreground hover:bg-accent/20"
+                onClick={handleSearch}
+              >
                 <Filter className="mr-2 h-4 w-4" />
-                More Filters
+                Search with Filters
               </Button>
             </div>
           </div>
