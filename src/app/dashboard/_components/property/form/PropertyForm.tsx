@@ -20,12 +20,14 @@ import { PricingSection } from "./sections/PricingSection";
 import { FeaturesAmenitiesSection } from "./sections/FeaturesAmenitiesSection";
 import { MediaSection } from "./sections/MediaSection";
 import { ImagesUploadSection } from "./files/ImagesUploadSection";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Loader2, Save, Eye } from "lucide-react";
 import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/utils/forms";
 import { FormPersist } from "@/lib/react-hook-form/FormPersist";
+import { createProperty, updateProperty } from "@/actions/drizzle/property";
+import { useRouter } from "next/navigation";
 
 
 
@@ -34,10 +36,13 @@ interface PropertyFormProps {
   initialData?: Partial<PropertyFormData>;
   onSubmit?: (data: PropertyFormData) => Promise<void> | void;
   isEdit?: boolean;
+  propertyId?: string; // Add propertyId for editing
 }
 
-export default function PropertyForm({ initialData, onSubmit, isEdit = false }: PropertyFormProps) {
+export default function PropertyForm({ initialData, onSubmit, isEdit = false, propertyId }: PropertyFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema) as any,
@@ -52,15 +57,43 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false }: 
   const isLand = isLandProperty(propertyType);
 
   const handleSubmit = async (data: PropertyFormData) => {
-    if (!onSubmit) {
-      toast.error("No submit handler provided");
+    if (onSubmit) {
+      // Use custom submit handler if provided
+      setIsSubmitting(true);
+      try {
+        await onSubmit(data);
+        toast.success(isEdit ? "Property updated successfully!" : "Property created successfully!");
+      } catch (error) {
+        console.error("Form submission error:", error);
+        toast.error("Failed to save property. Please try again.");
+      } finally {
+        setIsSubmitting(false);
+      }
       return;
     }
 
+    // Use default actions
     setIsSubmitting(true);
     try {
-      await onSubmit(data);
-      toast.success(isEdit ? "Property updated successfully!" : "Property created successfully!");
+      let result;
+      
+      if (isEdit && propertyId) {
+        result = await updateProperty(propertyId, data);
+      } else {
+        result = await createProperty(data);
+      }
+
+      if (result.success) {
+        toast.success(result.message);
+        // Redirect to the property page or dashboard
+        if (result.property?.slug) {
+          router.push(`/properties/${result.property.slug}`);
+        } else {
+          router.push("/dashboard/properties");
+        }
+      } else {
+        toast.error(result.message);
+      }
     } catch (error) {
       console.error("Form submission error:", error);
       toast.error("Failed to save property. Please try again.");

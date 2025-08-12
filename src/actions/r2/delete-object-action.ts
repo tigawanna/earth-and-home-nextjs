@@ -1,6 +1,6 @@
 "use server";
 
-import { s3Client } from "./r2";
+import { s3Client } from "../../lib/cloudflare/r2/r2";
 import { DeleteObjectCommand, ListObjectsV2Command, DeleteObjectsCommand } from "@aws-sdk/client-s3";
 import { serverEnvs } from "@/lib/envs/server-env";
 

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useTransition } from "react";
 import { useFieldArray, Control } from "react-hook-form";
 import { useUploadFiles } from "better-upload/client";
 import { UploadDropzoneProgress } from "@/components/ui/upload-dropzone-progress";
@@ -12,6 +12,7 @@ import { useState } from "react";
 import { PropertyFormData } from "../property-form-schema";
 import { toast } from "sonner";
 import Image from "next/image";
+import { deleteObject } from "@/actions/r2/delete-object-action";
 
 
 interface ImagesUploadSectionProps {
@@ -32,27 +33,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
 
   const uploadControl = useUploadFiles({
     route: "propertyImages",
-
-    // onBeforeUpload(data): File[] {
-    //   const formattedPropertyTitle = propertyTitle.replace(/\s+/g, '-').toLowerCase();
-    //   return data.files.map((file) => {
-    //     const newFile = new File([file], `${formattedPropertyTitle}/${file.name}`, {
-    //       type: file.type,
-    //       lastModified: file.lastModified,
-    //     });
-
-    //     // Handle custom properties if needed
-    //     for (const [key, value] of Object.entries(file)) {
-    //       if (!(key in newFile)) {
-    //         (newFile as any)[key] = value;
-    //       }
-    //     }
-
-    //     return newFile;
-    //   });
-    // },
   });
-
   // Watch for upload progress and completion
   const { progresses } = uploadControl;
   
@@ -79,8 +60,10 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
       }
     }
   }, [progresses, fields, append]);
+  const [isPending, startTransition] = useTransition();
 
-  const handleRemoveImage = (index: number) => {
+
+  const handleRemoveImage = (index: number, objectKey: string) => {
     remove(index);
     // Adjust featured image index if needed
     if (featuredImageIndex === index) {
@@ -88,6 +71,16 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
     } else if (featuredImageIndex > index) {
       setFeaturedImageIndex(featuredImageIndex - 1);
     }
+    startTransition(async () => {
+      const result = await deleteObject(objectKey);
+
+      if (result.success) {
+        toast.success(result.message);
+        // Optionally trigger a refresh or update state
+      } else {
+        toast.error(result.message);
+      }
+    });
     toast.success("Image removed");
   };
 
@@ -255,7 +248,7 @@ export function ImagesUploadSection({ control,propertyTitle }: ImagesUploadSecti
                         variant="outline"
                         size="sm"
                         className="h-7 px-2 hover:bg-destructive hover:text-destructive-foreground ml-auto"
-                        onClick={() => handleRemoveImage(index)}>
+                        onClick={() => handleRemoveImage(index, field.url)}>
                         <Trash2 className="h-3 w-3" />
                       </Button>
                     </div>

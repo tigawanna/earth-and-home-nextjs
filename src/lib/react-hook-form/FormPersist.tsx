@@ -9,10 +9,10 @@ interface FormPersistProps<T extends FieldValues> {
 
 export function FormPersist<T extends FieldValues>(props: FormPersistProps<T>): ReactElement {
   const { form, formKey } = props;
-  const { watch, setValue } = form;
-  const formData = watch();
-  console.log("FormPersist - title", formData.title);
-  console.log("FormPersist - type", formData.propertyType);
+  // const { watch, setValue } = form;
+  // const formData = watch();
+  // console.log("FormPersist - title", formData.title);
+  // console.log("FormPersist - type", formData.propertyType);
   useFormPersist(formKey, {
     watch: form.watch,
     setValue: form.setValue,
