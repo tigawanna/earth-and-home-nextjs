@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { PropertyWithAgent, PropertyFilters, PropertySortBy, SortOrder, getProperties } from "@/actions/drizzle/property";
+
 import { PropertyList } from "./PropertyList";
 import { PropertyFilters as PropertyFiltersComponent } from "./PropertyFilters";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Plus } from "lucide-react";
 import Link from "next/link";
+import { getProperties } from "@/actions/drizzle/property-queries";
+import { PropertyWithAgent, PropertyFilters, PropertySortBy, SortOrder } from "@/actions/drizzle/property-types";
 
 interface PropertyDashboardProps {
   initialProperties: PropertyWithAgent[];
@@ -29,7 +31,7 @@ export function PropertyDashboard({
   const [properties, setProperties] = useState<PropertyWithAgent[]>(initialProperties);
   const [pagination, setPagination] = useState(initialPagination);
   const [loading, setLoading] = useState(false);
-  
+
   // Filter and sort state
   const [filters, setFilters] = useState<PropertyFilters>({});
   const [sortBy, setSortBy] = useState<PropertySortBy>("createdAt");
@@ -160,44 +162,41 @@ export function PropertyDashboard({
         <Card>
           <CardContent className="flex items-center justify-between py-4">
             <div className="text-sm text-muted-foreground">
-              Showing {((currentPage - 1) * pagination.limit) + 1} to{" "}
+              Showing {(currentPage - 1) * pagination.limit + 1} to{" "}
               {Math.min(currentPage * pagination.limit, pagination.totalCount)} of{" "}
               {pagination.totalCount} properties
             </div>
-            
+
             <div className="flex gap-2">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage - 1)}
-                disabled={!pagination.hasPrevPage}
-              >
+                disabled={!pagination.hasPrevPage}>
                 Previous
               </Button>
-              
+
               {/* Page numbers */}
               {Array.from({ length: Math.min(5, pagination.totalPages) }, (_, i) => {
                 const page = Math.max(1, currentPage - 2) + i;
                 if (page > pagination.totalPages) return null;
-                
+
                 return (
                   <Button
                     key={page}
                     variant={page === currentPage ? "default" : "outline"}
                     size="sm"
-                    onClick={() => handlePageChange(page)}
-                  >
+                    onClick={() => handlePageChange(page)}>
                     {page}
                   </Button>
                 );
               })}
-              
+
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => handlePageChange(currentPage + 1)}
-                disabled={!pagination.hasNextPage}
-              >
+                disabled={!pagination.hasNextPage}>
                 Next
               </Button>
             </div>

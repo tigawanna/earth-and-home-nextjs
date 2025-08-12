@@ -1,4 +1,4 @@
-import { getFavoriteProperties } from "@/actions/drizzle/property";
+import { getFavoriteProperties } from "@/actions/drizzle/property-queries";
 import { PropertyDashboard } from "../_components/property/PropertyDashboard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";

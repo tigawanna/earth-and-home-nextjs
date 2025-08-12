@@ -87,6 +87,9 @@ export const propertyFormSchema = z.object({
   features: z.array(z.string()).default([]),
   utilities: z.record(z.string(), z.boolean()).default({}),
 
+  // Ownership
+  ownerId: z.string().optional(),
+  
   // Flags
   isFeatured: z.boolean().default(false),
   isNew: z.boolean().default(false),

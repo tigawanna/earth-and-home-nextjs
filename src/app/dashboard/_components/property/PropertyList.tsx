@@ -2,12 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { PropertyWithAgent } from "@/actions/drizzle/property";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Edit, Trash2, Eye, MapPin, Home, Bed, Bath } from "lucide-react";
-import { deleteProperty, toggleFavorite } from "@/actions/drizzle/property";
+import { deleteProperty, toggleFavorite } from "@/actions/drizzle/property-mutations";
 import { toast } from "sonner";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,6 +21,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { PropertyWithAgent } from "@/actions/drizzle/property-types";
 
 interface PropertyListProps {
   properties: PropertyWithAgent[];
