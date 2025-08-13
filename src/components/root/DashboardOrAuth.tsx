@@ -11,7 +11,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { User, Settings, LogOut, LayoutDashboard } from "lucide-react"
+import { User, Settings, LogOut, LayoutDashboard, Loader2 } from "lucide-react"
 import { authClient } from "@/lib/client-side-auth"
 
 interface User {
@@ -50,7 +50,7 @@ export function DashboardOrAuth({ className }: DashboardOrAuthProps) {
   if (isPending) {
     return (
       <div className={`flex items-center gap-2 ${className}`}>
-        <Button asChild variant="outline" size="sm" disabled>
+        <Button asChild variant="outline" size="sm">
           <Link href="/auth/signin">Sign In</Link>
         </Button>
       </div>

@@ -27,3 +27,10 @@ Preferences:
 - Put components related to a route in the same folder as the route in `/_components` directory
 - use `nuqs` for search params in client components
 - eg if we have a server component listing properties, the search box which will be a client component will have a nuqs hook that updates the search params in the URL to trigger a re-refetch of the server component
+-if a component goe over 250 lines, consider breaking it down into smaller components
+- Nextjs app router uses suspense for data fetchinig meaning
+ - when fetching in a seraver compoennt (recomended) put all the logic inan async component and call it in the page while wrapped in a suspense boundary
+ - if it makes sense to use a client component , do the same as bove prefetch the data in the server component and pass it down to the client component as props
+
+
+denniskinuthiaw@gmail.com
