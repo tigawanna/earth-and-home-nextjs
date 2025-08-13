@@ -20,8 +20,8 @@ import { PricingSection } from "./sections/PricingSection";
 import { FeaturesAmenitiesSection } from "./sections/FeaturesAmenitiesSection";
 import { MediaSection } from "./sections/MediaSection";
 import { ImagesUploadSection } from "./files/ImagesUploadSection";
-import { useState, useTransition } from "react";
-import { Loader2, Save, Eye } from "lucide-react";
+import { useEffect, useState, useTransition } from "react";
+import { Loader2, Save, Eye, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/utils/forms";
@@ -29,18 +29,17 @@ import { FormPersist } from "@/lib/react-hook-form/FormPersist";
 import { createProperty, updateProperty } from "@/actions/drizzle/property-mutations";
 import { useRouter } from "next/navigation";
 
-
-
-
 interface PropertyFormProps {
   initialData?: Partial<PropertyFormData>;
-  onSubmit?: (data: PropertyFormData) => Promise<void> | void;
   isEdit?: boolean;
   propertyId?: string; // Add propertyId for editing
 }
 
-export default function PropertyForm({ initialData, onSubmit, isEdit = false, propertyId }: PropertyFormProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
+export default function PropertyForm({
+  initialData,
+  isEdit = false,
+  propertyId,
+}: PropertyFormProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
@@ -51,55 +50,41 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
       ...initialData,
     } as PropertyFormData,
   });
+  const errors = form.formState.errors;
+  const isSubmitted = form.formState.isSubmitted;
+
 
   // Watch property type for conditional rendering
   const propertyType = useWatch({ control: form.control, name: "propertyType" });
   const isLand = isLandProperty(propertyType);
 
   const handleSubmit = async (data: PropertyFormData) => {
-    if (onSubmit) {
-      // Use custom submit handler if provided
-      setIsSubmitting(true);
+    startTransition(async () => {
       try {
-        await onSubmit(data);
-        toast.success(isEdit ? "Property updated successfully!" : "Property created successfully!");
+        let result;
+        if (isEdit && propertyId) {
+          result = await updateProperty(propertyId, data);
+        } else {
+          result = await createProperty(data);
+        }
+
+        if (result.success) {
+          toast.success(result.message);
+          // Redirect to the property page or dashboard
+          form.reset();
+          if (result.property?.slug) {
+            router.push(`/properties/${result.property.slug}`);
+          } else {
+            router.push("/dashboard/properties");
+          }
+        } else {
+          toast.error(result.message);
+        }
       } catch (error) {
         console.error("Form submission error:", error);
         toast.error("Failed to save property. Please try again.");
-      } finally {
-        setIsSubmitting(false);
       }
-      return;
-    }
-
-    // Use default actions
-    setIsSubmitting(true);
-    try {
-      let result;
-      
-      if (isEdit && propertyId) {
-        result = await updateProperty(propertyId, data);
-      } else {
-        result = await createProperty(data);
-      }
-
-      if (result.success) {
-        toast.success(result.message);
-        // Redirect to the property page or dashboard
-        if (result.property?.slug) {
-          router.push(`/properties/${result.property.slug}`);
-        } else {
-          router.push("/dashboard/properties");
-        }
-      } else {
-        toast.error(result.message);
-      }
-    } catch (error) {
-      console.error("Form submission error:", error);
-      toast.error("Failed to save property. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
 
   const handleSaveDraft = async () => {
@@ -113,6 +98,29 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
     data.status = "active";
     await handleSubmit(data);
   };
+
+  const isSubmitButtonDisabled = isPending;
+
+  // Get all error messages for user display
+  const getErrorMessages = () => {
+    const errorMessages: string[] = [];
+
+    const extractErrors = (obj: any, prefix = "") => {
+      Object.keys(obj).forEach((key) => {
+        if (obj[key]?.message) {
+          errorMessages.push(`${prefix}${key}: ${obj[key].message}`);
+        } else if (typeof obj[key] === "object" && obj[key] !== null) {
+          extractErrors(obj[key], `${prefix}${key}.`);
+        }
+      });
+    };
+
+    extractErrors(errors);
+    return errorMessages;
+  };
+
+  const errorMessages = getErrorMessages();
+  const hasErrors = errorMessages.length > 0 && isSubmitted;
 
   return (
     <div className="w-full   p-6 space-y-6">
@@ -181,9 +189,7 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
           <Separator />
 
           {/* Images Upload - Always shown */}
-          <ImagesUploadSection 
-          control={form.control as any} 
-          propertyTitle={form.watch("title")} />
+          <ImagesUploadSection control={form.control as any} propertyTitle={form.watch("title")} />
 
           <Separator />
 
@@ -198,9 +204,9 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
                   type="button"
                   variant="outline"
                   onClick={handleSaveDraft}
-                  disabled={isSubmitting}
+                  disabled={isPending}
                   className="flex items-center gap-2">
-                  {isSubmitting ? (
+                  {isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
                     <Save className="h-4 w-4" />
@@ -208,8 +214,11 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
                   Save as Draft
                 </Button>
 
-                <Button type="submit" disabled={isSubmitting} className="flex items-center gap-2">
-                  {isSubmitting ? (
+                <Button
+                  type="submit"
+                  disabled={isSubmitButtonDisabled}
+                  className="flex items-center gap-2">
+                  {isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
                     <Eye className="h-4 w-4" />
@@ -217,6 +226,33 @@ export default function PropertyForm({ initialData, onSubmit, isEdit = false, pr
                   {isEdit ? "Update Property" : "Publish Property"}
                 </Button>
               </div>
+
+              {/* User-Friendly Error Display */}
+              {hasErrors && (
+                <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
+                    <div className="space-y-2">
+                      <h4 className="font-medium text-destructive">
+                        Please fix the following errors:
+                      </h4>
+                      <ul className="text-sm text-destructive/80 space-y-1">
+                        {errorMessages.slice(0, 5).map((error, index) => (
+                          <li key={index} className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 bg-destructive/60 rounded-full mt-2 flex-shrink-0" />
+                            {error}
+                          </li>
+                        ))}
+                        {errorMessages.length > 5 && (
+                          <li className="text-destructive/60 italic">
+                            ... and {errorMessages.length - 5} more errors
+                          </li>
+                        )}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Form State Debug (dev only) */}
               {process.env.NODE_ENV === "development" && (

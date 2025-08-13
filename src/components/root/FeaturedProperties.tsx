@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { PublicPropertyListings } from "@/components/property/PublicPropertyListings";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
+import { Card, CardContent } from "../ui/card";
 
 export function FeaturedProperties() {
   // Search params to get only featured properties
@@ -24,10 +27,12 @@ export function FeaturedProperties() {
         </div>
 
         {/* Use the PublicPropertyListings component with featured filter */}
-        <PublicPropertyListings 
-          searchParams={featuredSearchParams}
-          limit={6} // Show only 6 featured properties on homepage
-        />
+              <Suspense fallback={<LoadingFallback />}>
+                <PublicPropertyListings
+                  searchParams={featuredSearchParams}
+                  limit={6} // Show only 6 featured properties on homepage
+                />
+              </Suspense>
 
         <div className="text-center mt-12">
           <Button
@@ -43,5 +48,16 @@ export function FeaturedProperties() {
         </div>
       </div>
     </section>
+  );
+}
+
+function LoadingFallback() {
+  return (
+    <Card>
+      <CardContent className="flex items-center justify-center py-8">
+        <Loader2 className="h-6 w-6 animate-spin mr-2" />
+        <span>Loading properties...</span>
+      </CardContent>
+    </Card>
   );
 }

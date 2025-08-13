@@ -19,8 +19,12 @@ export async function createProperty(data: PropertyFormData) {
     const session = await auth.api.getSession({
       headers: await headers(),
     });
+
     if (!session?.user?.id || session?.user?.role !== "admin") {
-      throw new Error("Unauthorized");
+      return {
+        success:false,
+        message:"Not authorized"
+      }
     }
 
     // Generate slug from title
