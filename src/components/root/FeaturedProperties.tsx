@@ -8,10 +8,10 @@ import { Card, CardContent } from "../ui/card";
 export function FeaturedProperties() {
   // Search params to get only featured properties
   const featuredSearchParams = {
-    featured: "true",
-    status: "active",
-    sortBy: "createdAt",
-    sortOrder: "desc",
+    // featured: "true",
+    // status: "active",
+    // sortBy: "createdAt",
+    // sortOrder: "desc",
   };
 
   return (
@@ -27,23 +27,20 @@ export function FeaturedProperties() {
         </div>
 
         {/* Use the PublicPropertyListings component with featured filter */}
-              <Suspense fallback={<LoadingFallback />}>
-                <PublicPropertyListings
-                  searchParams={featuredSearchParams}
-                  limit={6} // Show only 6 featured properties on homepage
-                />
-              </Suspense>
+        <Suspense fallback={<LoadingFallback />}>
+          <PublicPropertyListings
+            searchParams={featuredSearchParams}
+            limit={6} // Show only 6 featured properties on homepage
+          />
+        </Suspense>
 
         <div className="text-center mt-12">
           <Button
             size="lg"
             variant="outline"
             className="border-primary text-primary hover:bg-primary/10"
-            asChild
-          >
-            <Link href="/properties">
-              View All Properties
-            </Link>
+            asChild>
+            <Link href="/properties">View All Properties</Link>
           </Button>
         </div>
       </div>

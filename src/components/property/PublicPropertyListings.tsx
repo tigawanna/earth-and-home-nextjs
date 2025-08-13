@@ -13,6 +13,7 @@ export async function PublicPropertyListings({
   searchParams,
   limit,
 }: PublicPropertyListingsProps) {
+  console.log("=== search params  ===== ", searchParams);
   // Convert search params to filters
   const filters: PropertyFiltersType = {
     search: searchParams.search as string,
