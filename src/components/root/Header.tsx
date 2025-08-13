@@ -4,11 +4,10 @@ import { ModeToggle } from "../theme/theme-toggle";
 import { DashboardOrAuth } from "./DashboardOrAuth";
 import Link from "next/link";
 
-export function Header() {
+export function Header({ isLandingPage }: { isLandingPage?: boolean }) {
   return (
     <header className="navbar bg-background shadow-xs border-b boredr-base-200 sticky top-0 z-20 px-8">
       {/* Mobile menu button */}
-
       {/* Logo */}
       <div className="flex-1">
         <div className="flex items-center space-x-3">
@@ -21,54 +20,55 @@ export function Header() {
           </Link>
         </div>
       </div>
-
       {/* Desktop Navigation */}
-      <div className="flex-none hidden lg:block">
-        <nav className="menu menu-horizontal px-1">
-          <li>
-            <a
-              href="#home"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Home
-            </a>
-          </li>
-          <li>
-            <a
-              href="#properties"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Properties
-            </a>
-          </li>
-          <li>
-            <a
-              href="#buy"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Buy
-            </a>
-          </li>
-          <li>
-            <a
-              href="#sell"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Sell
-            </a>
-          </li>
-          <li>
-            <a
-              href="#about"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              About
-            </a>
-          </li>
-          <li>
-            <a
-              href="#contact"
-              className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Contact
-            </a>
-          </li>
-        </nav>
-      </div>
+      {isLandingPage && (
+        <div className="flex-none hidden lg:block">
+          <nav className="menu menu-horizontal px-1">
+            <li>
+              <a
+                href="#home"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="#properties"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                Properties
+              </a>
+            </li>
+            <li>
+              <a
+                href="#buy"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                Buy
+              </a>
+            </li>
+            <li>
+              <a
+                href="#sell"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                Sell
+              </a>
+            </li>
+            <li>
+              <a
+                href="#about"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                About
+              </a>
+            </li>
+            <li>
+              <a
+                href="#contact"
+                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                Contact
+              </a>
+            </li>
+          </nav>
+        </div>
+      )}
       <div className="flex-none md:hidden">
         <label
           htmlFor="header-drawer"

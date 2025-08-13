@@ -135,7 +135,6 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
         <div className="flex flex-wrap gap-3 mb-3">
           {/* Property Type */}
           <div className="space-y-1 min-w-[140px] flex-1">
-            <Label className="text-xs font-medium text-foreground">Type</Label>
             <Select
               value={propertyType || "all"}
               onValueChange={(value) => {
@@ -159,7 +158,6 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
 
           {/* Bedrooms */}
           <div className="space-y-1 min-w-[120px] flex-1">
-            <Label className="text-xs font-medium text-foreground">Beds</Label>
             <Select
               value={beds?.toString() || "any"}
               onValueChange={(value) => {
@@ -182,7 +180,6 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
 
           {/* Price Range - Responsive Width */}
           <div className="space-y-1 min-w-[180px] flex-[2_1_320px]">
-            <Label className="text-xs font-medium text-foreground">Price Range</Label>
             <div className="flex gap-2">
               <Input
                 type="number"
@@ -269,7 +266,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 </h4>
                 <div className="space-y-2">
                   <div className="space-y-1">
-                    <Label className="text-xs">Sort By</Label>
+      
                     <Select
                       value={sortBy}
                       onValueChange={(value) => handleSortChange("sortBy", value)}>
@@ -285,7 +282,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                     </Select>
                   </div>
                   <div className="space-y-1">
-                    <Label className="text-xs">Sort Order</Label>
+             
                     <Select
                       value={sortOrder}
                       onValueChange={(value) => handleSortChange("sortOrder", value)}>
@@ -308,7 +305,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 </h4>
                 <div className="space-y-2">
                   <div className="space-y-1">
-                    <Label className="text-xs">Bathrooms</Label>
+    
                     <Select
                       value={baths?.toString() || "any"}
                       onValueChange={(value) => {
@@ -329,7 +326,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                   </div>
 
                   <div className="space-y-1">
-                    <Label className="text-xs">City</Label>
+ 
                     <Input
                       placeholder="Enter city name"
                       value={city || ""}

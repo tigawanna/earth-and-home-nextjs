@@ -8,7 +8,7 @@ import { SellYourHome } from "@/components/root/SellYourHome";
 
 export default function Home() {
   return (
-    <ResponsiveDrawer>
+    <ResponsiveDrawer isLandingPage>
       <main className="min-h-screen ">
         {/* Hero */}
         <Hero />

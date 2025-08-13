@@ -7,15 +7,16 @@ import { Header } from "./Header";
 
 interface ResponsiveDrawerProps {
   children: React.ReactNode;
+  isLandingPage?: boolean; // Optional prop to indicate if this is the landing page
 }
 
-export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
+export function ResponsiveDrawer({ children, isLandingPage }: ResponsiveDrawerProps) {
   return (
     <div className="drawer">
       <input id="header-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col ">
         {/* Site Header */}
-        <Header />
+        <Header isLandingPage={isLandingPage} />
         {/* Main Content */}
         {children}
       </div>
@@ -44,72 +45,76 @@ export function ResponsiveDrawer({ children }: ResponsiveDrawerProps) {
           </label>
 
           {/* Mobile Navigation Links */}
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#home"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+          {isLandingPage && (
+            <div className="flex flex-col space-y-4 ">
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  Home
+                  <a
+                    href="#home"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      Home
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#properties"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              </li>
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  Properties
+                  <a
+                    href="#properties"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      Properties
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#buy"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              </li>
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  Buy
+                  <a
+                    href="#buy"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      Buy
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#sell"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              </li>
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  Sell
+                  <a
+                    href="#sell"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      Sell
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#about"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              </li>
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  About
+                  <a
+                    href="#about"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      About
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
-          <li>
-            <label htmlFor="header-drawer" aria-label="close sidebar">
-              <a
-                href="#contact"
-                className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              </li>
+              <li>
                 <label htmlFor="header-drawer" aria-label="close sidebar">
-                  Contact
+                  <a
+                    href="#contact"
+                    className="text-muted-foreground hover:text-primary transition-colors font-medium">
+                    <label htmlFor="header-drawer" aria-label="close sidebar">
+                      Contact
+                    </label>
+                  </a>
                 </label>
-              </a>
-            </label>
-          </li>
+              </li>
+            </div>
+          )}
           {/* CTA Buttons */}
           <div className="mt-6">
             <div className="flex flex-wrap  gap-4">
