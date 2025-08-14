@@ -3,8 +3,8 @@ import { PropertyFilters } from "@/components/property/list/PropertyFilters";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import Link from "next/link";
-import { getProperties } from "@/actions/drizzle/property-queries";
-import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/actions/drizzle/property-types";
+import { getProperties } from "@/dal/drizzle/property-queries";
+import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/dal/drizzle/property-types";
 
 interface PropertyDashboardProps {
   searchParams: { [key: string]: string | string[] | undefined };

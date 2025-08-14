@@ -31,6 +31,4 @@ Preferences:
 - Nextjs app router uses suspense for data fetchinig meaning
  - when fetching in a seraver compoennt (recomended) put all the logic inan async component and call it in the page while wrapped in a suspense boundary
  - if it makes sense to use a client component , do the same as bove prefetch the data in the server component and pass it down to the client component as props
-
-
-denniskinuthiaw@gmail.com
+- do not run the linter unless explicitely asked to `npm run lint` run the type checker instead `npx tsc --noEmit`

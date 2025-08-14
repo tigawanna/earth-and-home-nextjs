@@ -12,7 +12,7 @@ import { useState } from "react";
 import { PropertyFormData } from "../property-form-schema";
 import { toast } from "sonner";
 import Image from "next/image";
-import { deleteObject } from "@/actions/r2/delete-object-action";
+import { deleteObject } from "@/dal/r2/delete-object-action";
 
 
 interface ImagesUploadSectionProps {

@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, X, Filter } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { PropertyFilters as PropertyFiltersType } from "@/actions/drizzle/property-types";
+import { PropertyFilters as PropertyFiltersType } from "@/dal/drizzle/property-types";
 
 interface PropertyFiltersProps {
   showStatusFilter?: boolean;

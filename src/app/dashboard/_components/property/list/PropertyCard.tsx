@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, MapPin, Home, Bed, Bath } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { PropertyWithAgent } from "@/actions/drizzle/property-types";
+import { PropertyWithAgent } from "@/dal/drizzle/property-types";
 
 interface PropertyCardProps {
   property: PropertyWithAgent;
