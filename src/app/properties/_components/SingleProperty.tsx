@@ -235,7 +235,7 @@ export async function SingleProperty({ id }: SinglePropertyProps) {
       {/* Detailed Information Tabs */}
       <div className="mt-12">
         <Tabs defaultValue="description" className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4">
             <TabsTrigger value="description">Description</TabsTrigger>
             <TabsTrigger value="features">Features</TabsTrigger>
             <TabsTrigger value="amenities">Amenities</TabsTrigger>

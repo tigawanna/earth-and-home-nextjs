@@ -2,7 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Play, Camera, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
@@ -81,13 +87,19 @@ export function PropertyImageGallery({
           {/* Image overlay buttons */}
           <div className="absolute top-4 right-4 flex gap-2">
             {videoUrl && (
-              <Button size="sm" variant="secondary" className="bg-black/50 hover:bg-black/70 text-white border-0">
+              <Button
+                size="sm"
+                variant="secondary"
+                className="bg-black/50 hover:bg-black/70 text-white border-0">
                 <Play className="h-4 w-4 mr-2" />
                 Video Tour
               </Button>
             )}
             {virtualTourUrl && (
-              <Button size="sm" variant="secondary" className="bg-black/50 hover:bg-black/70 text-white border-0">
+              <Button
+                size="sm"
+                variant="secondary"
+                className="bg-black/50 hover:bg-black/70 text-white border-0">
                 <Camera className="h-4 w-4 mr-2" />
                 Virtual Tour
               </Button>
@@ -99,16 +111,8 @@ export function PropertyImageGallery({
             <Badge variant={status === "active" ? "default" : "secondary"}>
               {status.charAt(0).toUpperCase() + status.slice(1)}
             </Badge>
-            {isFeatured && (
-              <Badge variant="destructive">
-                ⭐ Featured
-              </Badge>
-            )}
-            {isNew && (
-              <Badge className="bg-green-600 hover:bg-green-700">
-                New
-              </Badge>
-            )}
+            {isFeatured && <Badge variant="destructive">⭐ Featured</Badge>}
+            {isNew && <Badge className="bg-green-600 hover:bg-green-700">New</Badge>}
           </div>
 
           {/* Image count indicator */}
@@ -122,6 +126,8 @@ export function PropertyImageGallery({
 
           {/* Full screen gallery */}
           <DialogContent className="max-w-7xl w-full h-full max-h-screen p-0">
+            <DialogTitle className="sr-only">{title} Image Gallery</DialogTitle>
+            <DialogDescription className="sr-only">View all images of {title}</DialogDescription>
             <div className="relative w-full h-full bg-black">
               {hasImages && (
                 <>
@@ -132,7 +138,7 @@ export function PropertyImageGallery({
                     className="object-contain"
                     priority
                   />
-                  
+
                   {/* Navigation buttons */}
                   {images.length > 1 && (
                     <>
@@ -140,16 +146,14 @@ export function PropertyImageGallery({
                         variant="ghost"
                         size="icon"
                         className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-                        onClick={prevImage}
-                      >
+                        onClick={prevImage}>
                         <ChevronLeft className="h-6 w-6" />
                       </Button>
                       <Button
                         variant="ghost"
                         size="icon"
                         className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
-                        onClick={nextImage}
-                      >
+                        onClick={nextImage}>
                         <ChevronRight className="h-6 w-6" />
                       </Button>
                     </>
@@ -167,8 +171,7 @@ export function PropertyImageGallery({
                     variant="ghost"
                     size="icon"
                     className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white"
-                    onClick={() => setIsOpen(false)}
-                  >
+                    onClick={() => setIsOpen(false)}>
                     <X className="h-6 w-6" />
                   </Button>
                 </>
@@ -190,8 +193,7 @@ export function PropertyImageGallery({
               onClick={() => {
                 setCurrentImageIndex(index);
                 setIsOpen(true);
-              }}
-            >
+              }}>
               <Image
                 src={image}
                 alt={`${title} - Thumbnail ${index + 1}`}
