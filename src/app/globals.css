@@ -196,7 +196,7 @@
   --background-base: var(--color-base-100);
   --foreground-base: var(--color-base-content);
 
-  /* --card-base: var(--color-base-200); */
+  /* --card-base: var(--color-neutral); */
   --card-base: color-mix(in oklch, var(--color-base-content) 3%, transparent);
   --card-foreground-base: var(--color-base-content);
 

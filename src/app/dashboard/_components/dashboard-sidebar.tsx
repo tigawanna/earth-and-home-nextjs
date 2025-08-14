@@ -238,6 +238,7 @@ export function DashboardSidebar() {
                 <DropdownMenuItem asChild>
                   <ModeToggle />
                 </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/settings">
                     <User className="mr-2 h-4 w-4" />
