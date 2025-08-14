@@ -36,7 +36,7 @@ export function PropertyImageGallery({
   const [isOpen, setIsOpen] = useState(false);
 
   const hasImages = images && images.length > 0;
-  const mainImage = hasImages ? images[0] : null;
+  const mainImage = hasImages ? images[currentImageIndex] : null;
 
   const nextImage = () => {
     if (hasImages) {
@@ -51,9 +51,9 @@ export function PropertyImageGallery({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="w-full">
       {/* Main Image */}
-      <div className="relative aspect-video rounded-lg overflow-hidden bg-muted group cursor-pointer">
+      <div className="relative aspect-video w-full bg-muted group cursor-pointer">
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <div className="w-full h-full relative group">
@@ -63,13 +63,13 @@ export function PropertyImageGallery({
                     src={mainImage}
                     alt={title}
                     fill
-                    className="object-cover transition-all duration-300 group-hover:scale-105"
+                    className="object-cover transition-transform duration-200 group-hover:scale-[1.02]"
                     priority
                   />
-                  {/* Hover overlay */}
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Camera className="h-12 w-12 text-white drop-shadow-lg" />
+                  {/* Subtle hover overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-200 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      <Camera className="h-8 w-8 text-white drop-shadow-lg" />
                     </div>
                   </div>
                 </>
@@ -117,9 +117,48 @@ export function PropertyImageGallery({
 
           {/* Image count indicator */}
           {hasImages && images.length > 1 && (
+            <>
+              <div className="absolute bottom-4 right-4">
+                <Badge variant="secondary" className="bg-black/50 text-white border-0">
+                  {images.length} Photos
+                </Badge>
+              </div>
+              
+              {/* Navigation arrows for main image */}
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  prevImage();
+                }}
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  nextImage();
+                }}
+              >
+                <ChevronRight className="w-4 h-4" />
+              </Button>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
+                {currentImageIndex + 1} / {images.length}
+              </div>
+            </>
+          )}
+          
+          {hasImages && images.length === 1 && (
             <div className="absolute bottom-4 right-4">
               <Badge variant="secondary" className="bg-black/50 text-white border-0">
-                {images.length} Photos
+                {images.length} Photo
               </Badge>
             </div>
           )}
@@ -183,30 +222,32 @@ export function PropertyImageGallery({
 
       {/* Image Thumbnails */}
       {hasImages && images.length > 1 && (
-        <div className="grid grid-cols-5 gap-2">
-          {images.slice(0, 5).map((image, index) => (
-            <button
-              key={index}
-              className={`relative aspect-square rounded overflow-hidden bg-muted transition-all hover:ring-2 hover:ring-primary ${
-                currentImageIndex === index ? "ring-2 ring-primary" : ""
-              }`}
-              onClick={() => {
-                setCurrentImageIndex(index);
-                setIsOpen(true);
-              }}>
-              <Image
-                src={image}
-                alt={`${title} - Thumbnail ${index + 1}`}
-                fill
-                className="object-cover"
-              />
-              {index === 4 && images.length > 5 && (
-                <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                  <span className="text-white font-medium">+{images.length - 4}</span>
-                </div>
-              )}
-            </button>
-          ))}
+        <div className="px-4 py-4 bg-background">
+          <div className="flex gap-2 overflow-x-auto">
+            {images.slice(0, 5).map((image, index) => (
+              <button
+                key={index}
+                className={`relative w-20 h-20 rounded overflow-hidden flex-shrink-0 border-2 transition-all duration-200 hover:ring-2 hover:ring-primary/60 ${
+                  currentImageIndex === index ? "ring-2 ring-primary" : "border-transparent"
+                }`}
+                onClick={() => {
+                  setCurrentImageIndex(index);
+                  setIsOpen(true);
+                }}>
+                <Image
+                  src={image}
+                  alt={`${title} - Thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover transition-transform duration-200 hover:scale-105"
+                />
+                {index === 4 && images.length > 5 && (
+                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <span className="text-white font-medium text-xs">+{images.length - 4}</span>
+                  </div>
+                )}
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>
