@@ -3,10 +3,7 @@
 import { Control, useWatch } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PropertyFormData } from "../property-form-schema";
-import { 
-  MultiSelectFieldComponent, 
-  SwitchFieldComponent 
-} from "../form-fields";
+import { MultiSelectFieldComponent, SwitchFieldComponent } from "../form-fields";
 import { COMMON_AMENITIES, COMMON_FEATURES, isLandProperty } from "@/utils/forms";
 
 interface FeaturesAmenitiesSectionProps {
@@ -14,14 +11,14 @@ interface FeaturesAmenitiesSectionProps {
 }
 
 // Convert readonly arrays to regular arrays for the component
-const amenityOptions = COMMON_AMENITIES.map(amenity => ({
+const amenityOptions = COMMON_AMENITIES.map((amenity) => ({
   value: amenity,
-  label: amenity
+  label: amenity,
 }));
 
-const featureOptions = COMMON_FEATURES.map(feature => ({
+const featureOptions = COMMON_FEATURES.map((feature) => ({
   value: feature,
-  label: feature
+  label: feature,
 }));
 
 const landFeatures = [
@@ -43,7 +40,7 @@ const landFeatures = [
   "Buildable",
   "Subdivided",
   "Conservation Area",
-].map(feature => ({ value: feature, label: feature }));
+].map((feature) => ({ value: feature, label: feature }));
 
 const commonUtilities = [
   { key: "electricity", label: "Electricity" },
@@ -64,32 +61,35 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
         <CardTitle>Features & Amenities</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Features */}
-        <div>
-          <MultiSelectFieldComponent
-            control={control}
-            name="features"
-            label={isLand ? "Land Features" : "Property Features"}
-            placeholder={isLand ? "Select land features..." : "Select property features..."}
-            options={isLand ? landFeatures : featureOptions}
-            description={isLand ? "Special characteristics of the land" : "Interior and exterior features"}
-          />
-        </div>
-
-        {/* Amenities (not for land) */}
-        {!isLand && (
+        <div className="flex gap-[10%] flex-wrap ">
+          {/* Features */}
           <div>
             <MultiSelectFieldComponent
               control={control}
-              name="amenities"
-              label="Amenities"
-              placeholder="Select amenities..."
-              options={amenityOptions}
-              description="Available amenities and facilities"
+              name="features"
+              label={isLand ? "Land Features" : "Property Features"}
+              placeholder={isLand ? "Select land features..." : "Select property features..."}
+              options={isLand ? landFeatures : featureOptions}
+              description={
+                isLand ? "Special characteristics of the land" : "Interior and exterior features"
+              }
             />
           </div>
-        )}
 
+          {/* Amenities (not for land) */}
+          {!isLand && (
+            <div>
+              <MultiSelectFieldComponent
+                control={control}
+                name="amenities"
+                label="Amenities"
+                placeholder="Select amenities..."
+                options={amenityOptions}
+                description="Available amenities and facilities"
+              />
+            </div>
+          )}
+        </div>
         {/* Utilities */}
         <div>
           <h4 className="text-sm font-medium mb-3">Available Utilities</h4>
@@ -116,7 +116,7 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
               label="Featured Listing"
               description="Highlight this property in search results"
             />
-            
+
             <SwitchFieldComponent
               control={control}
               name="isNew"
