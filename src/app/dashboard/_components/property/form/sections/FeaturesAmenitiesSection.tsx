@@ -61,7 +61,7 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
         <CardTitle>Features & Amenities</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div className="flex gap-[10%] flex-wrap ">
+        <div className="flex gap-[10%] flex-wrap bg-muted/50 p-2 ">
           {/* Features */}
           <div>
             <MultiSelectFieldComponent
@@ -91,7 +91,7 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
           )}
         </div>
         {/* Utilities */}
-        <div>
+        <div className="bg-muted/50 p-2">
           <h4 className="text-sm font-medium mb-3">Available Utilities</h4>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {commonUtilities.map((utility) => (
@@ -107,7 +107,7 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
         </div>
 
         {/* Property Flags */}
-        <div className="border-t pt-4">
+        <div className="bg-muted/50 p-2">
           <h4 className="text-sm font-medium mb-3">Listing Options</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <SwitchFieldComponent

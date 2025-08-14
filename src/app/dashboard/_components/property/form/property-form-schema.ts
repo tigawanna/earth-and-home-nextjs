@@ -74,7 +74,7 @@ export const propertyFormSchema = z.object({
 
   // Media & Features
   images: z.array(z.object({
-    url: z.string().url(),
+    url: z.url(),
     key: z.string(),
     name: z.string(),
     size: z.number(),

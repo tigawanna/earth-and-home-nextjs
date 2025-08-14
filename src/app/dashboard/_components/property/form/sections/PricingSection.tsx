@@ -51,15 +51,15 @@ export function PricingSection({ control }: PricingSectionProps) {
           <div>
             <CardTitle className="text-xl text-foreground">Pricing & Fees</CardTitle>
             <p className="text-sm text-muted-foreground mt-1">
-              Set competitive pricing to attract potential {isSale ? 'buyers' : 'tenants'}
+              Set competitive pricing to attract potential {isSale ? "buyers" : "tenants"}
             </p>
           </div>
         </div>
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Currency and Main Price */}
-        <div className="relative p-6 border-2 border-dashed border-accent rounded-xl bg-gradient-to-br from-accent/20 to-accent/10">
-          <div className="absolute -top-3 left-4 bg-background px-3 py-1 rounded-full">
+        <div className="relative p-6 rounded-xl bg-muted/50 ">
+          <div className="absolute -top-3 left-4  px-3 py-1 rounded-full">
             <span className="text-sm font-medium text-accent-foreground">Primary Pricing</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -72,7 +72,7 @@ export function PricingSection({ control }: PricingSectionProps) {
               options={CURRENCIES}
               required
             />
-            
+
             {isSale && (
               <CurrencyFieldComponent
                 control={control}
@@ -83,7 +83,7 @@ export function PricingSection({ control }: PricingSectionProps) {
                 required
               />
             )}
-            
+
             {isRent && (
               <CurrencyFieldComponent
                 control={control}
@@ -110,7 +110,7 @@ export function PricingSection({ control }: PricingSectionProps) {
                 description="Typically 1-2 months rent"
                 currency={selectedCurrency || "KES"}
               />
-              
+
               <DateFieldComponent
                 control={control}
                 name="availableFrom"
@@ -134,7 +134,7 @@ export function PricingSection({ control }: PricingSectionProps) {
               description="Homeowners Association fee (if applicable)"
               currency={selectedCurrency || "KES"}
             />
-            
+
             <CurrencyFieldComponent
               control={control}
               name="annualTaxes"

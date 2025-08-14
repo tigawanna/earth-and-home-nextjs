@@ -7,8 +7,9 @@ export function getLocalCurrency(): string {
   try {
     // Try to detect from browser locale if available
     if (typeof navigator !== 'undefined') {
-      const locale = navigator.language || 'en-KE';
-      
+      // const locale = navigator.language || 'en-KE';
+      const locale = 'en-KE';
+
       // Kenya-specific locales
       if (locale.includes('KE') || locale.includes('ke')) {
         return 'KES';

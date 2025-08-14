@@ -252,7 +252,7 @@ export default function PropertyForm({
                     onClick={handleSaveDraft}
                     disabled={isPending}
                     size="lg"
-                    className="flex items-center gap-2 px-8 py-3 border-2 hover:border-primary/50 transition-all duration-200">
+                    className="flex ">
                     {isPending ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
@@ -265,7 +265,7 @@ export default function PropertyForm({
                     type="submit"
                     disabled={isSubmitButtonDisabled}
                     size="lg"
-                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-200">
+                    className="flex">
                     {isPending ? (
                       <Loader2 className="h-5 w-5 animate-spin" />
                     ) : (
