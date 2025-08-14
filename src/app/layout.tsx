@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Toaster } from "@/components/ui/sonner";
+import { TanstackQueryProvider } from "../lib/tanstack/query/tsq-provider";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -66,15 +68,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <NuqsAdapter>
-          <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
-            <div>
-              <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 z-[-1]" />
-              {children}
-            </div>
-            <Toaster />
-          </ThemeProvider>
-        </NuqsAdapter>
+        <TanstackQueryProvider>
+          <NuqsAdapter>
+            <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
+              <div>
+                <div className="fixed inset-0 bg-gradient-to-b from-background to-background/80 z-[-1]" />
+                {children}
+              </div>
+              <Toaster />
+            </ThemeProvider>
+          </NuqsAdapter>
+        </TanstackQueryProvider>
       </body>
     </html>
   );
