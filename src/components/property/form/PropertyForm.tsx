@@ -29,8 +29,13 @@ import { FormPersist } from "@/lib/react-hook-form/FormPersist";
 import { createProperty, updateProperty } from "@/dal/drizzle/property-mutations";
 import { useRouter } from "next/navigation";
 
+// Convert Partial<T> (undefined) to nullable properties (null)
+type Nullable<T> = {
+  [K in keyof T]?: T[K] | null;
+};
+
 interface PropertyFormProps {
-  initialData?: Partial<PropertyFormData>;
+  initialData?: Nullable<PropertyFormData>;
   isEdit?: boolean;
   propertyId?: string; // Add propertyId for editing
 }
@@ -40,6 +45,7 @@ export default function PropertyForm({
   isEdit = false,
   propertyId,
 }: PropertyFormProps) {
+  console.log("== PropertyForm Rendered ==", initialData, isEdit, propertyId);
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
