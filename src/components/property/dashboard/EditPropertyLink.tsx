@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/client-side-auth";
-import { ChevronRight, Pen } from "lucide-react";
+import { ChevronRight, Loader, Pen } from "lucide-react";
 import Link from "next/link";
 
 interface EditPropertyLinkProps {
@@ -12,17 +12,17 @@ export function EditPropertyLink({ id }: EditPropertyLinkProps) {
   const { data, isPending } = authClient.useSession();
   if (isPending) {
     return (
-      <Button disabled className="text-blue-500">
-        <Link href={`/properties/${id}`} className="text-blue-500">
-          <Pen className="mr-2 h-4 w-4" />
+      <Button variant={"outline"} disabled className="" size={"sm"}>
+        <Link href={`/properties/${id}`} className="">
+          <Loader className="animate-spin mr-2 h-4 w-4" />
         </Link>
       </Button>
     );
   }
   if (data?.user?.role !== "admin") {
     return (
-      <Button className="text-blue-500">
-        <Link href={`/properties/${id}`} className="text-blue-500">
+      <Button variant={"outline"} className="" size={"sm"}>
+        <Link href={`/properties/${id}`} className="">
           <ChevronRight className="mr-2 h-4 w-4" />
         </Link>
       </Button>
@@ -30,8 +30,8 @@ export function EditPropertyLink({ id }: EditPropertyLinkProps) {
   }
 
   return (
-    <Button disabled className="text-blue-500">
-      <Link href={`/dashboard/properties/${id}/edit`} className="text-blue-500">
+    <Button variant={"outline"} className="" size={"sm"}>
+      <Link href={`/dashboard/properties/${id}/edit`} className="">
         <Pen className="mr-2 h-4 w-4" />
       </Link>
     </Button>

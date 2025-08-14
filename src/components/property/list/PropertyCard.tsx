@@ -5,6 +5,7 @@ import { Heart, MapPin, Home, Bed, Bath } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { PropertyWithAgent } from "@/dal/drizzle/property-types";
+import { EditPropertyLink } from "../dashboard/EditPropertyLink";
 
 interface PropertyCardProps {
   property: PropertyWithAgent;
@@ -31,20 +32,14 @@ export function PropertyCard({
   const defaultActions = (
     <div className="flex gap-2 pt-2">
       <Button asChild variant="outline" size="sm" className="flex-1">
-        <Link href={`/properties/${property.slug}`}>
-          View Details
-        </Link>
+        <Link href={`/properties/${property.slug}`}>View Details</Link>
       </Button>
-
+      <EditPropertyLink id={property.id} />
       {property.isFavorited !== undefined && (
         <Button asChild variant="outline" size="sm">
           <Link href={`/properties/${property.slug}`}>
-            <Heart 
-              className={`h-4 w-4 ${
-                property.isFavorited 
-                  ? "fill-red-500 text-red-500" 
-                  : ""
-              }`} 
+            <Heart
+              className={`h-4 w-4 ${property.isFavorited ? "fill-red-500 text-red-500" : ""}`}
             />
           </Link>
         </Button>
