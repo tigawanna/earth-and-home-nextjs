@@ -1,6 +1,6 @@
 import { getProperty } from "@/dal/drizzle/property-queries";
 import { SinglePropertyNotFound } from "./query-states";
-import { PropertyImageGallery } from "./PropertyImageGallery";
+import { PropertyImageGallery } from "./list/PropertyImageGallery";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

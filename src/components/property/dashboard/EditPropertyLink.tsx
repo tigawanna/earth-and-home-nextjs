@@ -13,7 +13,7 @@ export function EditPropertyLink({ id }: EditPropertyLinkProps) {
   if (isPending) {
     return (
       <Button disabled className="text-blue-500">
-        <Link href={`/properties/${id}/edit`} className="text-blue-500">
+        <Link href={`/properties/${id}`} className="text-blue-500">
           <Pen className="mr-2 h-4 w-4" />
         </Link>
       </Button>
@@ -21,7 +21,7 @@ export function EditPropertyLink({ id }: EditPropertyLinkProps) {
   }
   if (data?.user?.role !== "admin") {
     return (
-      <Button disabled className="text-blue-500">
+      <Button className="text-blue-500">
         <Link href={`/properties/${id}`} className="text-blue-500">
           <ChevronRight className="mr-2 h-4 w-4" />
         </Link>
@@ -31,7 +31,7 @@ export function EditPropertyLink({ id }: EditPropertyLinkProps) {
 
   return (
     <Button disabled className="text-blue-500">
-      <Link href={`/properties/${id}/edit`} className="text-blue-500">
+      <Link href={`/dashboard/properties/${id}/edit`} className="text-blue-500">
         <Pen className="mr-2 h-4 w-4" />
       </Link>
     </Button>
