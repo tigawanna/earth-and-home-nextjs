@@ -1,5 +1,5 @@
 import { Card } from "@/components/ui/card";
-import { PropertyCard } from "@/app/dashboard/_components/property/list/PropertyCard";
+import { PropertyCard } from "@/components/property/list/PropertyCard";
 import { getProperties } from "@/dal/drizzle/property-queries";
 import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/dal/drizzle/property-types";
 import { Home } from "lucide-react";

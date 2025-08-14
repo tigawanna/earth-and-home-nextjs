@@ -1,5 +1,5 @@
 
-import { PropertyDashboard } from "../_components/property/PropertyDashboard";
+import { PropertyDashboard } from "../../../components/property/PropertyDashboard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";

@@ -1,6 +1,6 @@
 "use server";
 
-import { PropertyFormData } from "@/app/dashboard/_components/property/form/property-form-schema";
+import { PropertyFormData } from "@/components/property/form/property-form-schema";
 import { auth } from "@/lib/auth";
 import { db } from "@/lib/drizzle/client";
 import { favorite, property } from "@/lib/drizzle/schema";

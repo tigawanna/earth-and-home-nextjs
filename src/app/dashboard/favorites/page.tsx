@@ -1,4 +1,4 @@
-import { FavoritesDashboard } from "../_components/property/FavoritesDashboard";
+import { FavoritesDashboard } from "../../../components/property/FavoritesDashboard";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
