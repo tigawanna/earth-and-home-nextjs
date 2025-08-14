@@ -18,10 +18,10 @@ export function ModeToggle({compact}:{compact?: boolean}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className=" ">
+        <Button variant="outline" size="icon" className="">
           <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
-          <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
-          <span className="sr-only">Toggle theme</span>
+          {/* <Moon className="h-[1.2rem] w-[1.2rem] transition-all" /> */}
+          <span className="">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

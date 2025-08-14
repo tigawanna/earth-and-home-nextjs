@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Building2,
   ChevronDown,
@@ -14,8 +14,8 @@ import {
   BarChart3,
   LogOut,
   User,
-  Shield
-} from "lucide-react"
+  Shield,
+} from "lucide-react";
 
 import {
   Sidebar,
@@ -28,17 +28,18 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { authClient } from "@/lib/client-side-auth"
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { authClient } from "@/lib/client-side-auth";
+import { ModeToggle } from "@/components/theme/theme-toggle";
 
 // Menu items for regular users
 const userMenuItems = [
@@ -67,7 +68,7 @@ const userMenuItems = [
     url: "/dashboard/settings",
     icon: Settings,
   },
-]
+];
 
 // Additional menu items for admins
 const adminMenuItems = [
@@ -86,52 +87,50 @@ const adminMenuItems = [
     url: "/dashboard/admin/analytics",
     icon: BarChart3,
   },
-]
+];
 
 interface User {
-  id: string
-  name: string
-  email: string
-  image?: string
-  role?: string
+  id: string;
+  name: string;
+  email: string;
+  image?: string;
+  role?: string;
 }
 
 export function DashboardSidebar() {
-  const pathname = usePathname()
-  const [user, setUser] = useState<User | null>(null)
-  const [isAdmin, setIsAdmin] = useState(false)
+  const pathname = usePathname();
+  const [user, setUser] = useState<User | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const session = await authClient.getSession()
+        const session = await authClient.getSession();
         if (session.data?.user) {
-          const userData = session.data.user as User
-          setUser(userData)
-          
+          const userData = session.data.user as User;
+          setUser(userData);
+
           // Check if user is admin by checking role
-          setIsAdmin(userData.role === "admin")
+          setIsAdmin(userData.role === "admin");
         }
       } catch (error) {
-        console.error("Failed to fetch user:", error)
+        console.error("Failed to fetch user:", error);
       }
-    }
+    };
 
-    fetchUser()
-  }, [])
+    fetchUser();
+  }, []);
 
   const handleSignOut = async () => {
     try {
-      await authClient.signOut()
-      window.location.href = "/"
+      await authClient.signOut();
+      window.location.href = "/";
     } catch (error) {
-      console.error("Sign out failed:", error)
+      console.error("Sign out failed:", error);
     }
-  }
+  };
 
-  const allMenuItems = isAdmin 
-    ? [...userMenuItems, ...adminMenuItems]
-    : userMenuItems
+  const allMenuItems = isAdmin ? [...userMenuItems, ...adminMenuItems] : userMenuItems;
 
   return (
     <Sidebar>
@@ -172,7 +171,7 @@ export function DashboardSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
           {/*  go to landing page */}
-          <SidebarMenuItem >
+          <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/">
                 <Home className="mr-2 h-4 w-4" />
@@ -236,6 +235,9 @@ export function DashboardSidebar() {
                 side="bottom"
                 align="end"
                 sideOffset={4}>
+                <DropdownMenuItem asChild>
+                  <ModeToggle />
+                </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/dashboard/settings">
                     <User className="mr-2 h-4 w-4" />

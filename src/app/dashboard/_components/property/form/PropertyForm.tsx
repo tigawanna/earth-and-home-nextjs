@@ -168,6 +168,9 @@ export default function PropertyForm({
                      style={{ width: "70%" }} />
               </div>
             </div>
+            <Button type="button" variant={"outline"} onClick={()=>{
+              toast("Hello from button")
+            }}>hello</Button>
 
             {/* Basic Information - Enhanced */}
             <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
