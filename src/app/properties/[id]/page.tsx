@@ -3,16 +3,18 @@ import { SingleProperty } from "../_components/SingleProperty";
 import { SinglePropertyLoadingFallback } from "../_components/query-states";
 
 interface PageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-export default function SinglePropertyPage({ params }: PageProps) {
+export default async function SinglePropertyPage({ params }: PageProps) {
+  const { id } = await params;
+  
   return (
-    <section className="w-full h-full  flex flex-col items-center justify-center">
+    <section className="w-full min-h-screen">
       <Suspense fallback={<SinglePropertyLoadingFallback />}>
-        <SingleProperty id={params.id} />
+        <SingleProperty id={id} />
       </Suspense>
     </section>
   );
