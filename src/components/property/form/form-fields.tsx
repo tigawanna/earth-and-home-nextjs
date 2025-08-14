@@ -185,7 +185,7 @@ export function SelectFieldComponent({
   options 
 }: SelectFieldProps) {
  const currentValue = useWatch({ control, name });
-//  console.log("Current value in SelectFieldComponent:== ", currentValue);
+ console.log("Current value in SelectFieldComponent:== ", currentValue);
   return (
     <FormField
       control={control}

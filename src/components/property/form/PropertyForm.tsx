@@ -45,14 +45,15 @@ export default function PropertyForm({
   isEdit = false,
   propertyId,
 }: PropertyFormProps) {
-  console.log("== PropertyForm Rendered ==", initialData, isEdit, propertyId);
+  console.log("== PropertyForm Rendered ==", initialData?.listingType);
+  
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema) as any,
     defaultValues: {
-      ...defaultPropertyFormValues,
+      // ...defaultPropertyFormValues,
       ...initialData,
     } as PropertyFormData,
   });
@@ -159,7 +160,7 @@ export default function PropertyForm({
           )}
         </div>
 
-        <FormPersist form={form} formKey="property-form" />
+        {/* <FormPersist form={form} formKey="property-form" /> */}
         
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-8">
