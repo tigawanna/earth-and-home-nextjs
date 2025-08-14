@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useQueryState, parseAsString, parseAsInteger } from "nuqs";
+import { useState, useTransition } from "react";
+import { useQueryStates, parseAsString, parseAsInteger } from "nuqs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Search, X, Filter } from "lucide-react";
+import { Search, X, Filter, Loader2 } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { PropertyFilters as PropertyFiltersType } from "@/dal/drizzle/property-types";
 
@@ -23,23 +23,48 @@ interface PropertyFiltersProps {
 
 export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  
+  // Combined query states using useQueryStates - batches all updates together
+  const [queryState, setQueryState] = useQueryStates(
+    {
+      search: parseAsString.withDefault(""),
+      propertyType: parseAsString,
+      listingType: parseAsString,
+      status: parseAsString,
+      minPrice: parseAsInteger,
+      maxPrice: parseAsInteger,
+      beds: parseAsInteger,
+      baths: parseAsInteger,
+      city: parseAsString,
+      featured: parseAsString,
+      sortBy: parseAsString.withDefault("createdAt"),
+      sortOrder: parseAsString.withDefault("desc"),
+      page: parseAsInteger.withDefault(1),
+    },
+    {
+      shallow: false,
+      throttleMs: 300, // Better for search inputs
+      startTransition, // This enables the isPending state
+    }
+  );
 
-  // Search params using nuqs - these automatically update the URL
-  const [search, setSearch] = useQueryState("search", parseAsString.withDefault(""));
-  const [propertyType, setPropertyType] = useQueryState("propertyType", parseAsString);
-  const [listingType, setListingType] = useQueryState("listingType", parseAsString);
-  const [status, setStatus] = useQueryState("status", parseAsString);
-  const [minPrice, setMinPrice] = useQueryState("minPrice", parseAsInteger);
-  const [maxPrice, setMaxPrice] = useQueryState("maxPrice", parseAsInteger);
-  const [beds, setBeds] = useQueryState("beds", parseAsInteger);
-  const [baths, setBaths] = useQueryState("baths", parseAsInteger);
-  const [city, setCity] = useQueryState("city", parseAsString);
-  const [isFeatured, setIsFeatured] = useQueryState("featured", parseAsString);
-
-  // Sort parameters
-  const [sortBy, setSortBy] = useQueryState("sortBy", parseAsString.withDefault("createdAt"));
-  const [sortOrder, setSortOrder] = useQueryState("sortOrder", parseAsString.withDefault("desc"));
-  const [currentPage, setCurrentPage] = useQueryState("page", parseAsInteger.withDefault(1));
+  // Destructure for easier access
+  const {
+    search,
+    propertyType,
+    listingType,
+    status,
+    minPrice,
+    maxPrice,
+    beds,
+    baths,
+    city,
+    featured: isFeatured,
+    sortBy,
+    sortOrder,
+    page: currentPage,
+  } = queryState;
 
   // Convert query states to filters object for counting active filters
   const filters: PropertyFiltersType = {
@@ -66,26 +91,28 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
   };
 
   const handleClearFilters = () => {
-    setSearch(null);
-    setPropertyType(null);
-    setListingType(null);
-    if (showStatusFilter) setStatus(null);
-    setMinPrice(null);
-    setMaxPrice(null);
-    setBeds(null);
-    setBaths(null);
-    setCity(null);
-    setIsFeatured(null);
-    setCurrentPage(1);
+    setQueryState(prev => ({
+      ...prev,
+      search: "",
+      propertyType: null,
+      listingType: null,
+      status: showStatusFilter ? null : prev.status,
+      minPrice: null,
+      maxPrice: null,
+      beds: null,
+      baths: null,
+      city: null,
+      featured: null,
+      page: 1,
+    }));
   };
 
   const handleSortChange = (field: "sortBy" | "sortOrder", value: string) => {
-    if (field === "sortBy") {
-      setSortBy(value);
-    } else {
-      setSortOrder(value);
-    }
-    setCurrentPage(1); // Reset to first page when sort changes
+    setQueryState(prev => ({
+      ...prev,
+      [field]: value,
+      page: 1, // Reset to first page when sort changes
+    }));
   };
 
   return (
@@ -96,14 +123,22 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
         <div className="flex flex-col md:flex-row  items-center justify-between gap-3 mb-4">
           <div className="flex w-full flex-3/4 gap-1 relative">
             <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            {isPending && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <Loader2 className="h-3 w-3 animate-spin text-primary" />
+              </div>
+            )}
             <Input
               placeholder="Search by title, description, or location..."
               value={search}
               onChange={(e) => {
-                setSearch(e.target.value || null);
-                setCurrentPage(1);
+                setQueryState(prev => ({
+                  ...prev,
+                  search: e.target.value || "",
+                  page: 1,
+                }));
               }}
-              className="pl-10 h-10 text-sm border-border/50 focus:border-primary focus-visible:ring-1 rounded-lg transition-colors"
+              className="pl-10 pr-10 h-10 text-sm border-border/50 focus:border-primary focus-visible:ring-1 rounded-lg transition-colors"
               aria-label="Search properties"
             />
           </div>
@@ -113,8 +148,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
             <Select
               value={listingType || "all"}
               onValueChange={(value) => {
-                setListingType(value === "all" ? null : value);
-                setCurrentPage(1);
+                setQueryState(prev => ({
+                  ...prev,
+                  listingType: value === "all" ? null : value,
+                  page: 1,
+                }));
               }}>
               <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
                 <SelectValue placeholder="All" />
@@ -138,8 +176,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
             <Select
               value={propertyType || "all"}
               onValueChange={(value) => {
-                setPropertyType(value === "all" ? null : value);
-                setCurrentPage(1);
+                setQueryState(prev => ({
+                  ...prev,
+                  propertyType: value === "all" ? null : value,
+                  page: 1,
+                }));
               }}>
               <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
                 <SelectValue placeholder="All" />
@@ -161,8 +202,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
             <Select
               value={beds?.toString() || "any"}
               onValueChange={(value) => {
-                setBeds(value === "any" ? null : Number(value));
-                setCurrentPage(1);
+                setQueryState(prev => ({
+                  ...prev,
+                  beds: value === "any" ? null : Number(value),
+                  page: 1,
+                }));
               }}>
               <SelectTrigger className="h-9 w-full border-border/50 focus:border-primary rounded-md">
                 <SelectValue placeholder="Any" />
@@ -186,8 +230,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 placeholder="Min"
                 value={minPrice || ""}
                 onChange={(e) => {
-                  setMinPrice(e.target.value ? Number(e.target.value) : null);
-                  setCurrentPage(1);
+                  setQueryState(prev => ({
+                    ...prev,
+                    minPrice: e.target.value ? Number(e.target.value) : null,
+                    page: 1,
+                  }));
                 }}
                 className="h-9 border-border/50 focus:border-primary rounded-md text-sm w-1/2 min-w-[70px]"
                 aria-label="Minimum price"
@@ -197,8 +244,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 placeholder="Max"
                 value={maxPrice || ""}
                 onChange={(e) => {
-                  setMaxPrice(e.target.value ? Number(e.target.value) : null);
-                  setCurrentPage(1);
+                  setQueryState(prev => ({
+                    ...prev,
+                    maxPrice: e.target.value ? Number(e.target.value) : null,
+                    page: 1,
+                  }));
                 }}
                 className="h-9 border-border/50 focus:border-primary rounded-md text-sm w-1/2 min-w-[70px]"
                 aria-label="Maximum price"
@@ -309,8 +359,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                     <Select
                       value={baths?.toString() || "any"}
                       onValueChange={(value) => {
-                        setBaths(value === "any" ? null : Number(value));
-                        setCurrentPage(1);
+                        setQueryState(prev => ({
+                          ...prev,
+                          baths: value === "any" ? null : Number(value),
+                          page: 1,
+                        }));
                       }}>
                       <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue placeholder="Any" />
@@ -331,8 +384,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       placeholder="Enter city name"
                       value={city || ""}
                       onChange={(e) => {
-                        setCity(e.target.value || null);
-                        setCurrentPage(1);
+                        setQueryState(prev => ({
+                          ...prev,
+                          city: e.target.value || null,
+                          page: 1,
+                        }));
                       }}
                       className="h-9 border-border/50 focus:border-primary rounded-md text-sm"
                       aria-label="City"
@@ -346,8 +402,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                       id="featured"
                       checked={isFeatured === "true"}
                       onChange={(e) => {
-                        setIsFeatured(e.target.checked ? "true" : null);
-                        setCurrentPage(1);
+                        setQueryState(prev => ({
+                          ...prev,
+                          featured: e.target.checked ? "true" : null,
+                          page: 1,
+                        }));
                       }}
                       className="w-3 h-3 text-primary bg-background border border-border rounded focus:ring-primary focus-visible:outline-none"
                     />
@@ -366,13 +425,15 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                 <div className="space-y-2">
                   {showStatusFilter && (
                     <div className="space-y-1">
-                      <Label className="text-xs">Status</Label>
-                      <Select
-                        value={status || "all"}
-                        onValueChange={(value) => {
-                          setStatus(value === "all" ? null : value);
-                          setCurrentPage(1);
-                        }}>
+                      <Label className="text-xs">Status</Label>                        <Select
+                          value={status || "all"}
+                          onValueChange={(value) => {
+                            setQueryState(prev => ({
+                              ...prev,
+                              status: value === "all" ? null : value,
+                              page: 1,
+                            }));
+                          }}>
                         <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                           <SelectValue placeholder="All statuses" />
                         </SelectTrigger>
@@ -395,8 +456,11 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
                     <Select
                       value={propertyType || "all"}
                       onValueChange={(value) => {
-                        setPropertyType(value === "all" ? null : value);
-                        setCurrentPage(1);
+                        setQueryState(prev => ({
+                          ...prev,
+                          propertyType: value === "all" ? null : value,
+                          page: 1,
+                        }));
                       }}>
                       <SelectTrigger className="h-9 border-border/50 focus:border-primary rounded-md">
                         <SelectValue placeholder="All types" />
@@ -432,7 +496,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(currentPage - 1)}
+                onClick={() => setQueryState(prev => ({ ...prev, page: currentPage - 1 }))}
                 disabled={currentPage <= 1}
                 className="px-3 py-1.5 border-border/50 hover:border-primary rounded-md disabled:opacity-50 disabled:cursor-not-allowed h-8 text-xs">
                 Previous
@@ -441,7 +505,7 @@ export function PropertyFilters({ showStatusFilter = true }: PropertyFiltersProp
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setCurrentPage(currentPage + 1)}
+                onClick={() => setQueryState(prev => ({ ...prev, page: currentPage + 1 }))}
                 className="px-3 py-1.5 border-border/50 hover:border-primary rounded-md h-8 text-xs">
                 Next
               </Button>

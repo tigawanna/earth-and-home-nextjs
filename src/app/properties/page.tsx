@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import { PropertyFilters } from "@/components/property/list/PropertyFilters";
 
+
+
 function LoadingFallback() {
   return (
     <Card>

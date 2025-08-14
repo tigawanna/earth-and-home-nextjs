@@ -4,6 +4,8 @@ import { getProperties } from "@/dal/drizzle/property-queries";
 import { PropertyFilters as PropertyFiltersType, PropertySortBy, SortOrder } from "@/dal/drizzle/property-types";
 import { Home } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 interface PublicPropertyListingsProps {
   searchParams: { [key: string]: string | string[] | undefined };
   limit?: number; // Optional limit for pagination
