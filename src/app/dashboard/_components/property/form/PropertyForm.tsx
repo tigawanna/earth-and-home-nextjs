@@ -158,7 +158,7 @@ export default function PropertyForm({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-8">
             {/* Progress Indicator */}
-            <div className="bg-card rounded-xl p-6 border border-border shadow-sm">
+            <div className="bg-card rounded-xl p-6 b shadow-md shadow-primary/15">
               <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
                 <span>Progress</span>
                 <span>Step by step</span>
@@ -170,14 +170,14 @@ export default function PropertyForm({
             </div>
 
             {/* Basic Information - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <BasicInfoSection control={form.control as any} />
             </div>
 
             <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
             {/* Location Details - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <LocationSection control={form.control as any} />
             </div>
 
@@ -187,14 +187,14 @@ export default function PropertyForm({
             {!isLand && (
               <>
                 {/* Building Information - Enhanced */}
-                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
                   <BuildingSection control={form.control as any} />
                 </div>
                 
                 <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
                 {/* Parking & Climate Control - Enhanced */}
-                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
                   <ParkingSection control={form.control as any} />
                 </div>
                 
@@ -205,7 +205,7 @@ export default function PropertyForm({
             {isLand && (
               <>
                 {/* Land Information - Enhanced */}
-                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
                   <LandSection control={form.control as any} />
                 </div>
                 
@@ -214,28 +214,28 @@ export default function PropertyForm({
             )}
 
             {/* Pricing - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <PricingSection control={form.control as any} />
             </div>
 
             <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
             {/* Features & Amenities - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <FeaturesAmenitiesSection control={form.control as any} />
             </div>
 
             <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
             {/* Images Upload - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <ImagesUploadSection control={form.control as any} propertyTitle={form.watch("title")} />
             </div>
 
             <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
 
             {/* Media - Enhanced */}
-            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+            <div className="bg-card rounded-xl shadow-md shadow-primary/15 overflow-hidden">
               <MediaSection control={form.control as any} />
             </div>
 

@@ -60,7 +60,7 @@ export function BasicInfoSection({ control }: BasicInfoSectionProps) {
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Property Type Selection - Most Important */}
-        <div className="relative p-6 border-2 border-dashed border-primary/20 rounded-xl bg-gradient-to-br from-accent/50 to-accent/30">
+        <div className="relative p-6 rounded-xl bg-gradient-to-br from-accent/50 to-accent/30 shadow-md shadow-primary/15">
           <div className="absolute -top-3 left-4 bg-card px-3 py-1 rounded-full">
             <span className="text-sm font-medium text-primary">Essential Details</span>
           </div>

@@ -59,7 +59,7 @@ export function FeaturesAmenitiesSection({ control }: FeaturesAmenitiesSectionPr
   const isLand = isLandProperty(propertyType);
 
   return (
-    <Card>
+    <Card className="shadow-md shadow-primary/15">
       <CardHeader>
         <CardTitle>Features & Amenities</CardTitle>
       </CardHeader>

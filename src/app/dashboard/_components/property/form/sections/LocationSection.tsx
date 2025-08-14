@@ -27,7 +27,7 @@ export function LocationSection({ control }: LocationSectionProps) {
       </CardHeader>
       <CardContent className="space-y-8">
         {/* Primary Location */}
-        <div className="relative p-6 border-2 border-dashed" >
+        <div className="relative p-6 rounded-xl shadow-md shadow-primary/15" >
           <div className="absolute -top-3 left-4 bg-card px-3 py-1 rounded-full">
             <span className="text-sm font-medium text-earth-green-600">Primary Location</span>
           </div>
@@ -95,7 +95,7 @@ export function LocationSection({ control }: LocationSectionProps) {
         </div>
 
         {/* GPS Coordinates */}
-        <div className="relative p-6 border border-border rounded-xl bg-muted/30">
+        <div className="relative p-6 rounded-xl bg-muted/30 shadow-md shadow-primary/15">
           <div className="absolute -top-3 left-4 bg-card px-3 py-1 rounded-full">
             <span className="text-sm font-medium text-muted-foreground">📍 GPS Coordinates (Optional)</span>
           </div>

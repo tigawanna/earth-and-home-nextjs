@@ -33,7 +33,7 @@ export function LandSection({ control }: LandSectionProps) {
   }
 
   return (
-    <Card>
+    <Card className="shadow-md shadow-primary/15">
       <CardHeader>
         <CardTitle>Land Information</CardTitle>
       </CardHeader>

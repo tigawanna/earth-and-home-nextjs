@@ -42,7 +42,7 @@ export function PricingSection({ control }: PricingSectionProps) {
   const isRent = listingType === "rent";
 
   return (
-    <Card className="border-0 shadow-md shadow-accent">
+    <Card className="shadow-md shadow-primary/15">
       <CardHeader className="pb-6">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">

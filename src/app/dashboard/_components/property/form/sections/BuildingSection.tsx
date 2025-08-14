@@ -46,7 +46,7 @@ export function BuildingSection({ control }: BuildingSectionProps) {
   }
 
   return (
-    <Card>
+    <Card className="shadow-md shadow-primary/15">
       <CardHeader>
         <CardTitle>Building Information</CardTitle>
       </CardHeader>

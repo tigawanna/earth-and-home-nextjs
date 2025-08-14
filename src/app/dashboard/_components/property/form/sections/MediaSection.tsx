@@ -13,7 +13,7 @@ interface MediaSectionProps {
 
 export function MediaSection({ control }: MediaSectionProps) {
   return (
-    <Card>
+    <Card className="shadow-md shadow-primary/15">
       <CardHeader>
         <CardTitle>Media & Virtual Tours</CardTitle>
       </CardHeader>
