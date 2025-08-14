@@ -31,11 +31,12 @@ export function TextFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <FormControl>
             <Input 
+              className="bg-base-100/30"
               placeholder={placeholder} 
               {...field} 
               value={field.value as string || ''} 
@@ -64,7 +65,7 @@ export function TextareaFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <FormControl>
@@ -98,7 +99,7 @@ export function NumberFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <FormControl>
@@ -138,7 +139,7 @@ export function CurrencyFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <FormControl>
@@ -192,7 +193,7 @@ export function SelectFieldComponent({
       render={({ field }) => {
         return(
         <FormItem>
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <Select onValueChange={field.onChange} value={field.value as string}>
@@ -281,7 +282,7 @@ export function MultiSelectTagsComponent({
                         const newValue = (field.value as string[]).filter((_, i) => i !== index);
                         field.onChange(newValue);
                       }}
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 text-muted-foreground hover:text-foreground"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -360,7 +361,7 @@ export function MultiSelectFieldComponent({
                         const newValue = (field.value as string[]).filter((_, i) => i !== index);
                         field.onChange(newValue);
                       }}
-                      className="ml-1 text-gray-500 hover:text-gray-700"
+                      className="ml-1 text-muted-foreground hover:text-foreground"
                     >
                       <X className="h-3 w-3" />
                     </button>
@@ -415,7 +416,7 @@ export function DateFieldComponent({
       name={name}
       render={({ field }) => (
         <FormItem className="flex flex-col">
-          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-red-500")}>
+          <FormLabel className={cn(required && "after:content-['*'] after:ml-0.5 after:text-destructive")}>
             {label}
           </FormLabel>
           <Popover>

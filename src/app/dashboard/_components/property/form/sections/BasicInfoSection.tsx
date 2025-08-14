@@ -44,65 +44,87 @@ const statusOptions = [
 
 export function BasicInfoSection({ control }: BasicInfoSectionProps) {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Basic Information</CardTitle>
-        <p className="text-sm text-muted-foreground">
-          Start by selecting your property type - this will determine which fields are available
-        </p>
+    <Card className="border-0 shadow-none">
+      <CardHeader className="pb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-semibold text-lg">1</span>
+          </div>
+          <div>
+            <CardTitle className="text-xl text-foreground">Basic Information</CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">
+              Start by selecting your property type - this will determine which fields are available
+            </p>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-8">
         {/* Property Type Selection - Most Important */}
-        <div className="p-4 border-2 border-dashed border-primary/20 rounded-lg bg-primary/5">
+        <div className="relative p-6 border-2 border-dashed border-primary/20 rounded-xl bg-gradient-to-br from-accent/50 to-accent/30">
+          <div className="absolute -top-3 left-4 bg-card px-3 py-1 rounded-full">
+            <span className="text-sm font-medium text-primary">Essential Details</span>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <SelectFieldComponent
-              control={control}
-              name="propertyType"
-              label="Property Type"
-              placeholder="Select property type"
-              options={propertyTypeOptions}
-              required
-              description="Choose whether you're listing land or a building"
-            />
+            <div className="space-y-2">
+              <SelectFieldComponent
+                control={control}
+                name="propertyType"
+                label="Property Type"
+                placeholder="Select property type"
+                options={propertyTypeOptions}
+                required
+                description="Choose whether you're listing land or a building"
+              />
+            </div>
             
-            <SelectFieldComponent
-              control={control}
-              name="listingType"
-              label="Listing Type"
-              placeholder="Select listing type"
-              options={listingTypeOptions}
-              required
-              description="Are you selling or renting?"
-            />
+            <div className="space-y-2">
+              <SelectFieldComponent
+                control={control}
+                name="listingType"
+                label="Listing Type"
+                placeholder="Select listing type"
+                options={listingTypeOptions}
+                required
+                description="Are you selling or renting?"
+              />
+            </div>
           </div>
         </div>
 
         {/* Property Details */}
-        <TextFieldComponent
-          control={control}
-          name="title"
-          label="Property Title"
-          placeholder="Enter a descriptive title for your property"
-          description="This will be the main headline for your property listing"
-          required
-        />
+        <div className="space-y-6">
+          <div className="bg-muted/50 rounded-xl p-6">
+            <TextFieldComponent
+              control={control}
+              name="title"
+              label="Property Title"
+              placeholder="Enter a descriptive title for your property"
+              description="This will be the main headline for your property listing"
+              required
+            />
+          </div>
 
-        <TextareaFieldComponent
-          control={control}
-          name="description"
-          label="Property Description"
-          placeholder="Describe your property in detail..."
-          description="Provide details about the property's features, condition, and highlights"
-        />
+          <div className="bg-muted/50 rounded-xl p-6">
+            <TextareaFieldComponent
+              control={control}
+              name="description"
+              label="Property Description"
+              placeholder="Describe your property in detail..."
+              description="Provide details about the property's features, condition, and highlights"
+            />
+          </div>
 
-        <SelectFieldComponent
-          control={control}
-          name="status"
-          label="Listing Status"
-          placeholder="Select status"
-          options={statusOptions}
-          description="Current status of your property listing"
-        />
+          <div className="bg-muted/50 rounded-xl p-6">
+            <SelectFieldComponent
+              control={control}
+              name="status"
+              label="Listing Status"
+              placeholder="Select status"
+              options={statusOptions}
+              description="Current status of your property listing"
+            />
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

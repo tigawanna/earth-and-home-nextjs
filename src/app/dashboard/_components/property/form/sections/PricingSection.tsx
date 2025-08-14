@@ -42,93 +42,109 @@ export function PricingSection({ control }: PricingSectionProps) {
   const isRent = listingType === "rent";
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Pricing & Fees</CardTitle>
+    <Card className="border-0 shadow-md shadow-accent">
+      <CardHeader className="pb-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
+            <span className="text-primary-foreground font-semibold text-lg">💰</span>
+          </div>
+          <div>
+            <CardTitle className="text-xl text-foreground">Pricing & Fees</CardTitle>
+            <p className="text-sm text-muted-foreground mt-1">
+              Set competitive pricing to attract potential {isSale ? 'buyers' : 'tenants'}
+            </p>
+          </div>
+        </div>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* Currency Selection and Primary Price Fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <SelectFieldComponent
-            control={control}
-            name="currency"
-            label="Currency"
-            placeholder="Select currency"
-            description="Choose the currency for all pricing"
-            options={CURRENCIES}
-            required
-          />
-          
-          {isSale && (
-            <CurrencyFieldComponent
+      <CardContent className="space-y-8">
+        {/* Currency and Main Price */}
+        <div className="relative p-6 border-2 border-dashed border-accent rounded-xl bg-gradient-to-br from-accent/20 to-accent/10">
+          <div className="absolute -top-3 left-4 bg-background px-3 py-1 rounded-full">
+            <span className="text-sm font-medium text-accent-foreground">Primary Pricing</span>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <SelectFieldComponent
               control={control}
-              name="salePrice"
-              label="Sale Price"
-              placeholder="Enter sale price"
-              currency={selectedCurrency || "KES"}
+              name="currency"
+              label="Currency"
+              placeholder="Select currency"
+              description="Choose the currency for all pricing"
+              options={CURRENCIES}
               required
             />
-          )}
-          
-          {isRent && (
-            <CurrencyFieldComponent
-              control={control}
-              name="rentalPrice"
-              label="Monthly Rent"
-              placeholder="Enter monthly rental price"
-              currency={selectedCurrency || "KES"}
-              required
-            />
-          )}
+            
+            {isSale && (
+              <CurrencyFieldComponent
+                control={control}
+                name="salePrice"
+                label="Sale Price"
+                placeholder="Enter sale price"
+                currency={selectedCurrency || "KES"}
+                required
+              />
+            )}
+            
+            {isRent && (
+              <CurrencyFieldComponent
+                control={control}
+                name="rentalPrice"
+                label="Monthly Rent"
+                placeholder="Enter monthly rental price"
+                currency={selectedCurrency || "KES"}
+                required
+              />
+            )}
+          </div>
         </div>
 
         {/* Secondary Price Fields for Rent */}
         {isRent && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <CurrencyFieldComponent
-              control={control}
-              name="securityDeposit"
-              label="Security Deposit"
-              placeholder="Enter security deposit amount"
-              description="Typically 1-2 months rent"
-              currency={selectedCurrency || "KES"}
-            />
+          <div className="bg-muted/50 rounded-xl p-6">
+            <h4 className="font-medium text-foreground mb-4">Rental Requirements</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CurrencyFieldComponent
+                control={control}
+                name="securityDeposit"
+                label="Security Deposit"
+                placeholder="Enter security deposit amount"
+                description="Typically 1-2 months rent"
+                currency={selectedCurrency || "KES"}
+              />
+              
+              <DateFieldComponent
+                control={control}
+                name="availableFrom"
+                label="Available From"
+                placeholder="Select availability date"
+                description="When will the property be available for rent?"
+              />
+            </div>
           </div>
         )}
 
         {/* Additional Fees */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <CurrencyFieldComponent
-            control={control}
-            name="hoaFee"
-            label="HOA Fee"
-            placeholder="Monthly HOA fee"
-            description="Homeowners Association fee (if applicable)"
-            currency={selectedCurrency || "KES"}
-          />
-          
-          <CurrencyFieldComponent
-            control={control}
-            name="annualTaxes"
-            label="Annual Property Taxes"
-            placeholder="Annual tax amount"
-            description="Yearly property tax amount"
-            currency={selectedCurrency || "KES"}
-          />
-        </div>
-
-        {/* Availability */}
-        {isRent && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <DateFieldComponent
+        <div className="bg-muted/50 rounded-xl p-6">
+          <h4 className="font-medium text-foreground mb-4">Additional Fees (Optional)</h4>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <CurrencyFieldComponent
               control={control}
-              name="availableFrom"
-              label="Available From"
-              placeholder="Select availability date"
-              description="When will the property be available for rent?"
+              name="hoaFee"
+              label="HOA Fee"
+              placeholder="Monthly HOA fee"
+              description="Homeowners Association fee (if applicable)"
+              currency={selectedCurrency || "KES"}
+            />
+            
+            <CurrencyFieldComponent
+              control={control}
+              name="annualTaxes"
+              label="Annual Property Taxes"
+              placeholder="Annual tax amount"
+              description="Yearly property tax amount"
+              currency={selectedCurrency || "KES"}
             />
           </div>
-        )}
+        </div>
       </CardContent>
     </Card>
   );

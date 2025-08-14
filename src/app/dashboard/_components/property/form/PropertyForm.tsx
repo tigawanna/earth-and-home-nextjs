@@ -123,152 +123,200 @@ export default function PropertyForm({
   const hasErrors = errorMessages.length > 0 && isSubmitted;
 
   return (
-    <div className="w-full   p-6 space-y-6">
-      <div className="text-center space-y-2">
-        <h1 className="text-3xl font-bold">{isEdit ? "Edit Property" : "Add New Property"}</h1>
-        <p className="text-muted-foreground">
-          {isEdit
-            ? "Update your property information"
-            : "Fill in the details to list your property"}
-        </p>
-        {propertyType && (
-          <div className="flex justify-center">
-            <span
-              className={`px-3 py-1 rounded-full text-sm font-medium ${
-                isLand
-                  ? "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200"
-                  : "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-              }`}>
-              {isLand ? "🏞️ Land Property" : "🏠 Building Property"}
-            </span>
+    <div className="min-h-screen bg-gradient-to-br from-background via-card to-background">
+      <div className="max-w-4xl mx-auto p-6 space-y-8">
+        {/* Enhanced Header */}
+        <div className="text-center space-y-4 py-8">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-primary to-accent rounded-2xl mb-4">
+            <span className="text-2xl">🏠</span>
           </div>
-        )}
-      </div>
-      <FormPersist form={form} formKey="property-form" />
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-6">
-          {/* Basic Information - Always shown */}
-          <BasicInfoSection control={form.control as any} />
-
-          <Separator />
-
-          {/* Location Details - Always shown */}
-          <LocationSection control={form.control as any} />
-
-          <Separator />
-
-          {/* Conditional Sections based on Property Type */}
-          {!isLand && (
-            <>
-              {/* Building Information - Only for non-land properties */}
-              <BuildingSection control={form.control as any} />
-              <Separator />
-
-              {/* Parking & Climate Control - Only for non-land properties */}
-              <ParkingSection control={form.control as any} />
-              <Separator />
-            </>
-          )}
-
-          {isLand && (
-            <>
-              {/* Land Information - Only for land properties */}
-              <LandSection control={form.control as any} />
-              <Separator />
-            </>
-          )}
-
-          {/* Pricing - Always shown */}
-          <PricingSection control={form.control as any} />
-
-          <Separator />
-
-          {/* Features & Amenities - Always shown */}
-          <FeaturesAmenitiesSection control={form.control as any} />
-
-          <Separator />
-
-          {/* Images Upload - Always shown */}
-          <ImagesUploadSection control={form.control as any} propertyTitle={form.watch("title")} />
-
-          <Separator />
-
-          {/* Media - Always shown */}
-          <MediaSection control={form.control as any} />
-
-          {/* Form Actions */}
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex flex-col sm:flex-row gap-4 justify-end">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleSaveDraft}
-                  disabled={isPending}
-                  className="flex items-center gap-2">
-                  {isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Save className="h-4 w-4" />
-                  )}
-                  Save as Draft
-                </Button>
-
-                <Button
-                  type="submit"
-                  disabled={isSubmitButtonDisabled}
-                  className="flex items-center gap-2">
-                  {isPending ? (
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
-                  {isEdit ? "Update Property" : "Publish Property"}
-                </Button>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+            {isEdit ? "Edit Property" : "Add New Property"}
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            {isEdit
+              ? "Update your property information with ease"
+              : "Create a stunning property listing that attracts the right buyers"}
+          </p>
+          {propertyType && (
+            <div className="flex justify-center">
+              <div
+                className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border-2 transition-all duration-200 ${
+                  isLand
+                    ? "bg-earth-green-50 border-earth-green-200 text-earth-green-800 dark:bg-earth-green-950 dark:border-earth-green-800 dark:text-earth-green-200"
+                    : "bg-accent border-accent-foreground/20 text-accent-foreground"
+                }`}>
+                <span className="text-lg">{isLand ? "🏞️" : "🏠"}</span>
+                {isLand ? "Land Property" : "Building Property"}
               </div>
+            </div>
+          )}
+        </div>
 
-              {/* User-Friendly Error Display */}
-              {hasErrors && (
-                <div className="mt-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg">
-                  <div className="flex items-start gap-3">
-                    <AlertCircle className="h-5 w-5 text-destructive mt-0.5 flex-shrink-0" />
-                    <div className="space-y-2">
-                      <h4 className="font-medium text-destructive">
-                        Please fix the following errors:
-                      </h4>
-                      <ul className="text-sm text-destructive/80 space-y-1">
-                        {errorMessages.slice(0, 5).map((error, index) => (
-                          <li key={index} className="flex items-start gap-2">
-                            <span className="w-1.5 h-1.5 bg-destructive/60 rounded-full mt-2 flex-shrink-0" />
-                            {error}
-                          </li>
-                        ))}
-                        {errorMessages.length > 5 && (
-                          <li className="text-destructive/60 italic">
-                            ... and {errorMessages.length - 5} more errors
-                          </li>
-                        )}
-                      </ul>
+        <FormPersist form={form} formKey="property-form" />
+        
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(handlePublish)} className="space-y-8">
+            {/* Progress Indicator */}
+            <div className="bg-card rounded-xl p-6 border border-border shadow-sm">
+              <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
+                <span>Progress</span>
+                <span>Step by step</span>
+              </div>
+              <div className="h-2 bg-muted rounded-full">
+                <div className="h-full bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300" 
+                     style={{ width: "70%" }} />
+              </div>
+            </div>
+
+            {/* Basic Information - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <BasicInfoSection control={form.control as any} />
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+            {/* Location Details - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <LocationSection control={form.control as any} />
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+            {/* Conditional Sections based on Property Type */}
+            {!isLand && (
+              <>
+                {/* Building Information - Enhanced */}
+                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                  <BuildingSection control={form.control as any} />
+                </div>
+                
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+                {/* Parking & Climate Control - Enhanced */}
+                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                  <ParkingSection control={form.control as any} />
+                </div>
+                
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+              </>
+            )}
+
+            {isLand && (
+              <>
+                {/* Land Information - Enhanced */}
+                <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+                  <LandSection control={form.control as any} />
+                </div>
+                
+                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+              </>
+            )}
+
+            {/* Pricing - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <PricingSection control={form.control as any} />
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+            {/* Features & Amenities - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <FeaturesAmenitiesSection control={form.control as any} />
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+            {/* Images Upload - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <ImagesUploadSection control={form.control as any} propertyTitle={form.watch("title")} />
+            </div>
+
+            <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent" />
+
+            {/* Media - Enhanced */}
+            <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+              <MediaSection control={form.control as any} />
+            </div>
+
+            {/* Enhanced Form Actions */}
+            <div className="bg-gradient-to-r from-card to-muted rounded-xl border border-border shadow-sm overflow-hidden">
+              <CardContent className="pt-8 pb-8">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleSaveDraft}
+                    disabled={isPending}
+                    size="lg"
+                    className="flex items-center gap-2 px-8 py-3 border-2 hover:border-primary/50 transition-all duration-200">
+                    {isPending ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Save className="h-5 w-5" />
+                    )}
+                    Save as Draft
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    disabled={isSubmitButtonDisabled}
+                    size="lg"
+                    className="flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground border-0 shadow-lg hover:shadow-xl transition-all duration-200">
+                    {isPending ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <Eye className="h-5 w-5" />
+                    )}
+                    {isEdit ? "Update Property" : "Publish Property"}
+                  </Button>
+                </div>
+
+                {/* Enhanced Error Display */}
+                {hasErrors && (
+                  <div className="mt-6 p-6 bg-destructive/10 border-2 border-destructive/20 rounded-xl">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-10 h-10 bg-destructive/20 rounded-full flex items-center justify-center">
+                        <AlertCircle className="h-5 w-5 text-destructive" />
+                      </div>
+                      <div className="space-y-3 flex-1">
+                        <h4 className="font-semibold text-destructive text-lg">
+                          Please fix the following errors:
+                        </h4>
+                        <ul className="text-sm text-destructive/80 space-y-2">
+                          {errorMessages.slice(0, 5).map((error, index) => (
+                            <li key={index} className="flex items-start gap-3 p-2 bg-destructive/5 rounded-lg">
+                              <span className="w-2 h-2 bg-destructive rounded-full mt-2 flex-shrink-0" />
+                              <span className="font-medium">{error}</span>
+                            </li>
+                          ))}
+                          {errorMessages.length > 5 && (
+                            <li className="text-destructive/70 italic text-center py-2">
+                              ... and {errorMessages.length - 5} more errors
+                            </li>
+                          )}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* Form State Debug (dev only) */}
-              {process.env.NODE_ENV === "development" && (
-                <details className="mt-4 p-4 bg-muted rounded-lg">
-                  <summary className="cursor-pointer text-sm font-medium">
-                    Form State (Development)
-                  </summary>
-                  <pre className="mt-2 text-xs overflow-auto">
-                    {JSON.stringify(form.formState.errors, null, 2)}
-                  </pre>
-                </details>
-              )}
-            </CardContent>
-          </Card>
-        </form>
-      </Form>
+                {/* Form State Debug (dev only) */}
+                {process.env.NODE_ENV === "development" && (
+                  <details className="mt-6 p-4 bg-muted rounded-xl border border-border">
+                    <summary className="cursor-pointer text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                      🔧 Form State (Development)
+                    </summary>
+                    <pre className="mt-3 text-xs overflow-auto text-muted-foreground bg-card p-3 rounded border">
+                      {JSON.stringify(form.formState.errors, null, 2)}
+                    </pre>
+                  </details>
+                )}
+              </CardContent>
+            </div>
+          </form>
+        </Form>
+      </div>
     </div>
   );
 }
