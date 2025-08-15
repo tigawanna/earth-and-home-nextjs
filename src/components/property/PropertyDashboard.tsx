@@ -30,7 +30,7 @@ export async function PropertyDashboard({
     ...(agentFilter && userId ? { agentId: userId } : {}), // Only add agentId if filtering by user
     search: searchParams?.search as string || "",
     propertyType: searchParams?.propertyType as string || "",
-    listingType: searchParams?.listingType as "sale" | "rent" || "sale",
+    listingType: searchParams?.listingType as "sale" | "rent",
     status: searchParams?.status as string || "",
     minPrice: searchParams?.minPrice ? Number(searchParams?.minPrice) : undefined,
     maxPrice: searchParams?.maxPrice ? Number(searchParams?.maxPrice) : undefined,
@@ -68,7 +68,7 @@ export async function PropertyDashboard({
         </div>
         {showActions && (
           <Button asChild>
-            <Link href="/dashboard/properties/new">
+            <Link href="/dashboard/properties/add">
               <Plus className="h-4 w-4 mr-2" />
               Add Property
             </Link>

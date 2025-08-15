@@ -156,10 +156,10 @@ export const COMMON_FEATURES = [
 ] as const;
 
 // Utility validation schemas
-export const positiveNumberSchema = z.coerce.number().positive().optional();
-export const nonNegativeNumberSchema = z.coerce.number().nonnegative().optional();
+export const positiveNumberSchema = z.coerce.number().positive().optional().nullable();
+export const nonNegativeNumberSchema = z.coerce.number().nonnegative().optional().nullable();
 export const requiredStringSchema = z.string().min(1, "This field is required");
-export const optionalStringSchema = z.string().optional();
+export const optionalStringSchema = z.string().optional().nullable();
 
 // Form step utilities
 export interface FormStep {

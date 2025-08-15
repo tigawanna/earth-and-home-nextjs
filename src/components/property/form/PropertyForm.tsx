@@ -45,11 +45,11 @@ export default function PropertyForm({
   isEdit = false,
   propertyId,
 }: PropertyFormProps) {
-  console.log("== PropertyForm Rendered ==", initialData?.listingType);
+
   
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
-
+  
   const form = useForm<PropertyFormData>({
     resolver: zodResolver(propertyFormSchema) as any,
     defaultValues: {

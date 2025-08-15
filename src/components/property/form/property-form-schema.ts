@@ -31,36 +31,36 @@ export const propertyFormSchema = z.object({
   state: optionalStringSchema,
   postalCode: optionalStringSchema,
   country: z.string().default("Kenya"),
-  latitude: z.coerce.number().min(-90).max(90).optional(),
-  longitude: z.coerce.number().min(-180).max(180).optional(),
+  latitude: z.coerce.number().min(-90).max(90).optional().nullable(),
+  longitude: z.coerce.number().min(-180).max(180).optional().nullable(),
 
   // Building Information (Conditional - Not for land)
   buildingSizeSqft: positiveNumberSchema,
   floors: positiveNumberSchema,
   beds: positiveNumberSchema,
   baths: positiveNumberSchema,
-  yearBuilt: z.coerce.number().min(1800).max(new Date().getFullYear() + 5).optional(),
+  yearBuilt: z.coerce.number().min(1800).max(new Date().getFullYear() + 5).optional().nullable(),
 
   // Land Information 
   lotSizeSqft: positiveNumberSchema,
-  lotSizeAcres: z.coerce.number().positive().optional(),
+  lotSizeAcres: z.coerce.number().positive().optional().nullable(),
   dimensions: optionalStringSchema,
   zoning: z.enum([
     "residential", "commercial", "agricultural", 
     "industrial", "mixed_use", "recreational", "other"
-  ]).optional(),
+  ]).optional().nullable(),
 
   // Parking & Utilities
   parkingSpaces: nonNegativeNumberSchema,
   parkingType: z.enum([
     "garage", "carport", "street", "covered", "assigned", "none"
-  ]).optional(),
+  ]).optional().nullable(),
   heating: z.enum([
     "none", "electric", "gas", "oil", "heat_pump", "solar", "geothermal"
-  ]).optional(),
+  ]).optional().nullable(),
   cooling: z.enum([
     "none", "central", "wall_unit", "evaporative", "geothermal"
-  ]).optional(),
+  ]).optional().nullable(),
 
   // Pricing
   currency: z.string().default("KES"),
@@ -70,7 +70,7 @@ export const propertyFormSchema = z.object({
   securityDeposit: positiveNumberSchema,
   hoaFee: nonNegativeNumberSchema,
   annualTaxes: nonNegativeNumberSchema,
-  availableFrom: z.date().optional(),
+  availableFrom: z.date().optional().nullable(),
 
   // Media & Features
   images: z.array(z.object({
@@ -85,10 +85,13 @@ export const propertyFormSchema = z.object({
   virtualTourUrl: optionalStringSchema,
   amenities: z.array(z.string()).default([]),
   features: z.array(z.string()).default([]),
-  utilities: z.record(z.string(), z.boolean()).default({}),
+  utilities: z.union([
+    z.array(z.string()),
+    z.record(z.string(), z.boolean().optional())
+  ]).default({}),
 
   // Ownership
-  ownerId: z.string().optional(),
+  ownerId: z.string().optional().nullable(),
   
   // Flags
   isFeatured: z.boolean().default(false),
