@@ -1,4 +1,4 @@
-import { getProperty } from "@/dal/drizzle/property-queries";
+import { getProperty } from "@/DAL/drizzle/property-queries";
 import { SinglePropertyNotFound } from "../query-states";
 import PropertyForm from "@/components/property/form/PropertyForm";
 

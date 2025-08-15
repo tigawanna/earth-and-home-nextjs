@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Heart, Edit, Trash2 } from "lucide-react";
-import { deleteProperty, toggleFavorite } from "@/dal/drizzle/property-mutations";
+import { deleteProperty, toggleFavorite } from "@/DAL/drizzle/property-mutations";
 import { toast } from "sonner";
 import Link from "next/link";
 import {
@@ -18,7 +18,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { PropertyWithAgent } from "@/dal/drizzle/property-types";
+import { PropertyWithAgent } from "@/DAL/drizzle/property-types";
 import { PropertyCard } from "./PropertyCard";
 
 interface ClientPropertyCardProps {

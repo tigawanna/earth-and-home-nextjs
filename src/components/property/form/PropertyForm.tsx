@@ -26,7 +26,7 @@ import { toast } from "sonner";
 import { useWatch } from "react-hook-form";
 import { isLandProperty } from "@/utils/forms";
 import { FormPersist } from "@/lib/react-hook-form/FormPersist";
-import { createProperty, updateProperty } from "@/dal/drizzle/property-mutations";
+import { createProperty, updateProperty } from "@/DAL/drizzle/property-mutations";
 import { useRouter } from "next/navigation";
 
 // Convert Partial<T> (undefined) to nullable properties (null)

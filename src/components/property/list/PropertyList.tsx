@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Home } from "lucide-react";
 import Link from "next/link";
-import { PropertyWithAgent } from "@/dal/drizzle/property-types";
+import { PropertyWithAgent } from "@/DAL/drizzle/property-types";
 import { ClientPropertyCard } from "./ClientPropertyCard";
 
 interface PropertyListProps {
