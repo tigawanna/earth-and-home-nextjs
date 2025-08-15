@@ -12,9 +12,18 @@ import {
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight, Play, Camera, X } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { emptyStringasNull } from "@/utils/values";
+
+export interface ImagePayload {
+  url: string;
+  key: string;
+  name: string;
+  size: number;
+  type: string;
+}
 
 interface PropertyImageGalleryProps {
-  images: string[];
+  images: ImagePayload[];
   title: string;
   videoUrl?: string | null;
   virtualTourUrl?: string | null;
@@ -35,18 +44,43 @@ export function PropertyImageGallery({
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
 
-  const hasImages = images && images.length > 0;
-  const mainImage = hasImages ? images[currentImageIndex] : null;
+  // Extract URLs from ImagePayload objects and sanitize them
+  const imageUrls = images.map(img => img.url);
+  const sanitizedImages = imageUrls.map(emptyStringasNull); // (string | null)[]
+  const validImages = sanitizedImages.filter((img): img is string => Boolean(img));
+  const validCount = validImages.length;
+  const hasImages = validCount > 0;
 
+  // currentImage is the sanitized value at the current index (or null)
+  const currentImage = sanitizedImages[currentImageIndex] ?? null;
+  const mainImage = currentImage;
+  console.log({mainImage});
+
+  // current index among valid images (for UI counters)
+  const currentValidIndex = mainImage ? validImages.indexOf(mainImage) : -1;
+
+  // Navigation helpers: skip over null/empty entries
   const nextImage = () => {
-    if (hasImages) {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    if (!sanitizedImages.length) return;
+    let i = currentImageIndex;
+    for (let k = 1; k <= sanitizedImages.length; k++) {
+      const idx = (i + k) % sanitizedImages.length;
+      if (sanitizedImages[idx]) {
+        setCurrentImageIndex(idx);
+        return;
+      }
     }
   };
 
   const prevImage = () => {
-    if (hasImages) {
-      setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    if (!sanitizedImages.length) return;
+    let i = currentImageIndex;
+    for (let k = 1; k <= sanitizedImages.length; k++) {
+      const idx = (i - k + sanitizedImages.length) % sanitizedImages.length;
+      if (sanitizedImages[idx]) {
+        setCurrentImageIndex(idx);
+        return;
+      }
     }
   };
 
@@ -60,6 +94,7 @@ export function PropertyImageGallery({
               {mainImage ? (
                 <>
                   <Image
+                    key={mainImage}
                     src={mainImage}
                     alt={title}
                     fill
@@ -115,15 +150,15 @@ export function PropertyImageGallery({
             {isNew && <Badge className="bg-green-600 hover:bg-green-700">New</Badge>}
           </div>
 
-          {/* Image count indicator */}
-          {hasImages && images.length > 1 && (
+          {/* Image count indicator (uses valid images count) */}
+          {hasImages && validCount > 1 && (
             <>
               <div className="absolute bottom-4 right-4">
                 <Badge variant="secondary" className="bg-black/50 text-white border-0">
-                  {images.length} Photos
+                  {validCount} Photos
                 </Badge>
               </div>
-              
+
               {/* Navigation arrows for main image */}
               <Button
                 variant="ghost"
@@ -133,8 +168,7 @@ export function PropertyImageGallery({
                   e.preventDefault();
                   e.stopPropagation();
                   prevImage();
-                }}
-              >
+                }}>
                 <ChevronLeft className="w-4 h-4" />
               </Button>
               <Button
@@ -145,20 +179,19 @@ export function PropertyImageGallery({
                   e.preventDefault();
                   e.stopPropagation();
                   nextImage();
-                }}
-              >
+                }}>
                 <ChevronRight className="w-4 h-4" />
               </Button>
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm">
-                {currentImageIndex + 1} / {images.length}
+                {currentValidIndex >= 0 ? currentValidIndex + 1 : 0} / {validCount}
               </div>
             </>
           )}
-          
-          {hasImages && images.length === 1 && (
+
+          {hasImages && validCount === 1 && (
             <div className="absolute bottom-4 right-4">
               <Badge variant="secondary" className="bg-black/50 text-white border-0">
-                {images.length} Photo
+                {validCount} Photo
               </Badge>
             </div>
           )}
@@ -168,18 +201,20 @@ export function PropertyImageGallery({
             <DialogTitle className="sr-only">{title} Image Gallery</DialogTitle>
             <DialogDescription className="sr-only">View all images of {title}</DialogDescription>
             <div className="relative w-full h-full bg-black">
-              {hasImages && (
+              {hasImages && currentImage && (
                 <>
                   <Image
-                    src={images[currentImageIndex]}
-                    alt={`${title} - Image ${currentImageIndex + 1}`}
+                    src={currentImage}
+                    alt={`${title} - Image ${
+                      currentValidIndex >= 0 ? currentValidIndex + 1 : currentImageIndex + 1
+                    }`}
                     fill
                     className="object-contain"
                     priority
                   />
 
                   {/* Navigation buttons */}
-                  {images.length > 1 && (
+                  {validCount > 1 && (
                     <>
                       <Button
                         variant="ghost"
@@ -201,7 +236,7 @@ export function PropertyImageGallery({
                   {/* Image counter */}
                   <div className="absolute top-4 left-1/2 -translate-x-1/2">
                     <Badge variant="secondary" className="bg-black/50 text-white border-0">
-                      {currentImageIndex + 1} of {images.length}
+                      {currentValidIndex >= 0 ? currentValidIndex + 1 : 0} of {validCount}
                     </Badge>
                   </div>
 
@@ -215,38 +250,49 @@ export function PropertyImageGallery({
                   </Button>
                 </>
               )}
+
+              {!hasImages && (
+                <div className="flex items-center justify-center h-full">
+                  <p className="text-white">No images available</p>
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>
       </div>
 
       {/* Image Thumbnails */}
-      {hasImages && images.length > 1 && (
+      {hasImages && validCount > 1 && (
         <div className="px-4 py-4 bg-background">
           <div className="flex gap-2 overflow-x-auto">
-            {images.slice(0, 5).map((image, index) => (
-              <button
-                key={index}
-                className={`relative w-20 h-20 rounded overflow-hidden flex-shrink-0 border-2 transition-all duration-200 hover:ring-2 hover:ring-primary/60 ${
-                  currentImageIndex === index ? "ring-2 ring-primary" : "border-transparent"
-                }`}
-                onClick={() => {
-                  setCurrentImageIndex(index);
-                  setIsOpen(true);
-                }}>
-                <Image
-                  src={image}
-                  alt={`${title} - Thumbnail ${index + 1}`}
-                  fill
-                  className="object-cover transition-transform duration-200 hover:scale-105"
-                />
-                {index === 4 && images.length > 5 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-                    <span className="text-white font-medium text-xs">+{images.length - 4}</span>
-                  </div>
-                )}
-              </button>
-            ))}
+            {validImages.slice(0, 5).map((image, index) => {
+              const originalIndex = sanitizedImages.indexOf(image);
+              return (
+                <button
+                  key={index}
+                  className={`relative w-20 h-20 rounded overflow-hidden flex-shrink-0 border-2 transition-all duration-200 hover:ring-2 hover:ring-primary/60 ${
+                    currentImageIndex === originalIndex
+                      ? "ring-2 ring-primary"
+                      : "border-transparent"
+                  }`}
+                  onClick={() => {
+                    setCurrentImageIndex(originalIndex);
+                    setIsOpen(true);
+                  }}>
+                  <Image
+                    src={image}
+                    alt={`${title} - Thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover transition-transform duration-200 hover:scale-105"
+                  />
+                  {index === 4 && validCount > 5 && (
+                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                      <span className="text-white font-medium text-xs">+{validCount - 4}</span>
+                    </div>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}

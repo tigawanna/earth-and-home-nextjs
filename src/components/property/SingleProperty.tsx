@@ -82,7 +82,7 @@ export async function SingleProperty({ id }: SinglePropertyProps) {
           <div className="lg:col-span-3 bg-black">
             <div className="max-w-none">
               <PropertyImageGallery
-                images={images as string[]}
+                images={images}
                 title={property.title}
                 videoUrl={property.videoUrl}
                 virtualTourUrl={property.virtualTourUrl}

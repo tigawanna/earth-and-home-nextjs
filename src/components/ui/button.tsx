@@ -7,9 +7,9 @@ import { cn } from "@/lib/utils";
 const buttonVariants = cva("btn", {
   variants: {
     variant: {
-      default: "bg-primary",
+      default: "btn-primary",
       destructive: "btn-error",
-      outline: "btn-outline border-[1px] border-input",
+      outline: "btn-outline border-4 border-border bg-card",
       secondary: "btn-secondary",
       accent: "btn-accent",
       ghost: "btn-ghost",
