@@ -28,21 +28,21 @@ export async function PropertyDashboard({
   // Convert search params to filters
   const filters: PropertyFiltersType = {
     ...(agentFilter && userId ? { agentId: userId } : {}), // Only add agentId if filtering by user
-    search: searchParams.search as string,
-    propertyType: searchParams.propertyType as string,
-    listingType: searchParams.listingType as "sale" | "rent",
-    status: searchParams.status as string,
-    minPrice: searchParams.minPrice ? Number(searchParams.minPrice) : undefined,
-    maxPrice: searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined,
-    beds: searchParams.beds ? Number(searchParams.beds) : undefined,
-    baths: searchParams.baths ? Number(searchParams.baths) : undefined,
-    city: searchParams.city as string,
-    isFeatured: searchParams.featured === "true" ? true : undefined,
+    search: searchParams?.search as string || "",
+    propertyType: searchParams?.propertyType as string || "",
+    listingType: searchParams?.listingType as "sale" | "rent" || "sale",
+    status: searchParams?.status as string || "",
+    minPrice: searchParams?.minPrice ? Number(searchParams?.minPrice) : undefined,
+    maxPrice: searchParams?.maxPrice ? Number(searchParams?.maxPrice) : undefined,
+    beds: searchParams?.beds ? Number(searchParams?.beds) : undefined,
+    baths: searchParams?.baths ? Number(searchParams?.baths) : undefined,
+    city: searchParams?.city as string,
+    isFeatured: searchParams?.featured === "true" ? true : undefined,
   };
 
-  const sortBy = (searchParams.sortBy as PropertySortBy) || "createdAt";
-  const sortOrder = (searchParams.sortOrder as SortOrder) || "desc";
-  const page = searchParams.page ? Number(searchParams.page) : 1;
+  const sortBy = (searchParams?.sortBy as PropertySortBy) || "createdAt";
+  const sortOrder = (searchParams?.sortOrder as SortOrder) || "desc";
+  const page = searchParams?.page ? Number(searchParams?.page) : 1;
 
   // Fetch properties with filters
   const result = await getProperties({

@@ -18,21 +18,21 @@ export async function PublicPropertyListings({
   console.log("=== search params  ===== ", searchParams);
   // Convert search params to filters
   const filters: PropertyFiltersType = {
-    search: searchParams.search as string,
-    propertyType: searchParams.propertyType as string,
-    listingType: searchParams.listingType as "sale" | "rent",
+    search: searchParams?.search as string || "",
+    propertyType: searchParams?.propertyType as string,
+    listingType: searchParams?.listingType as "sale" | "rent",
     status: "active", // Only show active properties in public view
-    minPrice: searchParams.minPrice ? Number(searchParams.minPrice) : undefined,
-    maxPrice: searchParams.maxPrice ? Number(searchParams.maxPrice) : undefined,
-    beds: searchParams.beds ? Number(searchParams.beds) : undefined,
-    baths: searchParams.baths ? Number(searchParams.baths) : undefined,
-    city: searchParams.city as string,
-    isFeatured: searchParams.featured === "true" ? true : undefined,
+    minPrice: searchParams?.minPrice ? Number(searchParams?.minPrice) : undefined,
+    maxPrice: searchParams?.maxPrice ? Number(searchParams?.maxPrice) : undefined,
+    beds: searchParams?.beds ? Number(searchParams?.beds) : undefined,
+    baths: searchParams?.baths ? Number(searchParams?.baths) : undefined,
+    city: searchParams?.city as string,
+    isFeatured: searchParams?.featured === "true" ? true : undefined,
   };
 
-  const sortBy = (searchParams.sortBy as PropertySortBy) || "createdAt";
-  const sortOrder = (searchParams.sortOrder as SortOrder) || "desc";
-  const page = searchParams.page ? Number(searchParams.page) : 1;
+  const sortBy = (searchParams?.sortBy as PropertySortBy) || "createdAt";
+  const sortOrder = (searchParams?.sortOrder as SortOrder) || "desc";
+  const page = searchParams?.page ? Number(searchParams?.page) : 1;
 
   // Get properties with filters
   const result = await getProperties({

@@ -26,6 +26,7 @@ export async function getProperties({
   limit?: number;
   userId?: string; // For checking favorites
 } = {}) {
+  console.log("=== getProperties filters ===", filters);
   try {
     const offset = (page - 1) * limit;
 
@@ -144,7 +145,7 @@ export async function getProperties({
       },
     };
   } catch (error) {
-    console.error("Error fetching properties:", error);
+    // console.error("Error fetching properties:===>>>", error);
     return {
       success: false,
       message: error instanceof Error ? error.message : "Failed to fetch properties",
