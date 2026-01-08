@@ -2381,6 +2381,7 @@ packages:
 
   better-upload@1.0.2:
     resolution: {integrity: sha512-cv4Oys/BVeX1lvZVk+9gTgWRq7XOUjakah0kQciJgGJTpj0tcITqbiJ9IplDbWOtFyJ6khmLEmzaMhDiJES9FQ==}
+    deprecated: use @better-upload/server and @better-upload/client - see better-upload.com
     peerDependencies:
       '@aws-sdk/client-s3': '*'
       react: '*'
@@ -3392,6 +3393,7 @@ packages:
   next@15.4.6:
     resolution: {integrity: sha512-us++E/Q80/8+UekzB3SAGs71AlLDsadpFMXVNM/uQ0BMwsh9m3mr0UNQIfjKed8vpWXsASe+Qifrnu1oLIcKEQ==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
+    deprecated: This version has a security vulnerability. Please upgrade to a patched version. See https://nextjs.org/blog/CVE-2025-66478 for more details.
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
